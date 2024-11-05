@@ -1,0 +1,20 @@
+# 最初にサインアップを行い、その後サインインを行う
+### サインアップ(/api/auth/signup)
+POST http://localhost:5000/api/auth/signup
+Content-Type: application/json
+
+{
+  "email": "example01@test.com",
+  "password": "password123",
+  "role": "ADMIN",
+  "username": "testuser"
+}
+
+### サインイン(/api/auth/signin)
+POST http://localhost:5000/api/auth/signin
+Content-Type: application/json
+
+{
+  "email": "example01@test.com",
+  "password": "password123"
+}
