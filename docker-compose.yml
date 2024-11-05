@@ -1,0 +1,56 @@
+services:
+  database:
+    build:
+      context: ./database
+    container_name: database
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "db-root-pass"
+      MYSQL_USER: "db-user"
+      MYSQL_PASSWORD: "db-pass"
+      MYSQL_DATABASE: "Labo-Management"
+      TZ: "Asia/Tokyo"
+    networks:
+      - labo
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $MYSQL_USER -p $MYSQL_PASSWORD
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ./.docker/Dockerfile.dev
+    container_name: backend
+    ports:
+      - 5000:5000
+    environment:
+      DATABASE_URL: "mysql://db-user:db-pass@database:3306/Labo-Management"
+    volumes:
+      - ./backend:/backend
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - labo
+
+  prisma-studio:
+    build:
+      context: ./backend
+      dockerfile: .docker/DockerfilePrismaStudio
+    environment:
+      DATABASE_URL: mysql://db-user:db-pass@database:3306/Labo-Management
+    volumes:
+      - ./backend:/backend
+    ports:
+      - 5555:5555
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - labo
+
+volumes:
+  data-store:
+
+networks:
+  labo:

@@ -1,0 +1,8 @@
+FROM node:20
+
+WORKDIR /backend
+
+RUN npm i -g nodemon
+RUN npm i -g prisma
+
+CMD [ "bash", "-c", "nodemon --exec 'npx prisma studio' --ext prisma,sql,toml" ]

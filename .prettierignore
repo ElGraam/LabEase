@@ -1,0 +1,17 @@
+# core
+package.json
+package-lock.json
+
+# frontend
+next.config.mjs
+
+# backend
+jest.config.js
+
+# dotfile, markdownfile, jsonfile
+.*
+*.md
+*.json
+
+# node_modules
+**/node_modules

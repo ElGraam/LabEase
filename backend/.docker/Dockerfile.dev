@@ -1,0 +1,7 @@
+FROM node:20
+
+WORKDIR /backend
+
+RUN npm i -g nodemon
+CMD [ "bash", "-c", "npm install && npx prisma generate && npm run migrate && npx prisma db seed && npm run migrate:test && nodemon --ext ts --exec ts-node app.ts" ]
+
