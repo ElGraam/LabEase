@@ -11,17 +11,167 @@ datasource db {
 }
 
 enum Role {
-  STUDENT   // 学生
-  PROFESSOR // 教授
-  ADMIN     //管理者
+  STUDENT
+  PROFESSOR
+  SUB_INSTRUCTOR
+}
+
+enum ProgramType {
+  UNDERGRADUATE
+  MASTERS
+  DOCTORAL
+}
+
+enum StudentStatus {
+  ACTIVE
+  GRADUATED
+  WITHDRAWN
+}
+
+enum EntryMonth {
+  APRIL
+  OCTOBER
+}
+
+enum GraduationMonth {
+  MARCH
+  SEPTEMBER
+}
+
+enum ProjectMilestoneStatus {
+  PLANNED
+  IN_PROGRESS
+  LATE
+  COMPLETED
+}
+
+enum MeetingType {
+  REGULAR
+  SPONTANEOUS
 }
 
 model Users {
-  id            String   @id @default(uuid())
-  username      String   @unique 
-  password      String   
-  email         String   @unique 
-  role          Role     @default(STUDENT)
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
+  id                String         @id @default(uuid())
+  username          String         @unique 
+  password          String   
+  email             String         @unique 
+  role              Role           @default(STUDENT)
+  studentId         String?        @unique // 学籍番号
+  program           ProgramType?
+  studentProfile    StudentProfile? // 学生の場合の追加情報
+  labId            String?        // 所属研究室ID
+  lab              Lab?           @relation(fields: [labId], references: [id])
+  assignedProjects  ProjectMember[] // 参加しているプロジェクト
+  
+  availableSlots    AvailableSlot[] // 空き時間スロット
+  meetings          MeetingParticipant[] // 参加するミーティング
+  created_at        DateTime       @default(now())
+  updated_at        DateTime       @updatedAt
+}
+
+// 学生プロファイル情報
+model StudentProfile {
+  id                String         @id @default(uuid())
+  userId           String         @unique
+  user             Users          @relation(fields: [userId], references: [id])
+  entryYear        Int            // 入学年度
+  entryMonth       EntryMonth     // 入学月（4月または10月）
+  plannedGradYear  Int            // 予定卒業年度
+  plannedGradMonth GraduationMonth // 予定卒業月（3月または9月）
+  status           StudentStatus  @default(ACTIVE)
+  created_at        DateTime       @default(now())
+  updated_at        DateTime       @updatedAt
+}
+
+// 研究室モデル
+model Lab {
+  id              String    @id @default(uuid())
+  name            String    // 研究室名
+  description     String?   @db.Text
+  professorId     String    @unique  // 教授のユーザーID
+  members         Users[]   // 研究室メンバー（教授、副指導教員、学生）
+  projects        Project[] // 研究室のプロジェクト
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+}
+
+// プロジェクトモデル
+model Project {
+  id          String          @id @default(uuid())
+  title       String         // プロジェクトタイトル
+  description String?        @db.Text
+  labId       String         // 所属研究室ID
+  lab         Lab            @relation(fields: [labId], references: [id])
+  members     ProjectMember[] // プロジェクトメンバー
+  milestones  ProjectMilestone[] // プロジェクトマイルストーン
+  created_at  DateTime       @default(now())
+  updated_at  DateTime       @updatedAt
+}
+
+// プロジェクトマイルストーン
+model ProjectMilestone {
+  id            String               @id @default(uuid())
+  projectId     String
+  project       Project              @relation(fields: [projectId], references: [id])
+  title         String
+  description   String?              @db.Text
+  dueDate       DateTime
+  status        ProjectMilestoneStatus @default(PLANNED)
+  completionDate DateTime?
+  created_at    DateTime             @default(now())
+  updated_at    DateTime             @updatedAt
+}
+
+// プロジェクトメンバー中間テーブル
+model ProjectMember {
+  id        String   @id @default(uuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id])
+  userId    String
+  user      Users    @relation(fields: [userId], references: [id])
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@unique([projectId, userId])
+}
+
+
+
+// 空き時間スロット
+model AvailableSlot {
+  id          String   @id @default(uuid())
+  userId      String
+  user        Users    @relation(fields: [userId], references: [id])
+  dayOfWeek   Int      // 0-6 (日曜-土曜)
+  startTime   DateTime
+  endTime     DateTime
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+// ミーティング
+model Meeting {
+  id          String               @id @default(uuid())
+  type        MeetingType
+  title       String
+  description String?              @db.Text
+  startTime   DateTime
+  endTime     DateTime
+  participants MeetingParticipant[]
+  created_at  DateTime             @default(now())
+  updated_at  DateTime             @updatedAt
+}
+
+
+// ミーティング参加者
+model MeetingParticipant {
+  id          String   @id @default(uuid())
+  meetingId   String
+  meeting     Meeting  @relation(fields: [meetingId], references: [id])
+  userId      String
+  user        Users    @relation(fields: [userId], references: [id])
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  @@unique([meetingId, userId])
 }
