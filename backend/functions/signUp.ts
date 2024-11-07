@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import crypto, { randomUUID } from 'node:crypto';
 import { prisma } from '../lib/prisma';
-import { AuthUserInfo } from '../types';
+import { AuthUserInfo,Role } from '../types';
 
 export const signUp = async (req: Request, res: Response, next: NextFunction) => {
   // リクエストボディからメールアドレスとパスワード、ユーザー名を取得
@@ -17,7 +17,7 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
     const authUserInfo: AuthUserInfo = {
       id: user.id,
       email: user.email,
-      role: user.role,
+      role: role as Role,
       username: user.username,
     };
     res.status(201).json(authUserInfo);
