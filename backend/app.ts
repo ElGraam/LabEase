@@ -1,6 +1,9 @@
 import express from 'express';
 import { signIn } from './functions/signIn';
 import { signUp } from './functions/signUp';
+import { lab_register } from './functions/lab_register';
+
+
 import { errorHandler, notFound } from './middleware/errorHandler';
 
 
@@ -10,6 +13,9 @@ app.use(express.json());
 // auth
 app.post('/api/auth/signup', signUp);
 app.post('/api/auth/signin', signIn);
+
+// lab
+app.post('/api/lab/register', lab_register);
 
 // error handler
 app.use(notFound);
