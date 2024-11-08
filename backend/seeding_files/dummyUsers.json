@@ -1,0 +1,22 @@
+[
+    {
+      "id": "1a2b3c4d-5678-90ab-cdef-1234567890ab",
+      "username": "professor_sato",
+      "email": "sato@example.com",
+      "password": "hashedpassword1",
+      "role": "PROFESSOR",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "2b3c4d5e-6789-01bc-def0-2345678901bc",
+      "username": "student_tanaka",
+      "email": "tanaka@example.com",
+      "password": "hashedpassword2",
+      "role": "STUDENT",
+      "studentId": "s0000000",
+      "program": "UNDERGRADUATE",
+      "created_at": "2024-01-02T00:00:00Z",
+      "updated_at": "2024-01-02T00:00:00Z"
+    }
+]
