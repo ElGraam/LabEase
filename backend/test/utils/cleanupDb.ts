@@ -8,7 +8,7 @@ export const resetDatabase = async (): Promise<void> => {
 
   const tablenames = await prisma.$queryRaw<
     Array<{ TABLE_NAME: string }>
-  >`SELECT TABLE_NAME from information_schema.TABLES WHERE TABLE_SCHEMA = 'labo_test';`;
+  >`SELECT TABLE_NAME from information_schema.TABLES WHERE TABLE_SCHEMA = 'lab_test';`;
 
   for (const { TABLE_NAME } of tablenames) {
     if (TABLE_NAME !== '_prisma_migrations') {
