@@ -1,1 +1,1 @@
-# labo-management
+# lab-management

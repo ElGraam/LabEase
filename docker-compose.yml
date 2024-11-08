@@ -9,10 +9,10 @@ services:
       MYSQL_ROOT_PASSWORD: "db-root-pass"
       MYSQL_USER: "db-user"
       MYSQL_PASSWORD: "db-pass"
-      MYSQL_DATABASE: "Labo-Management"
+      MYSQL_DATABASE: "lab-Management"
       TZ: "Asia/Tokyo"
     networks:
-      - labo
+      - lab
     healthcheck:
       test: mysqladmin ping -h 127.0.0.1 -u $MYSQL_USER -p $MYSQL_PASSWORD
 
@@ -24,21 +24,21 @@ services:
     ports:
       - 5000:5000
     environment:
-      DATABASE_URL: "mysql://db-user:db-pass@database:3306/Labo-Management"
+      DATABASE_URL: "mysql://db-user:db-pass@database:3306/lab-Management"
     volumes:
       - ./backend:/backend
     depends_on:
       database:
         condition: service_healthy
     networks:
-      - labo
+      - lab
 
   prisma-studio:
     build:
       context: ./backend
       dockerfile: .docker/DockerfilePrismaStudio
     environment:
-      DATABASE_URL: mysql://db-user:db-pass@database:3306/Labo-Management
+      DATABASE_URL: mysql://db-user:db-pass@database:3306/lab-Management
     volumes:
       - ./backend:/backend
     ports:
@@ -47,10 +47,10 @@ services:
       database:
         condition: service_healthy
     networks:
-      - labo
+      - lab
 
 volumes:
   data-store:
 
 networks:
-  labo:
+  lab:
