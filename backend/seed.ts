@@ -23,6 +23,7 @@ const main = async () => {
           username: member.username,
           email: member.email,
           password: member.password || "",
+          role: member.role,
           created_at: new Date(member.created_at),
           updated_at: new Date(member.updated_at),
         };
