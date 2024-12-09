@@ -9,7 +9,7 @@ services:
       MYSQL_ROOT_PASSWORD: "db-root-pass"
       MYSQL_USER: "db-user"
       MYSQL_PASSWORD: "db-pass"
-      MYSQL_DATABASE: "lab-Management"
+      MYSQL_DATABASE: "Lab-Management"
       TZ: "Asia/Tokyo"
     networks:
       - lab
@@ -24,7 +24,7 @@ services:
     ports:
       - 5000:5000
     environment:
-      DATABASE_URL: "mysql://db-user:db-pass@database:3306/lab-Management"
+      DATABASE_URL: "mysql://db-user:db-pass@database:3306/Lab-Management"
     volumes:
       - ./backend:/backend
     depends_on:
@@ -38,7 +38,7 @@ services:
       context: ./backend
       dockerfile: .docker/DockerfilePrismaStudio
     environment:
-      DATABASE_URL: mysql://db-user:db-pass@database:3306/lab-Management
+      DATABASE_URL: mysql://db-user:db-pass@database:3306/Lab-Management
     volumes:
       - ./backend:/backend
     ports:
