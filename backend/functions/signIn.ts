@@ -35,6 +35,7 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
       email: user.email,
       username: user.username,
       role: user.role as Role,
+      labId: user.labId || '',
     };
     return res.status(200).json(authUserInfo);
   } catch (error) {
