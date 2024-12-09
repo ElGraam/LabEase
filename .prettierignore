@@ -2,8 +2,7 @@
 package.json
 package-lock.json
 
-# frontend
-next.config.mjs
+
 
 # backend
 jest.config.js
