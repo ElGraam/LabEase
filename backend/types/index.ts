@@ -156,4 +156,5 @@ export type AuthUserInfo = {
   email: string;
   role: Role;
   username: string;
+  labId?: string;
 };
