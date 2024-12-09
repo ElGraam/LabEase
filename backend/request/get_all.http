@@ -1,0 +1,12 @@
+# GET  http://localhost:5000/api/role/:role
+### STUDENTの一覧を取得
+GET  http://localhost:5000/api/role/STUDENT
+Content-Type: application/json
+
+### PROFESSORの一覧を取得
+GET  http://localhost:5000/api/role/PROFESSOR
+Content-Type: application/json
+
+### SUB_INSTRUCTORの一覧を取得
+GET  http://localhost:5000/api/role/SUB_INSTRUCTOR
+Content-Type: application/json

@@ -1,8 +1,0 @@
-// 学生をlabに登録する
-POST http://localhost:5000/api/lab/register
-Content-Type: application/json
-
-{
-    "studentId": "testuser",
-    "labId": "lab01"
-}
