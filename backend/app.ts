@@ -8,6 +8,7 @@ import {get_student_basedId} from './functions/get_studentid';
 import {get_lab} from './functions/get_lab';
 import {updateProjectMilestone} from './functions/update_project_milestone';
 import {projectCreate} from './functions/project_create';
+import {projectRegister} from './functions/project_register';
 
 const app = express();
 app.use(express.json());
@@ -24,6 +25,7 @@ app.get('/api/student/:studentId',get_student_basedId);
 app.get('/api/lab/:labId',get_lab);
 app.post('/api/project/create',projectCreate);
 app.post('/api/project/milestone',updateProjectMilestone);
+app.post('/api/project/register',projectRegister);
 // error handler
 app.use(notFound);
 app.use(errorHandler);
