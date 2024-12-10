@@ -1,1 +1,2 @@
 GET  http://localhost:5000/api/lab/lab01
+Content-Type: application/json
