@@ -9,6 +9,7 @@ import {get_lab} from './functions/get_lab';
 import {updateProjectMilestone} from './functions/update_project_milestone';
 import {projectCreate} from './functions/project_create';
 import {projectRegister} from './functions/project_register';
+import {get_labproject} from './functions/get_labproject';
 
 const app = express();
 app.use(express.json());
@@ -19,13 +20,14 @@ app.post('/api/auth/signin', signIn);
 
 // lab
 app.post('/api/lab/register', lab_register);
-
 app.get('/api/role/:role',get_all);
 app.get('/api/student/:studentId',get_student_basedId);
 app.get('/api/lab/:labId',get_lab);
+// project
 app.post('/api/project/create',projectCreate);
 app.post('/api/project/milestone',updateProjectMilestone);
 app.post('/api/project/register',projectRegister);
+app.get('/api/project/:labid',get_labproject);
 // error handler
 app.use(notFound);
 app.use(errorHandler);

@@ -1,0 +1,10 @@
+POST http://localhost:5000/api/project/register
+Content-Type: application/json
+
+{
+  "projectId": "83968761-f5db-4374-98a2-11dcda6cabe8",
+  "memberIds": [
+    "2b3c4d5e-6789-01bc-def0-2345678901bc",
+    "1a2b3c4d-5678-90ab-cdef-1234567890ab"
+  ]
+}

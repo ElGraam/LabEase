@@ -26,7 +26,7 @@ export const projectCreate = async (req: Request, res: Response, next: NextFunct
             projectId: project.id,
             title: milestone.title!,
             description: milestone.description,
-            dueDate: milestone.dueDate!,
+            dueDate: new Date(milestone.dueDate!), // Convert string to Date object here
             status: 'PLANNED'
           }
         });
