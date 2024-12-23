@@ -14,9 +14,10 @@ import {
 import { redirect } from 'next/navigation';
 import { getLab } from './action';
 import { Users, Project } from '@/types';
+import { authOption } from '@/lib/next-auth/auth';
 // ラボ詳細ページのコンポーネント
 const LabPage = async ({ params }: { params: { id: string } }) => {
-  const session = await getServerSession();
+  const session = await getServerSession(authOption);
 
   // 未認証の場合はサインインページにリダイレクト
   if (!session) {
