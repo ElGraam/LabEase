@@ -1,14 +1,15 @@
 'use server';
 import { Project } from '@/types';
 
-/** getStudentsで返却する値の型 */
+/** getProjectで返却する値の型 */
 type responseData = {
-  project: Project[];
+  project: Project;
   status: number;
 };
-export const getLabProject = async (labId:string) : Promise<responseData> => {
 
-    const path = `${process.env.BACKEND_URL}/api/lab/${labId}/projects`;
+export const getProject = async (projectId:string) : Promise<responseData> => {
+
+    const path = `${process.env.BACKEND_URL}/api/project/${projectId}`;
   
     try {
       const res = await fetch(path, {
@@ -17,11 +18,10 @@ export const getLabProject = async (labId:string) : Promise<responseData> => {
       });
       
       const data = await res.json();
-      const Projects = Array.isArray(data) ? data : [data]; // データが配列でない場合、配列に変換
-
+      console.log(data);  
       return {
         status: res.status,
-        project: Projects
+        project: data
       };
   
     } catch (error) {
@@ -29,4 +29,3 @@ export const getLabProject = async (labId:string) : Promise<responseData> => {
       throw error;
     }
 }
-
