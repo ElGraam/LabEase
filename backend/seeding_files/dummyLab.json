@@ -6,5 +6,21 @@
     "professorId": "1a2b3c4d-5678-90ab-cdef-1234567890ab",
     "created_at": "2024-01-01T00:00:00Z",
     "updated_at": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "lab02",
+    "name": "ロボティクス研究室",
+    "description": "ロボットに関する研究を行う研究室です。",
+    "professorId": "7a2b3c4d-5678-90ab-cdef-1234567890ab",
+    "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "lab03",
+    "name": "セキュリティ研究室",
+    "description": "セキュリティに関する研究を行う研究室です。",
+    "professorId": "8a2b3c4d-5678-90ab-cdef-1234567890ab",
+    "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-01-01T00:00:00Z"
   }
 ]

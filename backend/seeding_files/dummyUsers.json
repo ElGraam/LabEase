@@ -10,6 +10,26 @@
       "updated_at": "2024-01-01T00:00:00Z"
     },
     {
+      "id": "7a2b3c4d-5678-90ab-cdef-1234567890ab",
+      "username": "professor_tanaka",
+      "email": "prof_tanaka@example.com",
+      "password": "prof_tanaka",
+      "role": "PROFESSOR",
+      "labId": "lab02",
+      "created_at": "2024-01-02T00:00:00Z",
+      "updated_at": "2024-01-02T00:00:00Z"
+    },
+    {
+      "id": "8a2b3c4d-5678-90ab-cdef-1234567890ab",
+      "username": "professor_ohta",
+      "email": "prof_ohta@example.com",
+      "password": "prof_ohta",
+      "role": "PROFESSOR",
+      "labId": "lab03",
+      "created_at": "2024-01-03T00:00:00Z",
+      "updated_at": "2024-01-03T00:00:00Z"
+    },
+    {
       "id": "2b3c4d5e-6789-01bc-def0-2345678901bc",
       "username": "student_tanaka",
       "email": "tanaka@example.com",
@@ -17,17 +37,39 @@
       "role": "STUDENT",
       "studentId": "Footrest5022",
       "program": "UNDERGRADUATE",
+      "studentProfile": {
+        "id": "profile1",
+        "userId": "2b3c4d5e-6789-01bc-def0-2345678901bc",
+        "entryYear": 2022,
+        "entryMonth": "APRIL",
+        "plannedGradYear": 2026,
+        "plannedGradMonth": "MARCH",
+        "status": "ACTIVE",
+        "created_at": "2024-01-02T00:00:00Z",
+        "updated_at": "2024-01-02T00:00:00Z"
+      },
       "created_at": "2024-01-02T00:00:00Z",
       "updated_at": "2024-01-02T00:00:00Z"
     },
     {
-      "id": "1a31b3c4d-5678-90ab-cdef-1234567890ab",
+      "id": "4b3c4d5e-6789-01bc-def0-2345678901bc",
       "username": "student_sato",
-      "email": "tanaka@example.com",
+      "email": "student_sato@example.com",
       "password": "tanakapassword1",
       "role": "STUDENT",
       "studentId": "Small8637",
       "program": "UNDERGRADUATE",
+      "studentProfile": {
+        "id": "profile2",
+        "userId": "4b3c4d5e-6789-01bc-def0-2345678901bc",
+        "entryYear": 2023,
+        "entryMonth": "OCTOBER",
+        "plannedGradYear": 2027,
+        "plannedGradMonth": "SEPTEMBER",
+        "status": "ACTIVE",
+        "created_at": "2024-01-01T00:00:00Z",
+        "updated_at": "2024-01-01T00:00:00Z"
+      },
       "created_at": "2024-01-01T00:00:00Z",
       "updated_at": "2024-01-01T00:00:00Z"
     },
@@ -39,6 +81,17 @@
       "role": "STUDENT",
       "studentId": "Onto8839",
       "program": "UNDERGRADUATE",
+      "studentProfile": {
+        "id": "profile3",
+        "userId": "3a2b3c4d-5678-90ab-cdef-1234567890ab",
+        "entryYear": 2021,
+        "entryMonth": "APRIL",
+        "plannedGradYear": 2025,
+        "plannedGradMonth": "MARCH",
+        "status": "ACTIVE",
+        "created_at": "2024-01-01T00:00:00Z",
+        "updated_at": "2024-01-01T00:00:00Z"
+      },
       "created_at": "2024-01-01T00:00:00Z",
       "updated_at": "2024-01-01T00:00:00Z"
     }
