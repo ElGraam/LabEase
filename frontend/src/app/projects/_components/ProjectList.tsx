@@ -28,8 +28,6 @@ const ProjectList = ({ projects }: Props) => {
             <Th>ステータス</Th>
             <Th>メンバー数</Th>
             <Th>期限</Th>
-            <Th>作成日</Th>
-            <Th>最終更新日</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -47,10 +45,8 @@ const ProjectList = ({ projects }: Props) => {
                   </Tag>
                 ))}
               </Td>
-              <Td>{project.milestones?.length}</Td>
+              <Td>{project.members?.length}</Td>
                 <Td>{new Date(project.milestones?.[0]?.dueDate).toLocaleDateString()}</Td>
-                <Td>{new Date(project.created_at).toLocaleDateString()}</Td>
-                <Td>{new Date(project.updated_at).toLocaleDateString()}</Td>
             </Tr>
           ))}
         </Tbody>
