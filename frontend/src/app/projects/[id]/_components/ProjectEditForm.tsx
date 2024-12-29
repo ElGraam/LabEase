@@ -1,8 +1,9 @@
 'use client';
 import { useState, useEffect } from "react";
-import { Button, FormControl, FormLabel, Input, Textarea, VStack, Box, Select } from "@chakra-ui/react";
-import { Project, ProjectMilestone, ProjectMilestoneStatus } from "@/types";
-import { getProject, updateProject } from "../action";
+import { Button, FormControl, FormLabel, Input, Textarea, VStack, Box, 
+         Checkbox, CheckboxGroup, Stack, Select } from "@chakra-ui/react";
+import { Project, ProjectMilestone, ProjectMilestoneStatus ,Users} from "@/types";
+import { getProject, updateProject, getLabMenbers, projectRegister } from "../action";
 
 import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -17,6 +18,9 @@ const ProjectEditForm = ({ projectId }: { projectId: string }) => {
     const [description, setDescription] = useState("");
     const [milestones, setMilestones] = useState<ProjectMilestone[]>([]);
     const [project, setProject] = useState<Project | null>(null);
+    const [labMembers, setLabMembers] = useState<Users[]>([]);
+    const [selectedMemberIds, setSelectedMemberIds] = useState<string[]>([]);
+    const [registeredMembers, setRegisteredMembers] = useState<string[]>([]);
 
     useEffect(() => {
         const fetchProject = async () => {
@@ -25,10 +29,22 @@ const ProjectEditForm = ({ projectId }: { projectId: string }) => {
             setTitle(projectData.project.title);
             setDescription(projectData.project.description || "");
             setMilestones(projectData.project.milestones);
+            if (projectData.project.members) {
+                setRegisteredMembers(projectData.project.members.map((m: any) => m.userId));
+            }
         };
         fetchProject();
         setIsLoading(false);
     }, [projectId]);
+
+    useEffect(() => {
+        (async () => {
+            if (project && project.labId) {
+                const { members } = await getLabMenbers(project.labId);
+                setLabMembers(members);
+            }
+        })();
+    }, [project]);
 
     const handleMilestoneChange = (index: number, field: keyof ProjectMilestone, value: any) => {
         const updatedMilestones = [...milestones];
@@ -56,6 +72,22 @@ const ProjectEditForm = ({ projectId }: { projectId: string }) => {
         } catch (error) {
             console.error(error);
         }
+    };
+
+    const handleRegister = async () => {
+        try {
+            if (session?.user?.role != 'STUDENT'){
+                await projectRegister(projectId, selectedMemberIds);
+                setSuccess("メンバーを登録しました");
+            }
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleMemberSelect = (values: string[]) => {
+        setSelectedMemberIds(values);
     };
 
     if (!project) return <Box>Loading...</Box>;
@@ -94,7 +126,7 @@ const ProjectEditForm = ({ projectId }: { projectId: string }) => {
                                 <FormLabel>ステータス</FormLabel>
                                 <Select
                                     value={milestone.status}
-                                    onChange={(e) => handleMilestoneChange(index, 'status', e.target.value)}
+                                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleMilestoneChange(index, 'status', e.target.value)}
                                 >
                                     {Object.values(ProjectMilestoneStatus).map((status) => (
                                         <option key={status} value={status}>
@@ -114,6 +146,35 @@ const ProjectEditForm = ({ projectId }: { projectId: string }) => {
                         </Box>
                     ))}
                 </Box>
+                <FormControl width="100%">
+                    <FormLabel fontSize="lg">メンバーを選択</FormLabel>
+                    <Box border="1px" borderColor="gray.200" p={4} borderRadius="md">
+                        <CheckboxGroup 
+                            onChange={handleMemberSelect} 
+                            value={selectedMemberIds}
+                        >
+                            <Stack spacing={2}>
+                                {labMembers.map((member) => (
+                                    <Checkbox 
+                                        key={member.id} 
+                                        value={member.id}
+                                        isDisabled={registeredMembers.includes(member.id)}
+                                    >
+                                        {member.username} {registeredMembers.includes(member.id) && "(登録済み)"}
+                                    </Checkbox>
+                                ))}
+                            </Stack>
+                        </CheckboxGroup>
+                    </Box>
+                </FormControl>
+                <Button 
+                    mt={2} 
+                    onClick={handleRegister}
+                    isDisabled={selectedMemberIds.length === 0}
+                    colorScheme="blue"
+                >
+                    選択したメンバーを登録
+                </Button>
                 <Button type="submit" colorScheme="blue">更新</Button>
                 {success && <Box color="green.500">{success}</Box>}
             </VStack>
