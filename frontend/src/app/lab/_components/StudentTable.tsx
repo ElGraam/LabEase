@@ -3,10 +3,14 @@
 import { useState } from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td, Checkbox, Button } from '@chakra-ui/react';
 import { labRegister } from '../action';
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 
 export default function StudentTable({ Users }: { Users: any[] }) {
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
-
+  const { data: session, status } = useSession(); // セッションからユーザー情報を取得
+  if (!session) redirect('/auth/signin');
+  const labId = session.user.labId ?? '';
   const handleCheckboxChange = (studentId: string) => {
     setSelectedStudents((prevSelected) => {
       const newSelected = prevSelected.includes(studentId)
@@ -16,11 +20,12 @@ export default function StudentTable({ Users }: { Users: any[] }) {
       return newSelected;
     });
   };
+
   const handleRegister = async () => {
-    console.log('handleRegister called');
     for (const studentId of selectedStudents) {
-      console.log(`studentId: ${studentId}`);
-      await labRegister('lab01', studentId);
+      if (labId){
+        await labRegister(labId, studentId);
+      }
     }
     setSelectedStudents([]);
   };
@@ -57,7 +62,7 @@ export default function StudentTable({ Users }: { Users: any[] }) {
         </Tbody>
       </Table>
       <Button colorScheme="blue" onClick={handleRegister}>
-        ラボに登録(lab01)
+        ラボに登録({selectedStudents.length}人)
       </Button>
     </>
   );
