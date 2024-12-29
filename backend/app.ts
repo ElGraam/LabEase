@@ -11,6 +11,7 @@ import {projectCreate} from './functions/project_create';
 import {projectRegister} from './functions/project_register';
 import {get_labproject} from './functions/get_labproject';
 import {get_project} from './functions/get_project';
+import { update_project } from './functions/update_project';
 
 const app = express();
 app.use(express.json());
@@ -30,6 +31,7 @@ app.post('/api/project/milestone',updateProjectMilestone);
 app.post('/api/project/register',projectRegister);
 app.get('/api/lab/:labid/projects', get_labproject);
 app.get('/api/project/:projectid',get_project);
+app.put('/api/project/:projectid',update_project);
 // error handler
 app.use(notFound);
 app.use(errorHandler);
