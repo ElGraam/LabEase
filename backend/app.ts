@@ -12,6 +12,7 @@ import {projectRegister} from './functions/project_register';
 import {get_labproject} from './functions/get_labproject';
 import {get_project} from './functions/get_project';
 import { update_project } from './functions/update_project';
+import { get_lab_member } from './functions/get_lab_member';
 
 const app = express();
 app.use(express.json());
@@ -25,6 +26,7 @@ app.post('/api/lab/register', lab_register);
 app.get('/api/role/:role',get_all);
 app.get('/api/student/:studentId',get_student_basedId);
 app.get('/api/lab/:labId',get_lab);
+app.get('/api/lab/:labId/members', get_lab_member);
 // project
 app.post('/api/project/create',projectCreate);
 app.post('/api/project/milestone',updateProjectMilestone);
