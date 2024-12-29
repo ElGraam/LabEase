@@ -43,19 +43,20 @@ const ProjectEditForm = ({ projectId }: { projectId: string }) => {
           <ul>
             {project.milestones.map((milestone) => (
               <li key={milestone.id}>
-                <h3>{milestone.title}</h3>
-                <p>{milestone.description}</p>
-                <p>{milestone.status}</p>
-                <p>期限: {new Date(milestone.dueDate).toLocaleString()}</p>
+                <h3>タイトル: {milestone.title}</h3>
+                <p>説明: {milestone.description}</p>
+                <p>期限: {new Date(milestone.dueDate).toLocaleDateString()}</p>
                 <p>ステータス: {milestone.status}</p>
-                <p>完成日: {milestone.completionDate ? new Date(milestone.completionDate).toLocaleString() : null}</p>
+                <p>完成日: {milestone.completionDate ? new Date(milestone.completionDate).toLocaleDateString() : null}</p>
               </li>
             ))}
           </ul>
           <h2>メンバー</h2>
           {project.members.map((member) => (
-            <p key={member.id}>{member.user.username}</p>
-            ))}
+            <p key={member.id}>
+              {member.user.username} ({member.user.email}) - {member.user.role}
+            </p>
+          ))}
         </div>
       );
     };

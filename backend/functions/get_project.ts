@@ -11,7 +11,11 @@ export const get_project = async (req: Request, res: Response, next: NextFunctio
         id: projectid, 
       },
       include: {
-        members: true,
+        members: {
+          include: {
+            user: true,
+          },
+        }, 
         milestones: true,
       },
     });
