@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { Project } from '@/types';
 import { projectCreate } from '../action';
+import { useRouter } from 'next/navigation';
 
 type CreateMilestone = {
   title: string;
@@ -26,6 +27,7 @@ type ProjectCreateFormProps = {
 };
 
 const ProjectCreateForm: React.FC<ProjectCreateFormProps> = ({ labId }): JSX.Element => {
+  const router = useRouter(); 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [milestoneTitle, setMilestoneTitle] = useState('');
@@ -37,7 +39,6 @@ const ProjectCreateForm: React.FC<ProjectCreateFormProps> = ({ labId }): JSX.Ele
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    const isoDueDate = milestoneDueDate ? new Date(milestoneDueDate).toISOString() : "";
     const milestones: CreateMilestone[] = [{
       title: milestoneTitle,
       description: milestoneDescription,
@@ -46,7 +47,7 @@ const ProjectCreateForm: React.FC<ProjectCreateFormProps> = ({ labId }): JSX.Ele
 
     try {
       await projectCreate(title, description, labId, milestones);
-      window.location.href = '/projects';
+      router.push('/projects'); 
     } catch (error: any) {
       setError(error.message);
     } finally {
