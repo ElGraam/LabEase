@@ -1,8 +1,8 @@
-import React from 'react';
-import ProjectEditForm from './_components/ProjectEditForm';
+import React from "react";
+import ProjectEditForm from "./_components/ProjectEditForm";
 
 const ProjectPage = ({ params }: { params: { id: string } }) => {
-  const { id: projectId } = params; 
+  const { id: projectId } = params;
 
   return (
     <div>

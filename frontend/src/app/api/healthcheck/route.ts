@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
 type Data = {
-  status: 'ok' | 'ng';
+  status: "ok" | "ng";
   message?: string;
   environments: {
     NEXTAUTH_URL?: string;
@@ -15,7 +15,7 @@ const convert_secret = (s: string | undefined): string | undefined => {
   if (s === undefined) {
     return undefined;
   }
-  return '*'.repeat(s.length);
+  return "*".repeat(s.length);
 };
 
 export const GET = async (req: NextRequest) => {
@@ -26,6 +26,6 @@ export const GET = async (req: NextRequest) => {
     BASIC_AUTH_PASSWORD: convert_secret(process.env.BASIC_AUTH_PASSWORD),
   };
 
-  const data: Data = { status: 'ok', environments: environments };
+  const data: Data = { status: "ok", environments: environments };
   return NextResponse.json(data);
 };

@@ -1,5 +1,5 @@
-import { getToken } from 'next-auth/jwt';
-import { NextRequest, NextResponse } from 'next/server';
+import { getToken } from "next-auth/jwt";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(req: NextRequest) {
   // セッションのトークンを取得
@@ -7,7 +7,6 @@ export async function middleware(req: NextRequest) {
 
   // リクエストのパスを取得
   const { pathname } = req.nextUrl;
-
 
   // 通常のレスポンスを返す
   return NextResponse.next();

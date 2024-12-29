@@ -1,6 +1,6 @@
-'use server';
+"use server";
 
-import { Project, ProjectMilestone } from '@/types';
+import { Project, ProjectMilestone } from "@/types";
 
 /** projectCreateで返却する値の型 */
 type responseData = {
@@ -12,15 +12,15 @@ export const projectCreate = async (
   title: string,
   description: string,
   labId: string,
-  milestones: { title: string; description: string; dueDate: Date }[]
+  milestones: { title: string; description: string; dueDate: Date }[],
 ): Promise<responseData> => {
   const path = `${process.env.BACKEND_URL}/api/project/create`;
 
   try {
     const res = await fetch(path, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ title, description, labId, milestones }),
     });

@@ -1,27 +1,28 @@
 import {
-    Heading,
-    Box,
-    Text,
-    VStack,
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
-    SystemStyleObject
-  } from '@chakra-ui/react';import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
-import { getLab } from './action';
-import { Users, Project } from '@/types';
-import { authOption } from '@/lib/next-auth/auth';
+  Heading,
+  Box,
+  Text,
+  VStack,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  SystemStyleObject,
+} from "@chakra-ui/react";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { getLab } from "./action";
+import { Users, Project } from "@/types";
+import { authOption } from "@/lib/next-auth/auth";
 // ラボ詳細ページのコンポーネント
 const LabPage = async ({ params }: { params: { id: string } }) => {
   const session = await getServerSession(authOption);
 
   // 未認証の場合はサインインページにリダイレクト
   if (!session) {
-    redirect('/auth/signin');
+    redirect("/auth/signin");
   }
 
   // ラボ情報を取得
@@ -32,17 +33,16 @@ const LabPage = async ({ params }: { params: { id: string } }) => {
     return <div>研究室情報の取得に失敗しました</div>;
   }
 
-
   // スタイル定義
   const containerStyle: SystemStyleObject = {
-    maxWidth: '1200px',
-    margin: '60px auto',
-    padding: '0 20px',
+    maxWidth: "1200px",
+    margin: "60px auto",
+    padding: "0 20px",
   };
 
   const headingStyle: SystemStyleObject = {
-    fontSize: 'app.header1',
-    marginBottom: '30px',
+    fontSize: "app.header1",
+    marginBottom: "30px",
   };
 
   return (
@@ -51,21 +51,21 @@ const LabPage = async ({ params }: { params: { id: string } }) => {
         <Heading as="h1" sx={headingStyle}>
           {lab.name}
         </Heading>
-        
+
         <Box w="100%">
           <Heading as="h2" size="md" mb={4}>
             研究室概要
           </Heading>
           <Text>{lab.description}</Text>
         </Box>
-  
+
         <Box w="100%">
           <Heading as="h2" size="md" mb={4}>
             指導教員
           </Heading>
-          <Text>{professor.username}</Text> 
+          <Text>{professor.username}</Text>
         </Box>
-  
+
         <Box w="100%">
           <Heading as="h2" size="md" mb={4}>
             メンバー一覧
@@ -89,7 +89,7 @@ const LabPage = async ({ params }: { params: { id: string } }) => {
             </Tbody>
           </Table>
         </Box>
-  
+
         <Box w="100%">
           <Heading as="h2" size="md" mb={4}>
             プロジェクト一覧

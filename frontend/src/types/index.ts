@@ -1,42 +1,42 @@
 // Enums
 export enum Role {
-  STUDENT = 'STUDENT',
-  PROFESSOR = 'PROFESSOR', 
-  SUB_INSTRUCTOR = 'SUB_INSTRUCTOR'
+  STUDENT = "STUDENT",
+  PROFESSOR = "PROFESSOR",
+  SUB_INSTRUCTOR = "SUB_INSTRUCTOR",
 }
 
 export enum ProgramType {
-  UNDERGRADUATE = 'UNDERGRADUATE',
-  MASTERS = 'MASTERS',
-  DOCTORAL = 'DOCTORAL'
+  UNDERGRADUATE = "UNDERGRADUATE",
+  MASTERS = "MASTERS",
+  DOCTORAL = "DOCTORAL",
 }
 
 export enum StudentStatus {
-  ACTIVE = 'ACTIVE',
-  GRADUATED = 'GRADUATED',
-  WITHDRAWN = 'WITHDRAWN'
+  ACTIVE = "ACTIVE",
+  GRADUATED = "GRADUATED",
+  WITHDRAWN = "WITHDRAWN",
 }
 
 export enum EntryMonth {
-  APRIL = 'APRIL',
-  OCTOBER = 'OCTOBER'
+  APRIL = "APRIL",
+  OCTOBER = "OCTOBER",
 }
 
 export enum GraduationMonth {
-  MARCH = 'MARCH',
-  SEPTEMBER = 'SEPTEMBER'
+  MARCH = "MARCH",
+  SEPTEMBER = "SEPTEMBER",
 }
 
 export enum ProjectMilestoneStatus {
-  PLANNED = 'PLANNED',
-  IN_PROGRESS = 'IN_PROGRESS',
-  LATE = 'LATE',
-  COMPLETED = 'COMPLETED'
+  PLANNED = "PLANNED",
+  IN_PROGRESS = "IN_PROGRESS",
+  LATE = "LATE",
+  COMPLETED = "COMPLETED",
 }
 
 export enum MeetingType {
-  REGULAR = 'REGULAR',
-  SPONTANEOUS = 'SPONTANEOUS'
+  REGULAR = "REGULAR",
+  SPONTANEOUS = "SPONTANEOUS",
 }
 
 // Types
@@ -149,6 +149,3 @@ export type MeetingParticipant = {
   created_at: Date;
   updated_at: Date;
 };
-
-
-  

@@ -1,6 +1,6 @@
-'use server';
-import { ITEM_LIMIT } from '@/const';
-import { Users } from '@/types';
+"use server";
+import { ITEM_LIMIT } from "@/const";
+import { Users } from "@/types";
 
 /** getStudentsで返却する値の型 */
 type responseData = {
@@ -12,8 +12,8 @@ export const labRegister = async (labId: string, studentId: string) => {
   const body = JSON.stringify({ labId, studentId });
   try {
     const res = await fetch(path, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body,
     });
     return res.status;
@@ -21,21 +21,21 @@ export const labRegister = async (labId: string, studentId: string) => {
     console.log(error);
     throw error;
   }
-}
+};
 /** 学生取得処理 */
 export const getStudents = async (
-  limit: number = ITEM_LIMIT
+  limit: number = ITEM_LIMIT,
 ): Promise<responseData> => {
   const path = `${process.env.BACKEND_URL}/api/role/STUDENT`;
 
   try {
     // backendにGETリクエストして、学生を取得する
     const res = await fetch(path, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      cache: 'no-cache',
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      cache: "no-cache",
     });
-    
+
     // ステータスコード、取得した学生数を返却
     const data = await res.json();
     const status = res.status;
@@ -53,11 +53,11 @@ export const getStudentBasedId = async (studentId: string) => {
   try {
     // backendにGETリクエストして、学生を取得する
     const res = await fetch(path, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      cache: 'no-cache',
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      cache: "no-cache",
     });
-    
+
     // ステータスコード、取得した学生数を返却
     const data = await res.json();
     const status = res.status;
@@ -67,4 +67,4 @@ export const getStudentBasedId = async (studentId: string) => {
     console.log(error);
     throw error;
   }
-}
+};

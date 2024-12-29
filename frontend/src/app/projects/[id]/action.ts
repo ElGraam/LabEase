@@ -1,5 +1,10 @@
-'use server';
-import { Project, ProjectMilestone ,ProjectMilestoneStatus, Users} from '@/types';
+"use server";
+import {
+  Project,
+  ProjectMilestone,
+  ProjectMilestoneStatus,
+  Users,
+} from "@/types";
 
 /** getProjectとupdateProjectで返却する値の型 */
 type responseData = {
@@ -11,58 +16,61 @@ type responseData01 = {
   status: number;
   members: Users[];
 };
-export const getProject = async (projectId:string) : Promise<responseData> => {
+export const getProject = async (projectId: string): Promise<responseData> => {
+  const path = `${process.env.BACKEND_URL}/api/project/${projectId}`;
 
-    const path = `${process.env.BACKEND_URL}/api/project/${projectId}`;
-  
-    try {
-      const res = await fetch(path, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-      });
-      
-      const data = await res.json();
-      console.log(data);  
-      return {
-        status: res.status,
-        project: data
-      };
-  
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-}
+  try {
+    const res = await fetch(path, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const data = await res.json();
+    console.log(data);
+    return {
+      status: res.status,
+      project: data,
+    };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
 export const updateProject = async (
   title: string,
   description: string,
-  milestones: { title: string; description: string; status: ProjectMilestoneStatus; dueDate: Date }[],
-  projectId: string
+  milestones: {
+    title: string;
+    description: string;
+    status: ProjectMilestoneStatus;
+    dueDate: Date;
+  }[],
+  projectId: string,
 ): Promise<responseData> => {
   const path = `${process.env.BACKEND_URL}/api/project/${projectId}`;
   const project = { title, description, milestones };
 
   try {
     const res = await fetch(path, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(project)
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(project),
     });
     return res.json();
   } catch (error) {
     console.log(error);
     throw error;
   }
-}
+};
 
-export const getLabMenbers = async (labId: string) : Promise<responseData01> => {
+export const getLabMenbers = async (labId: string): Promise<responseData01> => {
   const path = `${process.env.BACKEND_URL}/api/lab/${labId}/members`;
 
   try {
     const res = await fetch(path, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
     });
     const data = await res.json();
     const status = res.status;
@@ -72,24 +80,24 @@ export const getLabMenbers = async (labId: string) : Promise<responseData01> => 
     console.log(error);
     throw error;
   }
-}
+};
 
 export const projectRegister = async (
   projectId: string,
-  memberIds: string[]
+  memberIds: string[],
 ): Promise<responseData> => {
   const path = `${process.env.BACKEND_URL}/api/project/register`;
   const project = { projectId, memberIds };
 
   try {
     const res = await fetch(path, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(project)
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(project),
     });
     return res.json();
   } catch (error) {
     console.log(error);
     throw error;
   }
-}
+};

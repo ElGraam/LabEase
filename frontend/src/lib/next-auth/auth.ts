@@ -1,16 +1,16 @@
-import type { NextAuthOptions, Session } from 'next-auth';
-import NextAuth, { User } from 'next-auth';
-import { JWT } from 'next-auth/jwt';
-import CredentialProvider from 'next-auth/providers/credentials';
+import type { NextAuthOptions, Session } from "next-auth";
+import NextAuth, { User } from "next-auth";
+import { JWT } from "next-auth/jwt";
+import CredentialProvider from "next-auth/providers/credentials";
 
 export const authOption: NextAuthOptions = {
   secret: process.env.NEXT_AUTH_SECRET,
   providers: [
     CredentialProvider({
-      name: 'Credentials',
+      name: "Credentials",
       credentials: {
-        email: { label: 'email', type: 'text' },
-        password: { label: 'password', type: 'password' },
+        email: { label: "email", type: "text" },
+        password: { label: "password", type: "password" },
       },
       async authorize(credentials, req) {
         if (!credentials) return null;
@@ -19,15 +19,15 @@ export const authOption: NextAuthOptions = {
         try {
           // ユーザー認証
           res = await fetch(`${process.env.BACKEND_URL}/api/auth/signin`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: email, password: password }),
-            cache: 'no-cache',
+            cache: "no-cache",
           });
 
           // 認証に失敗した場合はエラーを返す
           if (!res.ok) {
-            throw new Error('error');
+            throw new Error("error");
           }
 
           // 認証で返ってきたユーザーを取得
@@ -39,7 +39,7 @@ export const authOption: NextAuthOptions = {
 
           return user;
         } catch (error) {
-          throw new Error('error');
+          throw new Error("error");
         }
       },
     }),
@@ -58,7 +58,7 @@ export const authOption: NextAuthOptions = {
       token: JWT;
       trigger?: string;
       user: User;
-      session?: any; 
+      session?: any;
     }) {
       // JWTにユーザー情報を格納する
       if (user) {

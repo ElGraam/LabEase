@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -11,10 +11,10 @@ import {
   VStack,
   Heading,
   HStack,
-} from '@chakra-ui/react';
-import { Project } from '@/types';
-import { projectCreate } from '../action';
-import { useRouter } from 'next/navigation';
+} from "@chakra-ui/react";
+import { Project } from "@/types";
+import { projectCreate } from "../action";
+import { useRouter } from "next/navigation";
 
 type CreateMilestone = {
   title: string;
@@ -26,28 +26,32 @@ type ProjectCreateFormProps = {
   labId: string;
 };
 
-const ProjectCreateForm: React.FC<ProjectCreateFormProps> = ({ labId }): JSX.Element => {
-  const router = useRouter(); 
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [milestoneTitle, setMilestoneTitle] = useState('');
-  const [milestoneDescription, setMilestoneDescription] = useState('');
-  const [milestoneDueDate, setMilestoneDueDate] = useState('');
+const ProjectCreateForm: React.FC<ProjectCreateFormProps> = ({
+  labId,
+}): JSX.Element => {
+  const router = useRouter();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [milestoneTitle, setMilestoneTitle] = useState("");
+  const [milestoneDescription, setMilestoneDescription] = useState("");
+  const [milestoneDueDate, setMilestoneDueDate] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    const milestones: CreateMilestone[] = [{
-      title: milestoneTitle,
-      description: milestoneDescription,
-      dueDate: new Date(milestoneDueDate)
-    }];
+    const milestones: CreateMilestone[] = [
+      {
+        title: milestoneTitle,
+        description: milestoneDescription,
+        dueDate: new Date(milestoneDueDate),
+      },
+    ];
 
     try {
       await projectCreate(title, description, labId, milestones);
-      router.push('/projects'); 
+      router.push("/projects");
     } catch (error: any) {
       setError(error.message);
     } finally {
