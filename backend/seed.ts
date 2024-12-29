@@ -57,6 +57,7 @@ const main = async () => {
   console.log(`create users length: ${filteredUsers.length}`);
 
   try {
+    // Create users first
     await prisma.users.createMany({
       data: filteredUsers.map((member) => ({
         id: member.id,
@@ -73,6 +74,7 @@ const main = async () => {
       skipDuplicates: true,
     });
 
+    // Create student profiles after users
     for (const member of filteredUsers) {
       if (member.studentProfile) {
         await prisma.studentProfile.create({
