@@ -12,7 +12,10 @@ const CreateProjectPage = async () => {
   }
 
   const labId = session.user.labId || '';
-
+  // ユーザーが学生の場合はプロジェクト一覧ページにリダイレクト
+  if (session.user.role === 'STUDENTS') {
+    redirect('/projects');
+  }
   return (
     <Container>
       <ProjectCreateForm labId={labId} />
