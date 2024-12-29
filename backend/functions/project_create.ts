@@ -1,9 +1,13 @@
-import { NextFunction, Request, Response } from 'express';
-import { prisma } from '../lib/prisma';
-import { randomUUID } from 'crypto';
-import { Project, ProjectMilestone } from '../types';
+import { NextFunction, Request, Response } from "express";
+import { prisma } from "../lib/prisma";
+import { randomUUID } from "crypto";
+import { Project, ProjectMilestone } from "../types";
 
-export const projectCreate = async (req: Request, res: Response, next: NextFunction) => {
+export const projectCreate = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const { title, description, labId, milestones } = req.body;
 
   try {
@@ -19,18 +23,20 @@ export const projectCreate = async (req: Request, res: Response, next: NextFunct
 
     // マイルストーンがある場合は追加
     if (milestones && Array.isArray(milestones)) {
-      const milestonePromises = milestones.map((milestone: Partial<ProjectMilestone>) => {
-        return prisma.projectMilestone.create({
-          data: {
-            id: randomUUID(),
-            projectId: project.id,
-            title: milestone.title!,
-            description: milestone.description,
-            dueDate: new Date(milestone.dueDate!), // Convert string to Date object here
-            status: 'PLANNED'
-          }
-        });
-      });
+      const milestonePromises = milestones.map(
+        (milestone: Partial<ProjectMilestone>) => {
+          return prisma.projectMilestone.create({
+            data: {
+              id: randomUUID(),
+              projectId: project.id,
+              title: milestone.title!,
+              description: milestone.description,
+              dueDate: new Date(milestone.dueDate!), // Convert string to Date object here
+              status: "PLANNED",
+            },
+          });
+        },
+      );
 
       await Promise.all(milestonePromises);
     }
@@ -40,18 +46,17 @@ export const projectCreate = async (req: Request, res: Response, next: NextFunct
       where: { id: project.id },
       include: {
         milestones: true,
-        members: true
-      }
+        members: true,
+      },
     });
 
     return res.status(201).json(createdProject);
-
   } catch (error) {
     if (error instanceof Error) {
       res.status(500);
       next({ message: error.message, statusCode: 500, stack: error.stack });
     } else {
-      next({ message: 'unknown error' });
+      next({ message: "unknown error" });
     }
   }
 };

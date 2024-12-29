@@ -5,7 +5,8 @@
         "migrate": "prisma migrate dev",
         "deploy": "prisma migrate deploy",
         "test": "DATABASE_URL='mysql://root:db-root-pass@database:3306/lab_test' jest --coverage",
-        "migrate:test": "DATABASE_URL='mysql://root:db-root-pass@database:3306/lab_test' prisma migrate reset -f"
+        "migrate:test": "DATABASE_URL='mysql://root:db-root-pass@database:3306/lab_test' prisma migrate reset -f",
+        "fmt": "prettier --write 'functions/**/*.ts' '*.ts' 'middleware/**/*.ts' 'test/**/*.ts'"
     },
     "dependencies": {
         "@prisma/client": "^5.21.1",

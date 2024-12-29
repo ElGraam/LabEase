@@ -1,6 +1,6 @@
-import { PrismaPromise } from '@prisma/client';
+import { PrismaPromise } from "@prisma/client";
 
-import { prisma } from '../../lib/prisma';
+import { prisma } from "../../lib/prisma";
 
 export const resetDatabase = async (): Promise<void> => {
   const transactions: PrismaPromise<any>[] = [];
@@ -11,7 +11,7 @@ export const resetDatabase = async (): Promise<void> => {
   >`SELECT TABLE_NAME from information_schema.TABLES WHERE TABLE_SCHEMA = 'lab_test';`;
 
   for (const { TABLE_NAME } of tablenames) {
-    if (TABLE_NAME !== '_prisma_migrations') {
+    if (TABLE_NAME !== "_prisma_migrations") {
       try {
         transactions.push(prisma.$executeRawUnsafe(`TRUNCATE ${TABLE_NAME};`));
       } catch (error) {

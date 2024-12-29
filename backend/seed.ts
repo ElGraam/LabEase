@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 import fs from "node:fs";
 import { performance } from "node:perf_hooks";
-import { Users ,Lab} from "./types/index";
+import { Users, Lab } from "./types/index";
 import crypto from "crypto";
 
 const prisma = new PrismaClient();
@@ -17,7 +17,8 @@ const main = async () => {
   console.log(`registered labs length: ${labs.length}`);
 
   const filteredLabs = labs.filter(
-    ({ id }) => !registeredLabs.some((registeredLab) => id === registeredLab.id),
+    ({ id }) =>
+      !registeredLabs.some((registeredLab) => id === registeredLab.id),
   );
 
   console.log(`create labs length: ${filteredLabs.length}`);
@@ -51,7 +52,8 @@ const main = async () => {
   console.log(`registered users length: ${registeredUsers.length}`);
 
   const filteredUsers = users.filter(
-    ({ id }) => !registeredUsers.some((registeredUser) => id === registeredUser.id),
+    ({ id }) =>
+      !registeredUsers.some((registeredUser) => id === registeredUser.id),
   );
 
   console.log(`create users length: ${filteredUsers.length}`);
@@ -67,7 +69,10 @@ const main = async () => {
         labId: member.labId,
         program: member.program,
         studentId: member.studentId,
-        password: crypto.createHash('sha256').update(member.password || "").digest('base64'),
+        password: crypto
+          .createHash("sha256")
+          .update(member.password || "")
+          .digest("base64"),
         created_at: new Date(member.created_at),
         updated_at: new Date(member.updated_at),
       })),
@@ -80,7 +85,7 @@ const main = async () => {
         await prisma.studentProfile.create({
           data: {
             id: member.studentProfile.id,
-            userId: member.id, 
+            userId: member.id,
             entryYear: member.studentProfile.entryYear,
             entryMonth: member.studentProfile.entryMonth,
             plannedGradYear: member.studentProfile.plannedGradYear,
@@ -100,7 +105,6 @@ const main = async () => {
   const userEnd = performance.now();
   console.log(`users create time: ${userEnd - userStart}ms`);
   console.log("fin users");
-
 };
 
 main()

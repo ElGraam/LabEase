@@ -1,13 +1,18 @@
-import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
+import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
 
 export const notFound = (_req: Request, res: Response, next: NextFunction) => {
   res.status(404);
-  const error = new Error('Not Found');
+  const error = new Error("Not Found");
 
   next(error);
 };
 
-export const errorHandler: ErrorRequestHandler = (error: Error, _req: Request, res: Response, _next: NextFunction) => {
+export const errorHandler: ErrorRequestHandler = (
+  error: Error,
+  _req: Request,
+  res: Response,
+  _next: NextFunction,
+) => {
   const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
   res.status(statusCode);
 
@@ -16,6 +21,6 @@ export const errorHandler: ErrorRequestHandler = (error: Error, _req: Request, r
     stack: error.stack,
   };
 
-  console.error('Error: ', responseBody);
+  console.error("Error: ", responseBody);
   res.json(responseBody);
 };

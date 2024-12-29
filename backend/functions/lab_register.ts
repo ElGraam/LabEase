@@ -1,7 +1,11 @@
-import { NextFunction, Request, Response } from 'express';
-import { prisma } from '../lib/prisma';
+import { NextFunction, Request, Response } from "express";
+import { prisma } from "../lib/prisma";
 
-export const lab_register = async (req: Request, res: Response, next: NextFunction) => {
+export const lab_register = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const { studentId, labId } = req.body;
 
   try {
@@ -37,7 +41,6 @@ export const lab_register = async (req: Request, res: Response, next: NextFuncti
     });
 
     return res.status(200).json(updatedUser);
-
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json();

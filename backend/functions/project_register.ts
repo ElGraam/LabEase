@@ -1,29 +1,35 @@
-import { NextFunction, Request, Response } from 'express';
-import { prisma } from '../lib/prisma';
-import { randomUUID } from 'crypto';
+import { NextFunction, Request, Response } from "express";
+import { prisma } from "../lib/prisma";
+import { randomUUID } from "crypto";
 
-export const projectRegister = async (req: Request, res: Response, next: NextFunction) => {
+export const projectRegister = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const { projectId, memberIds } = req.body;
 
   try {
     // プロジェクトの存在確認
     const project = await prisma.project.findUnique({
       where: { id: projectId },
-      include: { lab: { include: { members: true } } }
+      include: { lab: { include: { members: true } } },
     });
 
     if (!project) {
-      return res.status(404).json({ message: 'プロジェクトが見つかりません' });
+      return res.status(404).json({ message: "プロジェクトが見つかりません" });
     }
 
     // 登録されるメンバーがlabに所属しているか確認
-    const labMembers = project.lab.members.map(member => member.id);
-    const invalidMembers = memberIds.filter((id: string) => !labMembers.includes(id));
+    const labMembers = project.lab.members.map((member) => member.id);
+    const invalidMembers = memberIds.filter(
+      (id: string) => !labMembers.includes(id),
+    );
 
     if (invalidMembers.length > 0) {
-      return res.status(400).json({ 
-        message: '研究室に所属していないメンバーが含まれています',
-        invalidMembers
+      return res.status(400).json({
+        message: "研究室に所属していないメンバーが含まれています",
+        invalidMembers,
       });
     }
 
@@ -34,7 +40,7 @@ export const projectRegister = async (req: Request, res: Response, next: NextFun
           id: randomUUID(),
           projectId: projectId,
           userId: userId,
-        }
+        },
       });
     });
 
@@ -43,17 +49,16 @@ export const projectRegister = async (req: Request, res: Response, next: NextFun
     // 更新後のプロジェクト情報を返却
     const updatedProject = await prisma.project.findUnique({
       where: { id: projectId },
-      include: { members: true }
+      include: { members: true },
     });
 
     return res.status(200).json(updatedProject);
-
   } catch (error) {
     if (error instanceof Error) {
       res.status(500);
       next({ message: error.message, statusCode: 500, stack: error.stack });
     } else {
-      next({ message: 'unknown error' });
+      next({ message: "unknown error" });
     }
   }
 };
