@@ -13,7 +13,7 @@ const CreateProjectPage = async () => {
 
   const labId = session.user.labId || "";
   // ユーザーが学生の場合はプロジェクト一覧ページにリダイレクト
-  if (session.user.role === "STUDENTS") {
+  if (session.user.role === "STUDENT") {
     redirect("/projects");
   }
   return (
