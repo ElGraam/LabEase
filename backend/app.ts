@@ -13,6 +13,7 @@ import { get_labproject } from "./functions/get_labproject";
 import { get_project } from "./functions/get_project";
 import { update_project } from "./functions/update_project";
 import { get_lab_member } from "./functions/get_lab_member";
+import { updateProfile } from "./functions/update_profile";
 
 const app = express();
 app.use(express.json());
@@ -27,6 +28,8 @@ app.get("/api/role/:role", get_all);
 app.get("/api/student/:studentId", get_student_basedId);
 app.get("/api/lab/:labId", get_lab);
 app.get("/api/lab/:labId/members", get_lab_member);
+app.put("/api/profile/:userId", updateProfile);
+
 // project
 app.post("/api/project/create", projectCreate);
 app.post("/api/project/milestone", updateProjectMilestone);
