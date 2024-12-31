@@ -53,7 +53,7 @@ export type Users = {
   lab?: Lab;
   assignedProjects: Project[];
   availableSlots: AvailableSlot[];
-  meetings: MeetingParticipant[];
+  meetings: Meeting[];
   created_at: Date;
   updated_at: Date;
 };
