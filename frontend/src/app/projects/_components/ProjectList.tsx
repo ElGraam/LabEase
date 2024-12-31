@@ -1,9 +1,8 @@
 "use client";
-
-import { Project } from "@/types";
-import Link from "next/link";
 import { Box, Table, Thead, Tbody, Tr, Th, Td, Tag } from "@chakra-ui/react";
+import Link from "next/link";
 import { useSession } from "next-auth/react"; // ログイン情報を取得するために追加
+import { Project } from "@/types";
 type Props = {
   projects: Project[];
 };
