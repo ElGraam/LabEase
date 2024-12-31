@@ -1,9 +1,10 @@
-import { getServerSession } from "next-auth/next";
-import { authOption } from "@/lib/next-auth/auth";
-import { redirect } from "next/navigation";
-import { getLabProject } from "./action";
-import ProjectList from "./_components/ProjectList";
 import { Heading, VStack, Button, Link } from "@chakra-ui/react";
+import { redirect } from "next/navigation";
+import ProjectList from "./_components/ProjectList";
+import { getLabProject } from "./action";
+import { authOption } from "@/lib/next-auth/auth";
+import { getServerSession } from "next-auth/next";
+
 const ProjectsPage = async () => {
   const serversession = await getServerSession(authOption);
   console.log("getServerSession result:", serversession); // サーバーサイドでセッションを確認
