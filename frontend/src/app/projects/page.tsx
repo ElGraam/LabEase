@@ -7,13 +7,12 @@ import { getServerSession } from "next-auth/next";
 
 const ProjectsPage = async () => {
   const serversession = await getServerSession(authOption);
-  console.log("getServerSession result:", serversession); // サーバーサイドでセッションを確認
 
   if (!serversession) {
     redirect("/auth/signin");
   }
   const labId = serversession.user.labId || "";
-  console.log("labId:", labId); // labIdを確認
+  const role = serversession.user.role || "";
   const response = await getLabProject(labId);
   const projects = response.project;
 
@@ -22,11 +21,13 @@ const ProjectsPage = async () => {
       <Heading as="h1" size="xl">
         プロジェクト一覧
       </Heading>
-      <Link href="/projects/create">
-        <Button colorScheme="blue" alignSelf="flex-end">
-          新しいプロジェクトを作成
-        </Button>
-      </Link>
+      {role !== 'STUDENT' && (
+        <Link href="/projects/create">
+          <Button colorScheme="blue" alignSelf="flex-end">
+            新しいプロジェクトを作成
+          </Button>
+        </Link>
+      )}
       <ProjectList projects={projects} />
     </VStack>
   );

@@ -34,7 +34,6 @@ const StudentList = async ({
     redirect("/auth/signin"); // ログインページへのパス
   }
   const labid = session.user.labId || ``;
-  console.log(`Lab_ID:${labid}`);
   // クエリパラメータで指定された検索条件
   const keyword = searchParams?.keyword || "";
   const sort = searchParams?.sort || "studentId";

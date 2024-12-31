@@ -25,7 +25,6 @@ export default function StudentTable({ Users }: { Users: any[] }) {
       const newSelected = prevSelected.includes(studentId)
         ? prevSelected.filter((id) => id !== studentId)
         : [...prevSelected, studentId];
-      console.log("selectedStudents:", newSelected);
       return newSelected;
     });
   };
