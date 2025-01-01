@@ -51,9 +51,9 @@ export type Users = {
   studentProfile?: StudentProfile;
   labId?: string;
   lab?: Lab;
-  assignedProjects: Project[];
+  assignedProjects: ProjectMember[];
   availableSlots: AvailableSlot[];
-  meetings: Meeting[];
+  meetings: MeetingParticipant[];
   created_at: Date;
   updated_at: Date;
 };

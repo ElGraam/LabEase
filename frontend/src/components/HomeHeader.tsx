@@ -7,10 +7,7 @@ import {
   Image,
   SystemStyleObject,
 } from "@chakra-ui/react";
-import NextLink from "next/link";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+
 const HomeHeader = () => {
   const flexStyle: SystemStyleObject = {
     backgroundColor: "app.bg",
