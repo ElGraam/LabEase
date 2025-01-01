@@ -23,9 +23,10 @@ const ProjectList = ({ projects }: Props) => {
           <Tr>
             <Th>プロジェクト名</Th>
             <Th>説明</Th>
+            <Th>マイルストーン</Th>
             <Th>ステータス</Th>
-            <Th>メンバー数</Th>
             <Th>期限</Th>
+            <Th>達成した日</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -36,6 +37,10 @@ const ProjectList = ({ projects }: Props) => {
               </Td>
               <Td>{project.description}</Td>
               <Td>
+                {/* プロジェクトのステータスをタグで表示 */}
+                {project.milestones && project.milestones[0] && project.milestones[0].description}
+              </Td>
+              <Td>
                 {/* マイルストーンのステータスをタグで表示 */}
                 {project.milestones &&
                   project.milestones.map((milestone) => (
@@ -44,10 +49,14 @@ const ProjectList = ({ projects }: Props) => {
                     </Tag>
                   ))}
               </Td>
-              <Td>{project.members?.length}</Td>
               <Td>
                 {new Date(
                   project.milestones?.[0]?.dueDate,
+                ).toLocaleDateString()}
+              </Td>
+              <Td>
+                {new Date(
+                  project.milestones?.[0]?.completionDate ?? "",
                 ).toLocaleDateString()}
               </Td>
             </Tr>
