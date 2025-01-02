@@ -1,5 +1,5 @@
 // 一覧での一画面ごとの表示数
-export const ITEM_LIMIT = 6;
+export const ITEM_LIMIT = 10;
 
 // フッターのタイトル
 export const footerTitle: string[] = ["学生向け", "進路情報"];

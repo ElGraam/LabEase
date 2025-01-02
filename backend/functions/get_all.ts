@@ -8,20 +8,32 @@ export const get_all = async (
   next: NextFunction,
 ) => {
   const { role } = req.params;
+  const offset = Number(req.query.offset) || 0;
+  const limit = Number(req.query.limit) || 10;
 
   try {
-    // Roleを元にユーザーを取得するためのクエリ
     const users = await prisma.users.findMany({
       where: {
         role: role as Role,
       },
+      skip: offset,
+      take: limit,
     });
-    // ユーザーが存在しない場合は404を返す
+
+    const totalCount = await prisma.users.count({
+      where: {
+        role: role as Role,
+      },
+    });
+
     if (!users) {
       return res.status(404).json();
     }
 
-    return res.status(200).json(users);
+    return res.status(200).json({
+      users,
+      totalCount,
+    });
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json();
