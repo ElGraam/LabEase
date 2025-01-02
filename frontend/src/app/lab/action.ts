@@ -6,6 +6,7 @@ import { Users } from "@/types";
 type responseData = {
   Users: Users[];
   status: number;
+  totalCount: number;
 };
 export const labRegister = async (labId: string, studentId: string) => {
   const path = `${process.env.BACKEND_URL}/api/lab/register`;
@@ -24,9 +25,10 @@ export const labRegister = async (labId: string, studentId: string) => {
 };
 /** 学生取得処理 */
 export const getStudents = async (
+  offset: number = 0,
   limit: number = ITEM_LIMIT,
 ): Promise<responseData> => {
-  const path = `${process.env.BACKEND_URL}/api/role/STUDENT`;
+  const path = `${process.env.BACKEND_URL}/api/role/STUDENT?offset=${offset}&limit=${limit}`;
 
   try {
     // backendにGETリクエストして、学生を取得する
@@ -39,15 +41,16 @@ export const getStudents = async (
     // ステータスコード、取得した学生数を返却
     const data = await res.json();
     const status = res.status;
-    const Users = Array.isArray(data) ? data : [data]; // データが配列でない場合、配列に変換
-    return { status, Users };
+    const Users = Array.isArray(data.users) ? data.users : [data.users]; // データが配列でない場合、配列に変換
+    const totalCount = data.totalCount;
+    return { status, Users, totalCount };
   } catch (error) {
     console.log(error);
     throw error;
   }
 };
 
-export const getStudentBasedId = async (studentId: string) => {
+export const getStudentBasedId = async (studentId: string): Promise<responseData> => {
   const path = `${process.env.BACKEND_URL}/api/student/${studentId}`;
 
   try {
@@ -62,7 +65,9 @@ export const getStudentBasedId = async (studentId: string) => {
     const data = await res.json();
     const status = res.status;
     const Users = Array.isArray(data) ? data : [data]; // データが配列でない場合、配列に変換
-    return { status, Users };
+    const totalCount = Users.length; // 検索結果の総数
+
+    return { status, Users, totalCount };
   } catch (error) {
     console.log(error);
     throw error;

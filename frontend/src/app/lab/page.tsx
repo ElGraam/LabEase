@@ -13,6 +13,8 @@ import {
   Td,
 } from "@chakra-ui/react";
 import SearchBox from "./_components/SearchBox";
+
+import { ITEM_LIMIT } from "@/const";
 import { getStudentBasedId } from "@/app/lab/action";
 import { getStudents } from "./action";
 import { getServerSession } from "next-auth";
@@ -40,12 +42,13 @@ const StudentList = async ({
   const offset = Number(searchParams?.offset) || 0;
 
   // 指定された検索条件で学生情報を取得
-  const res = keyword ? await getStudentBasedId(keyword) : await getStudents();
+  const res = keyword 
+    ? await getStudentBasedId(keyword) 
+    : await getStudents(offset);
 
-  const { Users, status } = res;
-  const totalCount = status === 200 ? Users.length : 0;
-  const resultText = totalCount
-    ? `${totalCount}件の学生が見つかりました`
+  const { Users, status, totalCount } = res;
+  const resultText = status === 200 
+    ? `${totalCount}件の学生が見つかりました（${offset + 1}～${Math.min(offset + ITEM_LIMIT, totalCount)}件を表示）` 
     : "学生が見つかりませんでした";
 
   const vStackStyle: SystemStyleObject = {
