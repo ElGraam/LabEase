@@ -6,8 +6,43 @@ import {
   GraduationMonth, 
   StudentStatus, 
   Role, 
-  ProgramType 
+  ProgramType,
 } from '../../types';
+
+type DummyLab = {
+  id: string;
+  name: string;
+  description: string;
+  professorId: string;
+  created_at: string;
+  updated_at: string;
+}
+
+type DummyStudentProfile = {
+  id: string;
+  userId: string;
+  entryYear: number;
+  entryMonth: string;
+  plannedGradYear: number;
+  plannedGradMonth: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
+
+type DummyUser = {
+  id: string;
+  username: string;
+  email: string;
+  password: string;
+  role: string;
+  studentId?: string;
+  program?: string;
+  labId?: string;
+  studentProfile?: DummyStudentProfile;
+  created_at: string;
+  updated_at: string;
+}
 
 export async function getTestData() {
   // データベースのクリーンアップ
@@ -23,7 +58,7 @@ export async function getTestData() {
 
   // 研究室データの作成
   const labs = await Promise.all(
-    dummyLabs.map(async (lab) => {
+    (dummyLabs as DummyLab[]).map(async (lab) => {
       return await prisma.lab.create({
         data: {
           id: lab.id,
@@ -39,7 +74,7 @@ export async function getTestData() {
 
   // ユーザーデータの作成
   const users = await Promise.all(
-    dummyUsers.map(async (user) => {
+    (dummyUsers as DummyUser[]).map(async (user) => {
       const userData = {
         id: user.id,
         username: user.username,
