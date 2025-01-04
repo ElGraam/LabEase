@@ -60,8 +60,7 @@ describe('meeting_create', () => {
     expect(res.send.firstCall.args[0].meeting.title).toBe(request.body.title);
     expect(res.send.firstCall.args[0].meeting.type).toBe(request.body.type);
     expect(next.called).toBeFalsy();
-  });
-
+    });
   it('無効なデータでミーティング作成を試みるとエラーになる', async () => {
     const request = {
       body: {
