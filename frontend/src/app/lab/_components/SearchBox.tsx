@@ -32,7 +32,7 @@ const SearchBox = ({ isBookmark }: { isBookmark: boolean }) => {
 
   // 並び替えの状態を管理
   const [sortOrder, setSortOrder] = useState<string>(
-    searchParams?.get("sort") || "new",
+    searchParams?.get("sort") || "studentId",
   );
 
   const SortMap: { [key: string]: string } = {
