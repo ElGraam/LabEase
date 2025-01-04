@@ -14,6 +14,7 @@ import { get_project } from "./functions/get_project";
 import { update_project } from "./functions/update_project";
 import { get_lab_member } from "./functions/get_lab_member";
 import { updateProfile } from "./functions/update_profile";
+import { meeting_create } from "./functions/meeting_create";
 
 const app = express();
 app.use(express.json());
@@ -37,6 +38,10 @@ app.post("/api/project/register", projectRegister);
 app.get("/api/lab/:labid/projects", get_labproject);
 app.get("/api/project/:projectid", get_project);
 app.put("/api/project/:projectid", update_project);
+
+// meeting
+app.post("/api/meeting/create", meeting_create);
+
 // error handler
 app.use(notFound);
 app.use(errorHandler);
