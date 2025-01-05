@@ -8,6 +8,7 @@ import {
   Role, 
   ProgramType,
 } from '../../types';
+import crypto from "crypto";
 
 type DummyLab = {
   id: string;
@@ -55,7 +56,7 @@ export async function getTestData() {
   await prisma.studentProfile.deleteMany();
   await prisma.users.deleteMany();
   await prisma.lab.deleteMany();
-
+  await prisma.meeting.deleteMany();
   // 研究室データの作成
   const labs = await Promise.all(
     (dummyLabs as DummyLab[]).map(async (lab) => {
@@ -79,8 +80,10 @@ export async function getTestData() {
         id: user.id,
         username: user.username,
         email: user.email,
-        password: user.password,
-        role: user.role as Role,
+        password: crypto
+          .createHash("sha256")
+          .update(user.password || "")
+          .digest("base64"),        role: user.role as Role,
         studentId: user.studentId,
         program: user.program as ProgramType | undefined,
         labId: user.labId ?? undefined,
