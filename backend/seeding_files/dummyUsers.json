@@ -30,6 +30,16 @@
     "updated_at": "2024-01-03T00:00:00Z"
   },
   {
+    "id": "9a2b3c4d-5678-90ab-cdef-1234567890ac",
+    "username": "professor_suwa",
+    "email": "prof_suwa@test.com",
+    "password": "prof_suwa",
+    "role": "PROFESSOR",
+    "labId": "lab04",
+    "created_at": "2024-01-03T00:00:00Z",
+    "updated_at": "2024-01-03T00:00:00Z"
+  },
+  {
     "id": "2b3c4d5e-6789-01bc-def0-2345678901bc",
     "username": "student_tanaka",
     "email": "tanaka@example.com",
