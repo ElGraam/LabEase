@@ -14,6 +14,11 @@ export const signIn = async (
 
   try {
     // emailを元に、ユーザーを取得
+    const reg = /.+@example\.com$/;
+    if (!reg.test(email)) {
+      throw new Error("無効なメールアドレスです");
+    }
+
     const user = await prisma.users.findUnique({
       where: {
         email: email,
