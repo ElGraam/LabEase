@@ -1,43 +1,5 @@
 // Enums
-export enum Role {
-  STUDENT = 'STUDENT',
-  PROFESSOR = 'PROFESSOR', 
-  SUB_INSTRUCTOR = 'SUB_INSTRUCTOR'
-}
-
-export enum ProgramType {
-  UNDERGRADUATE = 'UNDERGRADUATE',
-  MASTERS = 'MASTERS',
-  DOCTORAL = 'DOCTORAL'
-}
-
-export enum StudentStatus {
-  ACTIVE = 'ACTIVE',
-  GRADUATED = 'GRADUATED',
-  WITHDRAWN = 'WITHDRAWN'
-}
-
-export enum EntryMonth {
-  APRIL = 'APRIL',
-  OCTOBER = 'OCTOBER'
-}
-
-export enum GraduationMonth {
-  MARCH = 'MARCH',
-  SEPTEMBER = 'SEPTEMBER'
-}
-
-export enum ProjectMilestoneStatus {
-  PLANNED = 'PLANNED',
-  IN_PROGRESS = 'IN_PROGRESS',
-  LATE = 'LATE',
-  COMPLETED = 'COMPLETED'
-}
-
-export enum MeetingType {
-  REGULAR = 'REGULAR',
-  SPONTANEOUS = 'SPONTANEOUS'
-}
+export { Role, ProgramType ,StudentStatus ,EntryMonth ,GraduationMonth ,ProjectMilestoneStatus ,MeetingType} from '@prisma/client';
 
 // Types
 export type Users = {
@@ -45,9 +7,9 @@ export type Users = {
   username: string;
   password: string;
   email: string;
-  role: Role;
+  role: import('@prisma/client').Role;  // Prismaの型を直接参照
   studentId?: string;
-  program?: ProgramType;
+  program?: import('@prisma/client').ProgramType;  // Prismaの型を直接参照
   studentProfile?: StudentProfile;
   labId?: string;
   lab?: Lab;
@@ -63,10 +25,10 @@ export type StudentProfile = {
   userId: string;
   user: Users;
   entryYear: number;
-  entryMonth: EntryMonth;
+  entryMonth: import('@prisma/client').EntryMonth;  // Prismaの型を直接参照
   plannedGradYear: number;
-  plannedGradMonth: GraduationMonth;
-  status: StudentStatus;
+  plannedGradMonth: import('@prisma/client').GraduationMonth; // Prismaの型を直接参照
+  status: import('@prisma/client').StudentStatus; // Prismaの型を直接参照
   created_at: Date;
   updated_at: Date;
 };
@@ -101,7 +63,7 @@ export type ProjectMilestone = {
   title: string;
   description?: string;
   dueDate: Date;
-  status: ProjectMilestoneStatus;
+  status: import('@prisma/client').ProjectMilestoneStatus; // Prismaの型を直接参照
   completionDate?: Date;
   created_at: Date;
   updated_at: Date;
@@ -130,7 +92,7 @@ export type AvailableSlot = {
 
 export type Meeting = {
   id: string;
-  type: MeetingType;
+  type: import('@prisma/client').MeetingType; // Prismaの型を直接参照
   title: string;
   description?: string;
   startTime: Date;
@@ -154,7 +116,8 @@ export type MeetingParticipant = {
 export type AuthUserInfo = {
   id: string;
   email: string;
-  role: Role;
+  role: import('@prisma/client').Role;  // Prismaの型を直接参照
   username: string;
   labId?: string;
 };
+
