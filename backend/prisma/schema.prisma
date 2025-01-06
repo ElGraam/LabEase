@@ -73,7 +73,7 @@ model Users {
 model StudentProfile {
   id                String         @id @default(uuid())
   userId           String         @unique
-  user             Users          @relation(fields: [userId], references: [id])
+  user             Users          @relation(fields: [userId], references: [id], onDelete: Cascade)
   entryYear        Int            // 入学年度
   entryMonth       EntryMonth     // 入学月（4月または10月）
   plannedGradYear  Int            // 予定卒業年度
@@ -101,7 +101,7 @@ model Project {
   title       String         // プロジェクトタイトル
   description String?        @db.Text
   labId       String         // 所属研究室ID
-  lab         Lab            @relation(fields: [labId], references: [id])
+  lab         Lab            @relation(fields: [labId], references: [id], onDelete: Cascade)
   members     ProjectMember[] // プロジェクトメンバー
   milestones  ProjectMilestone[] // プロジェクトマイルストーン
   created_at  DateTime       @default(now())
@@ -112,7 +112,7 @@ model Project {
 model ProjectMilestone {
   id            String               @id @default(uuid())
   projectId     String
-  project       Project              @relation(fields: [projectId], references: [id])
+  project       Project              @relation(fields: [projectId], references: [id], onDelete: Cascade)
   title         String
   description   String?              @db.Text
   dueDate       DateTime
@@ -126,9 +126,9 @@ model ProjectMilestone {
 model ProjectMember {
   id        String   @id @default(uuid())
   projectId String
-  project   Project  @relation(fields: [projectId], references: [id])
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   userId    String
-  user      Users    @relation(fields: [userId], references: [id])
+  user      Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -141,7 +141,7 @@ model ProjectMember {
 model AvailableSlot {
   id          String   @id @default(uuid())
   userId      String
-  user        Users    @relation(fields: [userId], references: [id])
+  user        Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
   dayOfWeek   Int      // 0-6 (日曜-土曜)
   startTime   DateTime
   endTime     DateTime
@@ -167,9 +167,9 @@ model Meeting {
 model MeetingParticipant {
   id          String   @id @default(uuid())
   meetingId   String
-  meeting     Meeting  @relation(fields: [meetingId], references: [id])
+  meeting     Meeting  @relation(fields: [meetingId], references: [id], onDelete: Cascade)
   userId      String
-  user        Users    @relation(fields: [userId], references: [id])
+  user        Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
 
