@@ -20,6 +20,7 @@ const ChakraFaPlus = chakra(FaPlus);
 
 const HeaderActionMenu = () => {
   const { data: session, status: status } = useSession();
+  const labId = session?.user.labId ?? "";
 
   // 全体のスタイル
   const contentFlexStyle: SystemStyleObject = {
@@ -103,7 +104,7 @@ const HeaderActionMenu = () => {
         <>
           <Button
             as={NextLink}
-            href="/lab"
+            href={`/lab/${labId}`}
             sx={labAddButtonStyle}
             variant="solid"
             leftIcon={<ChakraFaPlus />}
