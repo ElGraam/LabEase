@@ -52,12 +52,20 @@ const ProjectList = ({ projects }: Props) => {
               <Td>
                 {new Date(
                   project.milestones?.[0]?.dueDate,
-                ).toLocaleDateString()}
+                ).toLocaleDateString("ja-JP", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                })}
               </Td>
               <Td>
                 {new Date(
                   project.milestones?.[0]?.completionDate ?? "",
-                ).toLocaleDateString()}
+                ).toLocaleDateString("ja-JP", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                })}
               </Td>
             </Tr>
           ))}
