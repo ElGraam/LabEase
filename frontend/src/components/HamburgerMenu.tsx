@@ -50,7 +50,7 @@ const HamburgerMenu = () => {
       <Box
         position="absolute"
         top="50px"
-        right="0"
+        left="0"  
         width="200px"
         backgroundColor="gray.700"
         borderRadius="md"
