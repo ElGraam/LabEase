@@ -1,0 +1,4 @@
+# GET  get_meeting
+### Userの会議一覧を取得
+GET  http://localhost:5000/api/meeting/1a2b3c4d-5678-90ab-cdef-1234567890ab
+Content-Type: application/json

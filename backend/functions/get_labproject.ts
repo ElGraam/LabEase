@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../lib/prisma";
-import { Project } from "../types";
 
 export const get_labproject = async (
   req: Request,
