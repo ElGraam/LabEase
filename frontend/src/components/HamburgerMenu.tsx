@@ -89,6 +89,15 @@ const HamburgerMenu = () => {
               Lab Projects
             </Link>
           </Box>
+          <Box as="li">
+            <Link
+              href="/meetings"
+              color="white"
+              _hover={{ bg: "gray.600", p: "2", borderRadius: "md" }}
+            >
+              Meetings
+            </Link>
+          </Box>
         </VStack>
       </Box>
     </Box>
