@@ -16,17 +16,17 @@ import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import {
-    getProject,
-    updateProject,
-    getLabMenbers,
-    projectRegister,
-  } from "../action";
-  import {
-    Project,
-    ProjectMilestone,
-    ProjectMilestoneStatus,
-    Users,
-  } from "@/types";
+  getProject,
+  updateProject,
+  getLabMenbers,
+  projectRegister,
+} from "../action";
+import {
+  Project,
+  ProjectMilestone,
+  ProjectMilestoneStatus,
+  Users,
+} from "@/types";
 
 const ProjectEditForm = ({ projectId }: { projectId: string }) => {
   const { data: session, status } = useSession(); // セッションからユーザー情報を取得
@@ -121,8 +121,8 @@ const ProjectEditForm = ({ projectId }: { projectId: string }) => {
       <VStack spacing={4}>
         <FormControl>
           <FormLabel>プロジェクトタイトル</FormLabel>
-          <Input 
-            value={title} 
+          <Input
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
             isDisabled={session?.user?.role === "STUDENT"}
           />
@@ -228,13 +228,15 @@ const ProjectEditForm = ({ projectId }: { projectId: string }) => {
         <Button
           mt={2}
           onClick={handleRegister}
-          isDisabled={selectedMemberIds.length === 0 || session?.user?.role === "STUDENT"}
+          isDisabled={
+            selectedMemberIds.length === 0 || session?.user?.role === "STUDENT"
+          }
           colorScheme="blue"
         >
           選択したメンバーを登録
         </Button>
-        <Button 
-          type="submit" 
+        <Button
+          type="submit"
           colorScheme="blue"
           isDisabled={session?.user?.role === "STUDENT"}
         >

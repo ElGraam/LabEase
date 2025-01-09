@@ -38,7 +38,9 @@ const ProjectList = ({ projects }: Props) => {
               <Td>{project.description}</Td>
               <Td>
                 {/* プロジェクトのステータスをタグで表示 */}
-                {project.milestones && project.milestones[0] && project.milestones[0].description}
+                {project.milestones &&
+                  project.milestones[0] &&
+                  project.milestones[0].description}
               </Td>
               <Td>
                 {/* マイルストーンのステータスをタグで表示 */}
@@ -50,13 +52,14 @@ const ProjectList = ({ projects }: Props) => {
                   ))}
               </Td>
               <Td>
-                {new Date(
-                  project.milestones?.[0]?.dueDate,
-                ).toLocaleDateString("ja-JP", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                })}
+                {new Date(project.milestones?.[0]?.dueDate).toLocaleDateString(
+                  "ja-JP",
+                  {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                  },
+                )}
               </Td>
               <Td>
                 {new Date(

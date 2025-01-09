@@ -53,7 +53,7 @@ const HamburgerMenu = () => {
       <Box
         position="absolute"
         top="50px"
-        left="0"  
+        left="0"
         width="200px"
         backgroundColor="gray.700"
         borderRadius="md"
@@ -70,15 +70,16 @@ const HamburgerMenu = () => {
               Home
             </Link>
           </Box>
-          {role !== 'STUDENT' && (<Box as="li">
-            <Link
-              href="/lab"
-              color="white"
-              _hover={{ bg: "gray.600", p: "2", borderRadius: "md" }}
-            >
-              Lab Registration
-            </Link>
-          </Box>
+          {role !== "STUDENT" && (
+            <Box as="li">
+              <Link
+                href="/lab"
+                color="white"
+                _hover={{ bg: "gray.600", p: "2", borderRadius: "md" }}
+              >
+                Lab Registration
+              </Link>
+            </Box>
           )}
           <Box as="li">
             <Link
