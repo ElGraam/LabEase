@@ -10,7 +10,7 @@ export const get_meeting = async (
   
     try {
       if (!userId) {
-        return res.status(400).json({ error: "User ID is required" });
+        return res.status(400).json();
       }
       const user = await prisma.users.findUnique({
         where: {
@@ -52,7 +52,7 @@ export const get_meeting = async (
       return res.status(200).json(meetings);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json();
       next(error);
     }
   }
