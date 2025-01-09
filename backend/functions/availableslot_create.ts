@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../lib/prisma";
 
-export const availableSlots_craete = async (
+export const availableSlots_create = async (
     req: Request,
     res: Response,
     next: NextFunction,
