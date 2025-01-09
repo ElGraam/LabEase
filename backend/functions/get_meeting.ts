@@ -19,19 +19,36 @@ export const get_meeting = async (
         include: {
           meetings: {
             include: {
-              meeting: true
+              meeting: {
+                include: {
+                  participants: {
+                    include: {
+                      user: true
+                    }
+                  }
+                }
+              }
             }
           }
-        },
+        }
       });
   
       if (!user) {
         return res.status(404).json();
       }
 
-      // ユーザーの全ミーティングを抽出
-      const meetings = user.meetings.map(participant => participant.meeting);
-  
+      // ユーザーの全ミーティングを抽出し、パスワードを除外
+      const meetings = user.meetings.map(participant => ({
+        ...participant.meeting,
+        participants: participant.meeting.participants.map(p => ({
+          ...p,
+          user: {
+            ...p.user,
+            password: undefined
+          }
+        }))
+      }));
+
       return res.status(200).json(meetings);
     } catch (error) {
       if (error instanceof Error) {
