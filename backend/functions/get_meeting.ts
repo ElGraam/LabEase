@@ -12,7 +12,7 @@ export const get_meeting = async (
       if (!userId) {
         return res.status(400).json();
       }
-      const meeting = await prisma.users.findUnique({
+      const user = await prisma.users.findUnique({
         where: {
           id: userId,
         },
@@ -25,11 +25,14 @@ export const get_meeting = async (
         },
       });
   
-      if (!meeting) {
+      if (!user) {
         return res.status(404).json();
       }
+
+      // ユーザーの全ミーティングを抽出
+      const meetings = user.meetings.map(participant => participant.meeting);
   
-      return res.status(200).json(meeting);
+      return res.status(200).json(meetings);
     } catch (error) {
       if (error instanceof Error) {
         res.status(500).json();
