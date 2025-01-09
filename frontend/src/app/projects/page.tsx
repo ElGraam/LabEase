@@ -21,7 +21,7 @@ const ProjectsPage = async () => {
       <Heading as="h1" size="xl" mb={4}>
         プロジェクト一覧
       </Heading>
-      {role !== 'STUDENT' && (
+      {role !== "STUDENT" && (
         <Link href="/projects/create">
           <Button colorScheme="blue" alignSelf="flex-end">
             新しいプロジェクトを作成

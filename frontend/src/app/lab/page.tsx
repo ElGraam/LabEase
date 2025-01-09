@@ -42,14 +42,15 @@ const StudentList = async ({
   const offset = Number(searchParams?.offset) || 0;
 
   // 指定された検索条件で学生情報を取得
-  const res = keyword 
-    ? await getStudentBasedId(keyword) 
+  const res = keyword
+    ? await getStudentBasedId(keyword)
     : await getStudents(offset);
 
   const { Users, status, totalCount } = res;
-  const resultText = status === 200 
-    ? `${totalCount}件の学生が見つかりました（${offset + 1}～${Math.min(offset + ITEM_LIMIT, totalCount)}件を表示）` 
-    : "学生が見つかりませんでした";
+  const resultText =
+    status === 200
+      ? `${totalCount}件の学生が見つかりました（${offset + 1}～${Math.min(offset + ITEM_LIMIT, totalCount)}件を表示）`
+      : "学生が見つかりませんでした";
 
   const vStackStyle: SystemStyleObject = {
     margin: "60px auto",

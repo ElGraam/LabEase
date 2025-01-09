@@ -10,26 +10,29 @@ const MeetingPage = async () => {
     redirect("/auth/signin");
   }
   try {
-
     const userId = session.user.id;
     const { meetings } = await getMeetings(userId);
 
     return (
-    <Box maxW="container.xl" mx="auto" p={4}>
-      <Heading as="h1" size="xl" mb={4}>Meeting List</Heading>
-      <MeetingList meetings={meetings} />
-    </Box>
+      <Box maxW="container.xl" mx="auto" p={4}>
+        <Heading as="h1" size="xl" mb={4}>
+          Meeting List
+        </Heading>
+        <MeetingList meetings={meetings} />
+      </Box>
     );
   } catch (error) {
     return (
-    <Box maxW="container.xl" mx="auto" p={4}>
-      <Heading as="h1" size="xl" mb={4}>Meeting List</Heading>
-      <Box textAlign="center" py={4} color="red.500">
-        An error occurred. Please try again later.
+      <Box maxW="container.xl" mx="auto" p={4}>
+        <Heading as="h1" size="xl" mb={4}>
+          Meeting List
+        </Heading>
+        <Box textAlign="center" py={4} color="red.500">
+          An error occurred. Please try again later.
+        </Box>
       </Box>
-    </Box>
     );
   }
-}
+};
 
 export default MeetingPage;

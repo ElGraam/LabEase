@@ -50,7 +50,9 @@ export const getStudents = async (
   }
 };
 
-export const getStudentBasedId = async (studentId: string): Promise<responseData> => {
+export const getStudentBasedId = async (
+  studentId: string,
+): Promise<responseData> => {
   const path = `${process.env.BACKEND_URL}/api/student/${studentId}`;
 
   try {
