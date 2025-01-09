@@ -2,9 +2,12 @@
 
 import React, { useState } from "react";
 import { Box, Flex, Link, VStack } from "@chakra-ui/react";
+import { useSession } from "next-auth/react";
 
 const HamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { data: session } = useSession();
+  const role = session?.user.role;
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -67,7 +70,7 @@ const HamburgerMenu = () => {
               Home
             </Link>
           </Box>
-          <Box as="li">
+          {role !== 'STUDENT' && (<Box as="li">
             <Link
               href="/lab"
               color="white"
@@ -76,6 +79,7 @@ const HamburgerMenu = () => {
               Lab Registration
             </Link>
           </Box>
+          )}
           <Box as="li">
             <Link
               href="/projects"
