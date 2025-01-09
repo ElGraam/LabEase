@@ -18,7 +18,7 @@ const ProjectsPage = async () => {
 
   return (
     <VStack spacing={6} align="stretch" p={6}>
-      <Heading as="h1" size="xl">
+      <Heading as="h1" size="xl" mb={4}>
         プロジェクト一覧
       </Heading>
       {role !== 'STUDENT' && (
