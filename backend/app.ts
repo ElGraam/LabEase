@@ -18,6 +18,7 @@ import { meeting_create } from "./functions/meeting_create";
 import { get_meeting } from "./functions/get_meeting";
 import { availableSlots_create } from "./functions/availableslot_create";
 import { get_availableslot } from "./functions/get_availableslots";
+import { delete_availableslot } from "./functions/delete_availableslot";
 
 const app = express();
 app.use(express.json());
@@ -47,6 +48,8 @@ app.post("/api/meeting/create", meeting_create);
 app.get("/api/meeting/:userId", get_meeting);
 app.post("/api/availableslots/create/:userId", availableSlots_create);
 app.get("/api/availableslots/:userId", get_availableslot);
+app.delete("/api/availableslots/:availableSlotId", delete_availableslot);
+
 
 // error handler
 app.use(notFound);

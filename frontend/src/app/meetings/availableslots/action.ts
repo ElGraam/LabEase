@@ -48,3 +48,20 @@ export const getAvailableSlots = async (
     throw error;
   }
 };
+
+export const deleteAvailableSlot = async (
+  availableSlotId: string
+): Promise<responseData> => {
+  const path = `${process.env.BACKEND_URL}/api/availableslots/${availableSlotId}`;
+  try {
+    const res = await fetch(path, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.json();
+    return { availableslot: data };
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
