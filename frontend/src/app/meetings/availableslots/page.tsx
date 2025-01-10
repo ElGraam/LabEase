@@ -29,7 +29,7 @@ export default async function AvailableSlotsPage({ searchParams }: Props) {
   return (
     <Container maxW="container.xl" py={8}>
       <VStack spacing={8} align="stretch">
-        <Heading size="lg">空き時間管理</Heading>
+        <Heading size="lg">Availability Management</Heading>
         <Suspense fallback={<Box>Loading...</Box>}>
           <AvailableSlotsClientWrapper 
             userId={session.user.id} 
