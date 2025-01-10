@@ -34,7 +34,7 @@ export default function AvailableSlotsClientWrapper({
       <Box p={4} borderWidth={1} borderRadius="lg">
         <Heading size="md" mb={4}>List of available times</Heading>
         <AvailableSlotsList availableSlots={slots} onDelete={handleSuccess} />
-        <Box mt={4}>
+        <Box mt={4} display="flex" justifyContent="center">
           <Pagination
             keyword=""
             offset={offset}

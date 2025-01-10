@@ -48,7 +48,7 @@ const Pagination: FC<Props> = ({ keyword, offset, totalCount }) => {
   };
 
   return (
-    <Flex gap="5px">
+    <Flex gap="5px" justifyContent="center">
       <PaginationItem active={currentPageNum > 2} offset={0}>
         {1}
       </PaginationItem>
