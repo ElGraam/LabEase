@@ -15,9 +15,15 @@ export const get_availableslot = async (
     }
     
     try {
+        // 過去の予約は表示しない
+        const currentTime = new Date();
+        const jstTime = new Date(currentTime.getTime() + (9 * 60 * 60 * 1000)); // UTC+9に変換
         const availableSlots = await prisma.availableSlot.findMany({
             where: {
                 userId,
+                endTime: {
+                    gt: jstTime,
+                },
             },
             skip: offset,
             take: limit,
@@ -26,6 +32,9 @@ export const get_availableslot = async (
         const totalCount = await prisma.availableSlot.count({
             where: {
                 userId,
+                endTime: {
+                    gt: jstTime,
+                },
             },
         });
 
