@@ -6,12 +6,13 @@ type responseData = {
 };
 
 type responseData01 = {
-  availableslot: AvailableSlot[];
+  availableSlots: AvailableSlot[];
+  totalCount: number;
 };
 
 export const createAvailableSlots = async (
   userId: string,
-  dayOfWeek: string,
+  dayOfWeek: number,  // 曜日
   startTime: Date,
   endTime: Date,
 ): Promise<responseData> => {
@@ -42,7 +43,7 @@ export const getAvailableSlots = async (
       headers: { "Content-Type": "application/json" },
     });
     const data = await res.json();
-    return { availableslot: data };
+    return data;  
   } catch (error) {
     console.error(error);
     throw error;
