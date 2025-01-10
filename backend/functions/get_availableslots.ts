@@ -41,7 +41,9 @@ export const get_availableslot = async (
         if (!availableSlots) {
             return res.status(404).json();
         }
-
+        const sortedSlots = [...availableSlots].sort((a, b) => 
+            new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
+        );
         return res.status(200).json({
             availableSlots,
             totalCount,

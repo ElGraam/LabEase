@@ -1,0 +1,4 @@
+# GET  http://localhost:5000/api/availableslots/:userId
+### ユーザーの予約可能な時間を取得
+GET  http://localhost:5000/api/availableslots/1a2b3c4d-5678-90ab-cdef-1234567890ab
+Content-Type: application/json
