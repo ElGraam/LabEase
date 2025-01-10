@@ -47,8 +47,24 @@ const AvailableSlotsList = ({ availableSlots, onDelete }: Props) => {
             slots.map((slot: AvailableSlot) => (
               <Tr key={slot.id}>
                 <Td>{DayOfWeekMap[slot.dayOfWeek]}</Td>
-                <Td>{new Date(slot.startTime).toLocaleString()}</Td>
-                <Td>{new Date(slot.endTime).toLocaleString()}</Td>
+                <Td>{new Date(slot.startTime).toLocaleString("ja-JP", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  timeZone: "Asia/Tokyo"
+                  })}
+                </Td>
+                <Td>{new Date(slot.endTime).toLocaleString("ja-JP", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  timeZone: "Asia/Tokyo"
+                  })}
+                </Td>
                 <Td>
                   <Button
                     colorScheme="red"

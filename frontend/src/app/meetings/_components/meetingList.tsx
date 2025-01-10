@@ -73,6 +73,7 @@ export default function MeetingList({ meetings }: Props) {
                 day: "2-digit",
                 hour: "2-digit",
                 minute: "2-digit",
+                timeZone: "Asia/Tokyo"
               })}
             </Box>
             <Box>
@@ -83,6 +84,7 @@ export default function MeetingList({ meetings }: Props) {
                 day: "2-digit",
                 hour: "2-digit",
                 minute: "2-digit",
+                timeZone: "Asia/Tokyo"
               })}
             </Box>
           </Box>

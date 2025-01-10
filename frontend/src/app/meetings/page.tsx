@@ -16,7 +16,7 @@ const MeetingPage = async () => {
     return (
       <Box maxW="container.xl" mx="auto" p={4}>
         <Heading as="h1" size="xl" mb={4}>
-          Meeting List
+          Meetings
         </Heading>
         <MeetingList meetings={meetings} />
       </Box>
@@ -25,7 +25,7 @@ const MeetingPage = async () => {
     return (
       <Box maxW="container.xl" mx="auto" p={4}>
         <Heading as="h1" size="xl" mb={4}>
-          Meeting List
+          Meetings
         </Heading>
         <Box textAlign="center" py={4} color="red.500">
           An error occurred. Please try again later.
