@@ -10,6 +10,8 @@ import {
   Td,
   Checkbox,
   Button,
+  Box,
+  Hide,
 } from "@chakra-ui/react";
 import { labRegister } from "../action";
 import { useSession } from "next-auth/react";
@@ -39,39 +41,55 @@ export default function StudentTable({ Users }: { Users: any[] }) {
   };
 
   return (
-    <>
-      <Table variant="simple">
-        <Thead>
-          <Tr>
-            <Th>選択</Th>
-            <Th>名前</Th>
-            <Th>メール</Th>
-            <Th>学生ID</Th>
-            <Th>プログラム</Th>
-            <Th>LabID</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {Users.map((user: any) => (
-            <Tr key={user.id}>
-              <Td>
-                <Checkbox
-                  isChecked={selectedStudents.includes(user.studentId)}
-                  onChange={() => handleCheckboxChange(user.studentId)}
-                />
-              </Td>
-              <Td>{user.username}</Td>
-              <Td>{user.email}</Td>
-              <Td>{user.studentId}</Td>
-              <Td>{user.program}</Td>
-              <Td>{user.labId}</Td>
+    <Box>
+      <Box overflowX="auto">
+        <Table variant="simple" size={{ base: "sm", md: "md" }}>
+          <Thead>
+            <Tr>
+              <Th width="60px">選択</Th>
+              <Th width={{ base: "120px", md: "auto" }}>名前</Th>
+              <Hide below="md">
+                <Th>メール</Th>
+              </Hide>
+              <Th width={{ base: "100px", md: "auto" }}>学生ID</Th>
+              <Hide below="md">
+                <Th>プログラム</Th>
+              </Hide>
+              <Hide below="md">
+                <Th>LabID</Th>
+              </Hide>
             </Tr>
-          ))}
-        </Tbody>
-      </Table>
-      <Button colorScheme="blue" onClick={handleRegister}>
-        ラボに登録({selectedStudents.length}人)
-      </Button>
-    </>
+          </Thead>
+          <Tbody>
+            {Users.map((user: any) => (
+              <Tr key={user.id}>
+                <Td>
+                  <Checkbox
+                    isChecked={selectedStudents.includes(user.studentId)}
+                    onChange={() => handleCheckboxChange(user.studentId)}
+                  />
+                </Td>
+                <Td>{user.username}</Td>
+                <Hide below="md">
+                  <Td>{user.email}</Td>
+                </Hide>
+                <Td>{user.studentId}</Td>
+                <Hide below="md">
+                  <Td>{user.program}</Td>
+                </Hide>
+                <Hide below="md">
+                  <Td>{user.labId}</Td>
+                </Hide>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </Box>
+      <Box mt={4} mb={8} textAlign="center">
+        <Button colorScheme="blue" onClick={handleRegister}>
+          ラボに登録({selectedStudents.length}人)
+        </Button>
+      </Box>
+    </Box>
   );
 }
