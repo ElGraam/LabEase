@@ -4,13 +4,13 @@ import { deleteAvailableSlot } from "../action";
 import { Box, Button, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 
 const DayOfWeekMap: Record<number, string> = {
-  0: "日曜日",
-  1: "月曜日",
-  2: "火曜日",
-  3: "水曜日",
-  4: "木曜日",
-  5: "金曜日",
-  6: "土曜日"
+  0: "Sunday",
+  1: "Monday",
+  2: "Tuesday",
+  3: "Wednesday",
+  4: "Thursday",
+  5: "Friday",
+  6: "Saturday"  
 };
 
 type Props = {
@@ -32,10 +32,10 @@ const AvailableSlotsList = ({ availableSlots, onDelete }: Props) => {
       <Table variant="simple">
         <Thead>
           <Tr>
-            <Th>曜日</Th>
-            <Th>開始時間</Th>
-            <Th>終了時間</Th>
-            <Th>操作</Th>
+          <Th>Day</Th>
+          <Th>Start Time</Th>
+          <Th>End Time</Th>
+          <Th>Action</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -55,7 +55,7 @@ const AvailableSlotsList = ({ availableSlots, onDelete }: Props) => {
                     size="sm"
                     onClick={() => handleDelete(slot.id)}
                   >
-                    削除
+                    Delete
                   </Button>
                 </Td>
               </Tr>

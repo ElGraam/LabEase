@@ -1,6 +1,6 @@
 "use client";
 import { createAvailableSlots } from "../action";
-import { Button, Flex, FormControl, FormLabel, Input, Select } from "@chakra-ui/react";
+import { Button, Flex, FormControl, FormLabel, Input, Select, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 
 type Props = {
@@ -9,43 +9,94 @@ type Props = {
 };
 
 const CreateAvailableSlotsForm = ({ userId, onSuccess }: Props) => {
-  const [dayOfWeek, setDayOfWeek] = useState<string>("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const toast = useToast();
+
+  const isValidTimeRange = (start: Date, end: Date): boolean => {
+    const startHour = start.getHours();
+    const endHour = end.getHours();
+
+    // 22時から5時までの時間帯をチェック
+    if (startHour >= 22 || startHour < 5 || endHour >= 22 || endHour < 5) {
+      return false;
+    }
+    return true;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await createAvailableSlots(
-      userId,
-      parseInt(dayOfWeek), // 文字列を数値に変換
-      new Date(startTime),
-      new Date(endTime)
-    );
-    onSuccess();
+    try {
+      const startDate = new Date(startTime + ':00');
+      const endDate = new Date(endTime + ':00');
+
+      if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+        throw new Error('The date format is invalid.')
+      }
+      if (startDate >= endDate) {
+        toast({
+          title: "The date format is invalid.",
+          description: "Please set the end time to be later than the start time.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+      if (startDate.getDay() !== endDate.getDay()) {
+        toast({
+          title: "The date format is invalid.",
+          description: "Please set the start time and end time on the same day.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+        return;
+      }
+
+      if (!isValidTimeRange(startDate, endDate)) {
+        toast({
+          title: "The date format is invalid.",
+          description: "The time period from 10:00 PM to 5:00 AM cannot be set.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+        return;
+      }
+
+      // 日付から曜日を取得（0-6の数値）
+      const dayOfWeek = startDate.getDay();
+
+      await createAvailableSlots(
+        userId,
+        dayOfWeek,
+        startDate,
+        endDate
+      );
+      onSuccess();
+      toast({
+        title: "Availability has been created.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "An error has occurred.",
+        description: error instanceof Error ? error.message : "An unexpected error has occurred.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <Flex direction="column" gap={4}>
         <FormControl>
-          <FormLabel>曜日</FormLabel>
-          <Select 
-            value={dayOfWeek} 
-            onChange={(e) => setDayOfWeek(e.target.value)}
-            required
-          >
-            <option value="">選択してください</option>
-            <option value="0">日曜日</option>
-            <option value="1">月曜日</option>
-            <option value="2">火曜日</option>
-            <option value="3">水曜日</option>
-            <option value="4">木曜日</option>
-            <option value="5">金曜日</option>
-            <option value="6">土曜日</option>
-          </Select>
-        </FormControl>
-        <FormControl>
-          <FormLabel>開始時間</FormLabel>
+          <FormLabel>Start time</FormLabel>
           <Input
             type="datetime-local"
             value={startTime}
@@ -54,7 +105,7 @@ const CreateAvailableSlotsForm = ({ userId, onSuccess }: Props) => {
           />
         </FormControl>
         <FormControl>
-          <FormLabel>終了時間</FormLabel>
+          <FormLabel>End time</FormLabel>
           <Input
             type="datetime-local"
             value={endTime}
@@ -63,7 +114,7 @@ const CreateAvailableSlotsForm = ({ userId, onSuccess }: Props) => {
           />
         </FormControl>
         <Button type="submit" colorScheme="blue">
-          作成
+          Create
         </Button>
       </Flex>
     </form>

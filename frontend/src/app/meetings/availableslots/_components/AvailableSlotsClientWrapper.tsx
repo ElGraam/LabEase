@@ -27,12 +27,12 @@ export default function AvailableSlotsClientWrapper({
   return (
     <>
       <Box p={4} borderWidth={1} borderRadius="lg">
-        <Heading size="md" mb={4}>空き時間の作成</Heading>
+        <Heading size="md" mb={4}>Creation of availability time</Heading>
         <CreateAvailableSlotsForm userId={userId} onSuccess={handleSuccess} />
       </Box>
 
       <Box p={4} borderWidth={1} borderRadius="lg">
-        <Heading size="md" mb={4}>空き時間一覧</Heading>
+        <Heading size="md" mb={4}>List of available times</Heading>
         <AvailableSlotsList availableSlots={slots} onDelete={handleSuccess} />
         <Box mt={4}>
           <Pagination
