@@ -21,8 +21,15 @@ export const createAvailableSlots = async (
     const res = await fetch(path, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ dayOfWeek, startTime, endTime }),
+      body: JSON.stringify({
+        dayOfWeek,
+        startTime: new Date(startTime).toISOString(),
+        endTime: new Date(endTime).toISOString(),
+      }),
     });
+    if (!res.ok) {
+      throw new Error('Failed to create slot');
+    }
     const data = await res.json();
     return { availableslot: data };
   } catch (error) {
