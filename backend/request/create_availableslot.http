@@ -1,0 +1,8 @@
+POST http://localhost:5000/api/availableslots/create/1a2b3c4d-5678-90ab-cdef-1234567890ab
+Content-Type: application/json
+
+{
+  "dayOfWeek": 1,
+  "startTime": "2025-02-01T10:00:00Z",
+  "endTime": "2025-02-01T12:00:00Z"
+}
