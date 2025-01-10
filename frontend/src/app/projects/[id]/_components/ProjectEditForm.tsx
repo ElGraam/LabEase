@@ -12,7 +12,8 @@ import {
   Stack,
   Select,
 } from "@chakra-ui/react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import {
@@ -41,7 +42,7 @@ const ProjectEditForm = ({ projectId }: { projectId: string }) => {
   const [labMembers, setLabMembers] = useState<Users[]>([]);
   const [selectedMemberIds, setSelectedMemberIds] = useState<string[]>([]);
   const [registeredMembers, setRegisteredMembers] = useState<string[]>([]);
-
+  const router = useRouter();
   useEffect(() => {
     const fetchProject = async () => {
       const projectData = await getProject(projectId);
@@ -79,6 +80,7 @@ const ProjectEditForm = ({ projectId }: { projectId: string }) => {
       [field]: value,
     };
     setMilestones(updatedMilestones);
+    router.refresh();
   };
 
   const handleEditProject = async (e: React.FormEvent) => {
@@ -93,6 +95,7 @@ const ProjectEditForm = ({ projectId }: { projectId: string }) => {
       if (session?.user?.role != "STUDENT") {
         await updateProject(title, description, formattedMilestones, projectId);
         setSuccess("更新しました");
+        router.refresh();
       }
     } catch (error) {
       console.error(error);
@@ -104,6 +107,7 @@ const ProjectEditForm = ({ projectId }: { projectId: string }) => {
       if (session?.user?.role != "STUDENT") {
         await projectRegister(projectId, selectedMemberIds);
         setSuccess("メンバーを登録しました");
+        router.refresh();
       }
     } catch (error) {
       console.error(error);
@@ -112,6 +116,7 @@ const ProjectEditForm = ({ projectId }: { projectId: string }) => {
 
   const handleMemberSelect = (values: string[]) => {
     setSelectedMemberIds(values);
+    
   };
 
   if (!project) return <Box>Loading...</Box>;
