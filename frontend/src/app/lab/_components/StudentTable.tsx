@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Table,
   Thead,
@@ -20,6 +21,7 @@ import { redirect } from "next/navigation";
 export default function StudentTable({ Users }: { Users: any[] }) {
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
   const { data: session, status } = useSession(); // セッションからユーザー情報を取得
+  const router = useRouter();
   if (!session) redirect("/auth/signin");
   const labId = session.user.labId ?? "";
   const handleCheckboxChange = (studentId: string) => {
@@ -38,6 +40,7 @@ export default function StudentTable({ Users }: { Users: any[] }) {
       }
     }
     setSelectedStudents([]);
+    router.refresh(); 
   };
 
   return (
