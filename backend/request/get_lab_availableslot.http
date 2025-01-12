@@ -1,0 +1,3 @@
+### Available slotsを取得する
+GET  http://localhost:5000/api/lab/lab01/availableslots
+Content-Type: application/json
