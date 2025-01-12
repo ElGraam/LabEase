@@ -20,6 +20,7 @@ import { availableSlots_create } from "./functions/availableslot_create";
 import { get_availableslot } from "./functions/get_availableslots";
 import { delete_availableslot } from "./functions/delete_availableslot";
 import { delete_meeting } from "./functions/delete_meeting";
+import { get_lab_availableslot } from "./functions/get_lab_availableslot";
 
 const app = express();
 app.use(express.json());
@@ -51,7 +52,7 @@ app.post("/api/availableslots/create/:userId", availableSlots_create);
 app.delete("/api/meeting/:meetingId", delete_meeting);
 app.get("/api/availableslots/:userId", get_availableslot);
 app.delete("/api/availableslots/:availableSlotId", delete_availableslot);
-
+app.get("/api/lab/:labId/availableslots", get_lab_availableslot);
 
 // error handler
 app.use(notFound);
