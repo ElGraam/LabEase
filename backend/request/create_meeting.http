@@ -1,0 +1,42 @@
+POST http://localhost:5000/api/meeting/create
+Content-Type: application/json
+
+{
+    "type": "REGULAR",
+    "title": "週次進捗ミーティング",
+    "description": "プロジェクトの進捗確認と今後の計画について",
+    "startTime": "2025-02-01T10:00:00Z",
+    "endTime": "2025-02-01T11:00:00Z",
+    "participants": [
+        {
+            "userId": "1a2b3c4d-5678-90ab-cdef-1234567890ab"
+        },
+        {
+            "userId": "2b3c4d5e-6789-01bc-def0-2345678901bc"
+        }
+    ]
+}
+
+###
+
+POST http://localhost:5000/api/meeting/create
+Content-Type: application/json
+
+{
+    "type": "SPONTANEOUS",
+    "title": "緊急プロジェクトミーティング",
+    "description": "緊急の問題解決について",
+    "startTime": "2025-02-02T15:00:00Z",
+    "endTime": "2025-02-02T16:00:00Z",
+    "participants": [
+        {
+            "userId": "1a2b3c4d-5678-90ab-cdef-1234567890ab"
+        },
+        {
+            "userId": "2b3c4d5e-6789-01bc-def0-2345678901bc"
+        },
+        {
+            "userId": "3a2b3c4d-5678-90ab-cdef-1234567890ab"
+        }
+    ]
+}
