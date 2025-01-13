@@ -1,6 +1,6 @@
 "use server";
 
-import { Project, ProjectMilestone } from "@/types";
+import { Project } from "@/types";
 
 /** projectCreateで返却する値の型 */
 type responseData = {
