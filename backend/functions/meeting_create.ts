@@ -25,25 +25,37 @@ export const meeting_create = async (
 
     // バリデーション
     if (!body.title || body.title.trim() === '') {
-      throw new Error('タイトルは必須です');
+      return res.status(400).json({ error: 'タイトルは必須です' });
     }
 
-    if (!body.participants || body.participants.length === 0) {
-      throw new Error('参加者は必須です');
+    if (!Array.isArray(body.participants) || body.participants.length === 0) {
+      return res.status(400).json({ error: '参加者は必須です' });
+    }
+
+    const participantIds = body.participants
+      .map(p => p.userId)
+      .filter((id): id is string => typeof id === 'string' && id.length > 0);
+
+    if (participantIds.length === 0) {
+      return res.status(400).json({ error: '有効な参加者IDが必要です' });
     }
 
     const startTime = new Date(body.startTime);
     const endTime = new Date(body.endTime);
 
+    if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) {
+      return res.status(400).json({ error: '無効な日時形式です' });
+    }
+
     if (endTime <= startTime) {
-      throw new Error('終了時刻は開始時刻より後である必要があります');
+      return res.status(400).json({ error: '終了時刻は開始時刻より後である必要があります' });
     }
 
     // 参加者全員の存在確認
     const users = await prisma.users.findMany({
       where: {
         id: {
-          in: body.participants.map(p => p.userId)
+          in: participantIds
         }
       }
     });
@@ -124,6 +136,11 @@ export const meeting_create = async (
 
     res.status(201).send({ meeting });
   } catch (error) {
-    next(error);
+    if (error instanceof Error) {
+      res.status(500);
+      next({ message: error.message, statusCode: 500, stack: error.stack });
+    } else {
+      next({ message: "unknown error" });
+    }
   }
 };
