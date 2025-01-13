@@ -3,7 +3,13 @@ import { prisma } from '../lib/prisma';
 
 export const get_lab_availableslot = async (req: Request, res: Response, next: NextFunction) => {
     const labId = req.params.labId;
+
+    if (!labId) {
+        return res.status(400).json();
+    }
+
     const now = new Date();
+    const tokyoDate = new Date(now.toLocaleString("ja-JP", {timeZone: "Asia/Tokyo"}));
     
     try {
         const lab_members_slots = await prisma.lab.findUnique({
@@ -22,8 +28,8 @@ export const get_lab_availableslot = async (req: Request, res: Response, next: N
                                 OR: [
                                     {
                                         AND: [
-                                            { startTime: { gt: now.toISOString() } },
-                                            { endTime: { gt: now.toISOString() } }
+                                            { startTime: { gt: tokyoDate.toISOString() } },
+                                            { endTime: { gt: tokyoDate.toISOString() } }
                                         ]
                                     }
                                 ]
@@ -46,7 +52,7 @@ export const get_lab_availableslot = async (req: Request, res: Response, next: N
         });
 
         if (!lab_members_slots) {
-            return res.status(404).json();
+            return res.status(404).json({ error: 'Lab not found' });
         }
 
         res.status(200).json(lab_members_slots);
@@ -55,6 +61,5 @@ export const get_lab_availableslot = async (req: Request, res: Response, next: N
           res.status(500).json();
         }
         next(error);
-    }
+      }
 };
-    
