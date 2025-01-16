@@ -7,14 +7,13 @@ import {
   Text,
   Card,
   CardBody,
-  Badge
+  Badge,
 } from '@chakra-ui/react';
 
 interface AvailableSlot {
   id: string;
   startTime: Date;
   endTime: Date;
-  dayOfWeek: number;
 }
 
 interface Member {
@@ -26,35 +25,31 @@ interface Member {
 interface Props {
   member: Member;
   isSelected: boolean;
-  isAvailable: boolean;
   onSelect: (memberId: string) => void;
-  showAllSlots?: boolean; // 全スロットを表示するかどうか
+  selectedWeekRange: { weekStart: Date; weekEnd: Date } | null;
 }
 
 export const MemberAvailability = ({ 
   member, 
   isSelected, 
-  isAvailable, 
   onSelect,
-  showAllSlots = false 
+  selectedWeekRange 
 }: Props) => {
-  // スロットの表示制御
-  const displaySlots = member.availableSlots
-    .filter(slot => {
-      const slotDate = new Date(slot.startTime);
-      const weekAgo = new Date();
-      weekAgo.setDate(weekAgo.getDate() - 7);
-      return slotDate >= weekAgo;
-    })
-    .slice(0, showAllSlots ? undefined : 3); // 選択時は全て表示、未選択時は3件まで
+  // 選択された週の空き時間をフィルタリング
+  const weekSlots = selectedWeekRange
+    ? member.availableSlots.filter(slot => {
+        const slotDate = new Date(slot.startTime);
+        return slotDate >= selectedWeekRange.weekStart && 
+               slotDate <= selectedWeekRange.weekEnd;
+      })
+    : [];
 
   return (
     <Card
       variant="outline"
       borderColor={isSelected ? 'blue.500' : 'gray.200'}
-      opacity={isAvailable ? 1 : 0.5}
       transition="all 0.2s"
-      _hover={{ shadow: isAvailable ? 'md' : 'none' }}
+      _hover={{ shadow: 'md' }}
     >
       <CardBody>
         <VStack align="stretch" spacing={3}>
@@ -62,49 +57,39 @@ export const MemberAvailability = ({
             <Checkbox
               isChecked={isSelected}
               onChange={() => onSelect(member.id)}
-              isDisabled={!isAvailable}
               colorScheme="blue"
             />
             <Text fontWeight="semibold">
               {member.username}
-              {!isAvailable && (
-                <Badge ml={2} colorScheme="red">
-                  時間外
-                </Badge>
-              )}
             </Text>
           </Box>
-          <VStack align="stretch" spacing={2}>
-            {displaySlots.map((slot) => (
-              <Badge
-                key={slot.id}
-                p={2}
-                borderRadius="md"
-                variant="subtle"
-                colorScheme="green"
-              >
-                {new Date(slot.startTime).toLocaleString("ja-JP", {
-                  month: 'short',
-                  day: 'numeric',
-                  weekday: 'short',
-                  hour: 'numeric',
-                  minute: '2-digit',
-                  timeZone: 'Asia/Tokyo'
-                })}
-                {' - '}
-                {new Date(slot.endTime).toLocaleString("ja-JP", {
-                  hour: 'numeric',
-                  minute: '2-digit',
-                  timeZone: 'Asia/Tokyo'
-                })}
-              </Badge>
-            ))}
-            {!showAllSlots && member.availableSlots.length > 3 && (
-              <Text fontSize="sm" color="gray.500">
-                他 {member.availableSlots.length - 3} 件の予定あり
-              </Text>
-            )}
-          </VStack>
+          
+          {selectedWeekRange && weekSlots.length > 0 && (
+            <VStack align="stretch" spacing={2}>
+              {weekSlots.map((slot) => (
+                <Badge
+                  key={slot.id}
+                  p={2}
+                  borderRadius="md"
+                  variant="subtle"
+                  colorScheme="green"
+                >
+                  {new Date(slot.startTime).toLocaleString("ja-JP", {
+                    month: 'short',
+                    day: 'numeric',
+                    weekday: 'short',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                  })}
+                  {' - '}
+                  {new Date(slot.endTime).toLocaleString("ja-JP", {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                  })}
+                </Badge>
+              ))}
+            </VStack>
+          )}
         </VStack>
       </CardBody>
     </Card>
