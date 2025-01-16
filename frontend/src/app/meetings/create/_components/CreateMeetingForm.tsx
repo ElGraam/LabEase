@@ -20,6 +20,16 @@ import { createMeeting } from "../action";
 import { MeetingType } from "@/types";
 import type { LabMembersSlots } from "../action";
 
+const generateTimeOptions = () => {
+  const options = [];
+  for (let hour = 5; hour < 22; hour++) {
+    options.push(`${hour.toString().padStart(2, '0')}:00`);
+    options.push(`${hour.toString().padStart(2, '0')}:30`);
+  }
+  options.push(`${'22'.padStart(2, '0')}:00`);
+  return options;
+};
+
 interface Props {
   initialLabMembers: LabMembersSlots;
 }
@@ -31,24 +41,40 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
     title: "",
     description: "",
     type: MeetingType.REGULAR,
+    date: "",
     startTime: "",
     endTime: ""
   });
   const [loading, setLoading] = useState(false);
-  const [offset, setOffset] = useState(0);
   const toast = useToast();
+  const timeOptions = generateTimeOptions();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
+      const startDateTime = new Date(`${formData.date}T${formData.startTime}:00`);
+      const endDateTime = new Date(`${formData.date}T${formData.endTime}:00`);
+
+      if (startDateTime >= endDateTime) {
+        toast({
+          title: "時間の指定が不正です",
+          description: "終了時間は開始時間より後に設定してください",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+        setLoading(false);
+        return;
+      }
+
       await createMeeting(
         formData.type,
         formData.title,
         formData.description,
-        new Date(formData.startTime),
-        new Date(formData.endTime),
+        startDateTime,
+        endDateTime,
         selectedMembers
       );
       
@@ -82,16 +108,16 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
 
   // 選択された日付の週の範囲を計算
   const weekRange = useMemo(() => {
-    if (!formData.startTime) return null;
+    if (!formData.date) return null;
 
-    const startDate = new Date(formData.startTime);
+    const startDate = new Date(`${formData.date}T${formData.startTime || '00:00'}:00`);
     const weekStart = new Date(startDate);
     weekStart.setDate(startDate.getDate() - 3); 
     const weekEnd = new Date(startDate);
     weekEnd.setDate(startDate.getDate() + 3); 
 
     return { weekStart, weekEnd };
-  }, [formData.startTime]);
+  }, [formData.date, formData.startTime]);
 
   const displayMembers = initialLabMembers.members;
 
@@ -114,25 +140,46 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
           />
         </FormControl>
 
-        <SimpleGrid columns={2} spacing={4}>
+        <SimpleGrid columns={3} spacing={4}>
           <FormControl isRequired>
-            <FormLabel>開始時間</FormLabel>
+            <FormLabel>日付</FormLabel>
             <Input
-              type="datetime-local"
-              name="startTime"
-              value={formData.startTime}
-              onChange={e => setFormData(prev => ({ ...prev, startTime: e.target.value }))}
+              type="date"
+              value={formData.date}
+              onChange={e => setFormData(prev => ({ ...prev, date: e.target.value }))}
             />
           </FormControl>
 
           <FormControl isRequired>
+            <FormLabel>開始時間</FormLabel>
+            <Select
+              value={formData.startTime}
+              onChange={e => setFormData(prev => ({ ...prev, startTime: e.target.value }))}
+              required
+            >
+              <option value="">開始時間を選択</option>
+              {timeOptions.map((time) => (
+                <option key={`start-${time}`} value={time}>
+                  {time}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl isRequired>
             <FormLabel>終了時間</FormLabel>
-            <Input
-              type="datetime-local"
-              name="endTime"
+            <Select
               value={formData.endTime}
               onChange={e => setFormData(prev => ({ ...prev, endTime: e.target.value }))}
-            />
+              required
+            >
+              <option value="">終了時間を選択</option>
+              {timeOptions.map((time) => (
+                <option key={`end-${time}`} value={time}>
+                  {time}
+                </option>
+              ))}
+            </Select>
           </FormControl>
         </SimpleGrid>
 
