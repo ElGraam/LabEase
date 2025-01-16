@@ -10,22 +10,22 @@ export const availableSlots_create = async (
     const { userId } = req.params;
     const { dayOfWeek, startTime, endTime } = req.body;
     if (!userId) {
-        return res.status(400).json();
+        return res.status(400).json({messege: "userId is required"});
     }       
     if (!dayOfWeek || dayOfWeek < 0 || dayOfWeek > 6) {
-        return res.status(400).json();
+        return res.status(400).json({messege: "dayOfWeek is required"});
     }
     if (!startTime || !endTime) {
-        return res.status(400).json();
+        return res.status(400).json({messege: "startTime and endTime are required"});
     }
     if (startTime >= endTime) {
-        return res.status(400).json();
+        return res.status(400).json({messege: "startTime must be less than endTime"});
     }
     const startTimeUTC = new Date(startTime).getTime();
     const endTimeUTC = new Date(endTime).getTime();
     const currentTimeUTC = new Date().getTime();
     if (startTimeUTC < currentTimeUTC || endTimeUTC < currentTimeUTC) {
-        return res.status(400).json();
+        return res.status(400).json({messege: "startTime and endTime must be in the future"});
     }
     // 予約済みのスロットと重複しているかチェック
     const overlappingSlots = await prisma.availableSlot.findMany({
@@ -44,12 +44,12 @@ export const availableSlots_create = async (
         }
     });
     if (overlappingSlots.length > 0) {
-        return res.status(400).json();
+        return res.status(400).json({messege: "The time period is already reserved."});
     }
     const startHour = new Date(startTime).getHours();
     const endHour = new Date(endTime).getHours();
     if ((startHour >= 22 || startHour < 5) || (endHour >= 22 || endHour < 5)) {
-        return res.status(400).json();
+        return res.status(400).json({messege: "The time period from 10:00 PM to 5:00 AM cannot be set."});
     }
     const availableSlots = await prisma.availableSlot.create({
         data: {
