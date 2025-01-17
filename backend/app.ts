@@ -12,6 +12,7 @@ import { projectRegister } from "./functions/project_register";
 import { get_labproject } from "./functions/get_labproject";
 import { get_project } from "./functions/get_project";
 import { update_project } from "./functions/update_project";
+import { delete_project } from "./functions/delete_project";
 import { get_lab_member } from "./functions/get_lab_member";
 import { updateProfile } from "./functions/update_profile";
 import { meeting_create } from "./functions/meeting_create";
@@ -42,8 +43,9 @@ app.post("/api/project/create", projectCreate);
 app.post("/api/project/milestone", updateProjectMilestone);
 app.post("/api/project/register", projectRegister);
 app.get("/api/lab/:labid/projects", get_labproject);
-app.get("/api/project/:projectid", get_project);
-app.put("/api/project/:projectid", update_project);
+app.get("/api/project/:projectId", get_project);
+app.put("/api/project/:projectId", update_project);
+app.delete("/api/project/:projectId", delete_project);
 
 // meeting
 app.post("/api/meeting/create", meeting_create);
