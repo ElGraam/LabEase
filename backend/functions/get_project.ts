@@ -6,13 +6,13 @@ export const get_project = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const { projectid } = req.params; // projectidを取得
+  const { projectId } = req.params; // projectidを取得
 
   try {
     // projectidを元に、projectを取得
     const project = await prisma.project.findUnique({
       where: {
-        id: projectid,
+        id: projectId,
       },
       include: {
         members: {

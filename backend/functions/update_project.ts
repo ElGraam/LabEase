@@ -6,13 +6,13 @@ export const update_project = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const { projectid } = req.params; // projectidを取得
+  const { projectId } = req.params; // projectidを取得
   const { title, description, milestones } = req.body; // リクエストボディからデータを取得
 
   try {
     // 現在のプロジェクトを取得
     const existingProject = await prisma.project.findUnique({
-      where: { id: projectid },
+      where: { id: projectId },
       include: {
         milestones: true,
       },
@@ -45,7 +45,7 @@ export const update_project = async (
     const updatedProject = await prisma.$transaction(async (prisma) => {
       if (projectChanged) {
         await prisma.project.update({
-          where: { id: projectid },
+          where: { id: projectId },
           data: {
             title,
             description,
@@ -56,13 +56,13 @@ export const update_project = async (
       if (milestonesChanged) {
         // 既存のマイルストーンを削除
         await prisma.projectMilestone.deleteMany({
-          where: { projectId: projectid },
+          where: { projectId: projectId },
         });
 
         // 新しいマイルストーンを作成
         const newMilestones = milestones.map((milestone: any) => ({
           ...milestone,
-          projectId: projectid,
+          projectId: projectId,
         }));
 
         await prisma.projectMilestone.createMany({
@@ -73,7 +73,7 @@ export const update_project = async (
       // 更新後のプロジェクトを取得
       return prisma.project.findUnique({
         where: {
-          id: projectid,
+          id: projectId,
         },
         include: {
           members: {
