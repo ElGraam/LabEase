@@ -6,6 +6,11 @@ type responseData = {
   project: Project[];
   status: number;
 };
+
+type response = {
+  project: Project;
+};
+
 export const getLabProject = async (labId: string): Promise<responseData> => {
   const path = `${process.env.BACKEND_URL}/api/lab/${labId}/projects`;
 
@@ -27,3 +32,23 @@ export const getLabProject = async (labId: string): Promise<responseData> => {
     throw error;
   }
 };
+
+export const deleteProject = async (projectId: string): Promise<response> => {
+  const path = `${process.env.BACKEND_URL}/api/project/${projectId}`;
+
+  try {
+    const res = await fetch(path, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const data = await res.json();
+
+    return {
+      project: data,
+    };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
