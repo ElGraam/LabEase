@@ -25,7 +25,6 @@ const ProjectList = ({ projects: initialProjects }: Props) => {
 
   if (!session) return <p>ログインしてください。</p>;
 
-  const labId = session.user.labId ?? "";
   const userRole = session.user.role;
   const canDelete = userRole === "PROFESSOR" || userRole === "SUB_INSTRUCTOR";
 
