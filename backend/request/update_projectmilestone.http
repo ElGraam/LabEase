@@ -2,10 +2,10 @@ POST  http://localhost:5000/api/project/milestone
 Content-Type: application/json
 
 {
-  "projectId": "2d30adbe-7545-4d8d-81e2-d659577dd342",
-  "milestoneId": "0345b2b3-9bd5-4b68-ac85-d94243febd67",
+  "projectId": "103706ca-db55-4f61-9910-4bf87033e048",
+  "milestoneId": "3bb3b6c8-defd-4ced-885d-4300773cf5af",
   "title": "先行研究調査",
   "description": "関連論文の調査と整理",
-  "status": "IN_PROGRESS",
+  "status": "COMPLETED",
   "dueDate": "2024-04-30T00:00:00Z"
 }
