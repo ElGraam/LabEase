@@ -63,6 +63,7 @@ export const update_project = async (
         const newMilestones = milestones.map((milestone: any) => ({
           ...milestone,
           projectId: projectId,
+          completionDate: milestone.status === "COMPLETED" ? new Date() : null,
         }));
 
         await prisma.projectMilestone.createMany({
