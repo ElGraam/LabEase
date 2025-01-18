@@ -7,12 +7,12 @@ import { redirect } from "next/navigation";
 
 const ProjectPage = async ({ params }: { params: { id: string } }) => {
   const { id: projectId } = params;
-  const projectData = await getProject(projectId);
-  const { members } = await getLabMenbers(projectData.project.labId);
   const session = await getServerSession(authOption);
   if (!session) {
     return redirect("/auth/signin");
   }
+  const projectData = await getProject(projectId);
+  const { members } = await getLabMenbers(session.user.labId);
 
   return (
     <div>
