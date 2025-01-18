@@ -109,7 +109,7 @@ const ProjectEditForm = ({
           <Input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            isDisabled={session?.user?.role === "STUDENT"}
+            readOnly={session?.user?.role === "STUDENT"}
           />
         </FormControl>
         <FormControl>
@@ -117,7 +117,7 @@ const ProjectEditForm = ({
           <Textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            isDisabled={session?.user?.role === "STUDENT"}
+            readOnly={session?.user?.role === "STUDENT"}
           />
         </FormControl>
 
@@ -138,7 +138,7 @@ const ProjectEditForm = ({
                   onChange={(e) =>
                     handleMilestoneChange(index, "title", e.target.value)
                   }
-                  isDisabled={session?.user?.role === "STUDENT"}
+                  readOnly={session?.user?.role === "STUDENT"}
                 />
               </FormControl>
               <FormControl mt={2}>
@@ -148,7 +148,7 @@ const ProjectEditForm = ({
                   onChange={(e) =>
                     handleMilestoneChange(index, "description", e.target.value)
                   }
-                  isDisabled={session?.user?.role === "STUDENT"}
+                  readOnly={session?.user?.role === "STUDENT"}
                 />
               </FormControl>
               <FormControl mt={2}>
@@ -159,6 +159,11 @@ const ProjectEditForm = ({
                     handleMilestoneChange(index, "status", e.target.value)
                   }
                   isDisabled={session?.user?.role === "STUDENT"}
+                  sx={{
+                    color: session?.user?.role === "STUDENT" ? "black" : undefined,
+                    opacity: "1 !important",
+                    bg: session?.user?.role === "STUDENT" ? "gray.50" : undefined
+                  }}
                 >
                   {Object.values(ProjectMilestoneStatus).map((status) => (
                     <option key={status} value={status}>
@@ -181,52 +186,66 @@ const ProjectEditForm = ({
                       new Date(e.target.value),
                     )
                   }
-                  isDisabled={session?.user?.role === "STUDENT"}
+                  isReadOnly={session?.user?.role === "STUDENT"}
                 />
               </FormControl>
             </Box>
           ))}
         </Box>
         <FormControl width="100%">
-          <FormLabel fontSize="lg">メンバーを選択</FormLabel>
+          <FormLabel fontSize="lg">
+            {session?.user?.role === "STUDENT" ? "メンバー" : "メンバーを選択"}
+          </FormLabel>
           <Box border="1px" borderColor="gray.200" p={4} borderRadius="md">
-            <CheckboxGroup
-              onChange={handleMemberSelect}
-              value={selectedMemberIds}
-              isDisabled={session?.user?.role === "STUDENT"}
-            >
+            {session?.user?.role === "STUDENT" ? (
               <Stack spacing={2}>
-                {labMembers.map((member) => (
-                  <Checkbox
-                    key={member.id}
-                    value={member.id}
-                    isDisabled={registeredMembers.includes(member.id)}
-                  >
-                    {member.username}{" "}
-                    {registeredMembers.includes(member.id) && "(登録済み)"}
-                  </Checkbox>
-                ))}
+                {labMembers
+                  .filter(member => registeredMembers.includes(member.id))
+                  .map((member) => (
+                    <Box key={member.id} p={1}>
+                      {member.username}
+                    </Box>
+                  ))}
               </Stack>
-            </CheckboxGroup>
+            ) : (
+              <CheckboxGroup
+                onChange={handleMemberSelect}
+                value={selectedMemberIds}
+              >
+                <Stack spacing={2}>
+                  {labMembers.map((member) => (
+                    <Checkbox
+                      key={member.id}
+                      value={member.id}
+                      isDisabled={registeredMembers.includes(member.id)}
+                    >
+                      {member.username}{" "}
+                      {registeredMembers.includes(member.id) && "(登録済み)"}
+                    </Checkbox>
+                  ))}
+                </Stack>
+              </CheckboxGroup>
+            )}
           </Box>
         </FormControl>
-        <Button
-          mt={2}
-          onClick={handleRegister}
-          isDisabled={
-            selectedMemberIds.length === 0 || session?.user?.role === "STUDENT"
-          }
-          colorScheme="blue"
-        >
-          選択したメンバーを登録
-        </Button>
-        <Button
-          type="submit"
-          colorScheme="blue"
-          isDisabled={session?.user?.role === "STUDENT"}
-        >
-          更新
-        </Button>
+        {session?.user?.role !== "STUDENT" && (
+          <>
+            <Button
+              mt={2}
+              onClick={handleRegister}
+              isDisabled={selectedMemberIds.length === 0}
+              colorScheme="blue"
+            >
+              選択したメンバーを登録
+            </Button>
+            <Button
+              type="submit"
+              colorScheme="blue"
+            >
+              更新
+            </Button>
+          </>
+        )}
         {success && <Box color="green.500">{success}</Box>}
       </VStack>
     </form>
