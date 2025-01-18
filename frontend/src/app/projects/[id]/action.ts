@@ -23,6 +23,7 @@ export const getProject = async (projectId: string): Promise<responseData> => {
     const res = await fetch(path, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
+      cache: 'no-store',
     });
 
     const data = await res.json();
@@ -71,6 +72,7 @@ export const getLabMenbers = async (labId: string): Promise<responseData01> => {
     const res = await fetch(path, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
+      cache: 'no-store',
     });
     const data = await res.json();
     const status = res.status;
