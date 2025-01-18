@@ -103,14 +103,17 @@ const ProjectList = ({ projects: initialProjects }: Props) => {
                   )}
                 </Td>
                 <Td>
-                  {new Date(
-                    project.milestones?.[0]?.completionDate ?? "",
-                  ).toLocaleDateString("ja-JP", {
-                    year: "numeric",
-                    month: "2-digit",
-                    day: "2-digit",
-                    timeZone: "Asia/Tokyo",
-                  })}
+                  {project.milestones?.[0]?.completionDate 
+                    ? new Date(project.milestones[0].completionDate).toLocaleDateString(
+                        "ja-JP",
+                        {
+                          year: "numeric",
+                          month: "2-digit",
+                          day: "2-digit",
+                          timeZone: "Asia/Tokyo",
+                        },
+                      )
+                    : "-"}
                 </Td>
                 {canDelete && (
                   <Td>
