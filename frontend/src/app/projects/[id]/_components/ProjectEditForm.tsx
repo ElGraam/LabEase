@@ -15,11 +15,9 @@ import {
 import { redirect, useRouter } from "next/navigation";
 
 import { useSession } from "next-auth/react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
-  getProject,
   updateProject,
-  getLabMenbers,
   projectRegister,
 } from "../action";
 import {
@@ -29,45 +27,27 @@ import {
   Users,
 } from "@/types";
 
-const ProjectEditForm = ({ projectId }: { projectId: string }) => {
-  const { data: session, status } = useSession(); // セッションからユーザー情報を取得
+const ProjectEditForm = ({ 
+  projectId,
+  projectData,
+  labMembers,
+}: { 
+  projectId: string;
+  projectData: Project;
+  labMembers: Users[];
+}) => {
+  const { data: session, status } = useSession();
   if (!session) redirect("/auth/signin");
 
   const [success, setSuccess] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [milestones, setMilestones] = useState<ProjectMilestone[]>([]);
-  const [project, setProject] = useState<Project | null>(null);
-  const [labMembers, setLabMembers] = useState<Users[]>([]);
+  const [title, setTitle] = useState(projectData.title);
+  const [description, setDescription] = useState(projectData.description || "");
+  const [milestones, setMilestones] = useState<ProjectMilestone[]>(projectData.milestones);
   const [selectedMemberIds, setSelectedMemberIds] = useState<string[]>([]);
-  const [registeredMembers, setRegisteredMembers] = useState<string[]>([]);
+  const [registeredMembers, setRegisteredMembers] = useState<string[]>(
+    projectData.members ? projectData.members.map((m: any) => m.userId) : []
+  );
   const router = useRouter();
-  useEffect(() => {
-    const fetchProject = async () => {
-      const projectData = await getProject(projectId);
-      setProject(projectData.project);
-      setTitle(projectData.project.title);
-      setDescription(projectData.project.description || "");
-      setMilestones(projectData.project.milestones);
-      if (projectData.project.members) {
-        setRegisteredMembers(
-          projectData.project.members.map((m: any) => m.userId),
-        );
-      }
-    };
-    fetchProject();
-    setIsLoading(false);
-  }, [projectId]);
-
-  useEffect(() => {
-    (async () => {
-      if (project && project.labId) {
-        const { members } = await getLabMenbers(project.labId);
-        setLabMembers(members);
-      }
-    })();
-  }, [project]);
 
   const handleMilestoneChange = (
     index: number,
@@ -119,7 +99,7 @@ const ProjectEditForm = ({ projectId }: { projectId: string }) => {
     
   };
 
-  if (!project) return <Box>Loading...</Box>;
+  if (!projectData) return <Box>Loading...</Box>;
 
   return (
     <form onSubmit={handleEditProject}>
