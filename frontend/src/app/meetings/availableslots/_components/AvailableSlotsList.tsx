@@ -41,7 +41,7 @@ const AvailableSlotsList = ({ availableSlots, onDelete }: Props) => {
         <Tbody>
           {slots.length === 0 ? (
             <Tr>
-              <Td colSpan={4} textAlign="center">空き時間が登録されていません</Td>
+              <Td colSpan={4} textAlign="center">No available time slots registered</Td>
             </Tr>
           ) : (
             slots.map((slot: AvailableSlot) => (

@@ -18,7 +18,7 @@ export default async function CreateMeetingPage() {
   return (
     <Container maxW="4xl" py={8}>
       <VStack spacing={8} align="stretch">
-        <Heading size="lg">新規会議作成</Heading>
+        <Heading size="lg">Create New Meeting</Heading>
         <CreateMeetingForm initialLabMembers={labMembers} />
       </VStack>
     </Container>

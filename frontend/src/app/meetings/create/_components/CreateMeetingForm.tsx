@@ -59,8 +59,8 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
 
       if (startDateTime >= endDateTime) {
         toast({
-          title: "時間の指定が不正です",
-          description: "終了時間は開始時間より後に設定してください",
+          title: "Invalid Time Selection",
+          description: "End time must be after start time",
           status: "error",
           duration: 3000,
           isClosable: true,
@@ -79,7 +79,7 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
       );
       
       toast({
-        title: "会議を作成しました",
+        title: "Meeting Created",
         status: "success",
         duration: 3000,
         isClosable: true,
@@ -87,8 +87,8 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
       router.push("/meetings");
     } catch (error) {
       toast({
-        title: "エラーが発生しました",
-        description: "会議の作成に失敗しました",
+        title: "Error Occurred",
+        description: "Failed to create meeting",
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -125,7 +125,7 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
     <Box as="form" onSubmit={handleSubmit}>
       <VStack spacing={6} align="stretch">
         <FormControl isRequired>
-          <FormLabel>タイトル</FormLabel>
+          <FormLabel>Title</FormLabel>
           <Input
             value={formData.title}
             onChange={e => setFormData(prev => ({ ...prev, title: e.target.value }))}
@@ -133,7 +133,7 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
         </FormControl>
 
         <FormControl>
-          <FormLabel>説明</FormLabel>
+          <FormLabel>Description</FormLabel>
           <Textarea
             value={formData.description}
             onChange={e => setFormData(prev => ({ ...prev, description: e.target.value }))}
@@ -142,7 +142,7 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
 
         <SimpleGrid columns={3} spacing={4}>
           <FormControl isRequired>
-            <FormLabel>日付</FormLabel>
+            <FormLabel>Date</FormLabel>
             <Input
               type="date"
               value={formData.date}
@@ -151,13 +151,13 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
           </FormControl>
 
           <FormControl isRequired>
-            <FormLabel>開始時間</FormLabel>
+            <FormLabel>Start Time</FormLabel>
             <Select
               value={formData.startTime}
               onChange={e => setFormData(prev => ({ ...prev, startTime: e.target.value }))}
               required
             >
-              <option value="">開始時間を選択</option>
+              <option value="">Select start time</option>
               {timeOptions.map((time) => (
                 <option key={`start-${time}`} value={time}>
                   {time}
@@ -167,13 +167,13 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
           </FormControl>
 
           <FormControl isRequired>
-            <FormLabel>終了時間</FormLabel>
+            <FormLabel>End Time</FormLabel>
             <Select
               value={formData.endTime}
               onChange={e => setFormData(prev => ({ ...prev, endTime: e.target.value }))}
               required
             >
-              <option value="">終了時間を選択</option>
+              <option value="">Select end time</option>
               {timeOptions.map((time) => (
                 <option key={`end-${time}`} value={time}>
                   {time}
@@ -184,19 +184,19 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
         </SimpleGrid>
 
         <FormControl isRequired>
-          <FormLabel>会議タイプ</FormLabel>
+          <FormLabel>Meeting Type</FormLabel>
           <Select
             value={formData.type}
             onChange={e => setFormData(prev => ({ ...prev, type: e.target.value as MeetingType }))}
           >
-            <option value={MeetingType.REGULAR}>定例会議</option>
-            <option value={MeetingType.SPONTANEOUS}>臨時会議</option>
+            <option value={MeetingType.REGULAR}>Regular Meeting</option>
+            <option value={MeetingType.SPONTANEOUS}>Spontaneous Meeting</option>
           </Select>
         </FormControl>
 
         <Box>
           <Heading size="md" mb={4}>
-            参加者選択 (全{initialLabMembers.members.length}人)
+            Select Participants ({initialLabMembers.members.length} total)
           </Heading>
           <SimpleGrid columns={[1, 2, 3]} spacing={4}>
             {displayMembers.map((member) => (
@@ -216,10 +216,10 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
           colorScheme="blue"
           size="lg"
           isLoading={loading}
-          loadingText="作成中..."
+          loadingText="Creating..."
           isDisabled={selectedMembers.length === 0}
         >
-          会議を作成
+          Create Meeting
         </Button>
       </VStack>
     </Box>
