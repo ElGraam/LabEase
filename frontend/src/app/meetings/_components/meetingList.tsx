@@ -16,11 +16,19 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  IconButton
+  IconButton,
+  HStack,
+  Avatar,
+  Tag,
+  TagLabel,
+  Icon,
+  Flex,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { FiUsers } from "react-icons/fi";
 
 type Props = {
   meetings: Meeting[];
@@ -75,110 +83,135 @@ export default function MeetingList({ meetings: initialMeetings }: Props) {
     );
   }
 
-  if (meetings.length === 0) {
-    return (
-      <Box textAlign="center" py={4}>
-        <Alert status="info">
-          <AlertIcon />
-          There are no scheduled meetings.
-        </Alert>
-      </Box>
-    );
-  }
-
   return (
     <>
-      <Box display="flex" flexDirection="column" gap={4}>
-        {meetings.map((meeting) => (
-          <Box
-            key={meeting.id}
-            borderWidth="1px"
-            borderRadius="lg"
-            p={4}
-            shadow="sm"
-            _hover={{ shadow: "md" }}
-            transition="box-shadow 0.2s"
+      <Box mb={4}>
+        <HStack spacing={4}>
+          <Button
+            as={Link}
+            href="/meetings/create"
+            colorScheme="blue"
           >
+            Create Meeting
+          </Button>
+          <Button
+            as={Link}
+            href="/meetings/availableslots"
+            colorScheme="green"
+          >
+            Manage Available Time
+          </Button>
+        </HStack>
+      </Box>
+
+      {meetings.length === 0 ? (
+        <Box textAlign="center" py={4}>
+          <Alert status="info">
+            <AlertIcon />
+            There are no scheduled meetings.
+          </Alert>
+        </Box>
+      ) : (
+        <Box display="flex" flexDirection="column" gap={4}>
+          {meetings.map((meeting) => (
             <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="flex-start"
+              key={meeting.id}
+              borderWidth="1px"
+              borderRadius="lg"
+              p={4}
+              shadow="sm"
+              _hover={{ shadow: "md" }}
+              transition="box-shadow 0.2s"
             >
-              <Box>
-                <Box as="h2" fontSize="xl" fontWeight="semibold">
-                  {meeting.title}
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="flex-start"
+              >
+                <Box>
+                  <Box as="h2" fontSize="xl" fontWeight="semibold">
+                    {meeting.title}
+                  </Box>
+                  <Box color="gray.600">{meeting.description}</Box>
                 </Box>
-                <Box color="gray.600">{meeting.description}</Box>
-              </Box>
-              <Box display="flex" gap={2} alignItems="center">
-                <Box
-                  bg="blue.100"
-                  color="blue.800"
-                  px={2}
-                  py={1}
-                  borderRadius="md"
-                  fontSize="sm"
-                >
-                  {meeting.type}
-                </Box>
-                {canDelete && (
-                  <IconButton
-                    aria-label="Delete meeting"
-                    icon={<DeleteIcon />}
-                    size="sm"
-                    colorScheme="red"
-                    variant="ghost"
-                    onClick={() => handleDeleteClick(meeting.id)}
-                  />
-                )}
-              </Box>
-            </Box>
-            <Box mt={4} fontSize="sm" color="gray.500">
-              <Box>
-                Start:{" "}
-                {new Date(meeting.startTime).toLocaleString("ja-JP", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  timeZone: "Asia/Tokyo"
-                })}
-              </Box>
-              <Box>
-                End:{" "}
-                {new Date(meeting.endTime).toLocaleString("ja-JP", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  timeZone: "Asia/Tokyo"
-                })}
-              </Box>
-            </Box>
-            <Box mt={2}>
-              <Box as="h3" fontSize="sm" fontWeight="semibold">
-                Participants:
-              </Box>
-              <Box display="flex" flexWrap="wrap" gap={2} mt={1}>
-                {meeting.participants.map((participant) => (
+                <Box display="flex" gap={2} alignItems="center">
                   <Box
-                    key={participant.id}
-                    bg="gray.100"
+                    bg="blue.100"
+                    color="blue.800"
                     px={2}
                     py={1}
                     borderRadius="md"
                     fontSize="sm"
                   >
-                    {participant.user.username}
+                    {meeting.type}
                   </Box>
-                ))}
+                  {canDelete && (
+                    <IconButton
+                      aria-label="Delete meeting"
+                      icon={<DeleteIcon />}
+                      size="sm"
+                      colorScheme="red"
+                      variant="ghost"
+                      onClick={() => handleDeleteClick(meeting.id)}
+                    />
+                  )}
+                </Box>
+              </Box>
+              <Box mt={4} fontSize="sm" color="gray.500">
+                <Box>
+                  Start:{" "}
+                  {new Date(meeting.startTime).toLocaleString("ja-JP", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    timeZone: "Asia/Tokyo"
+                  })}
+                </Box>
+                <Box>
+                  End:{" "}
+                  {new Date(meeting.endTime).toLocaleString("ja-JP", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    timeZone: "Asia/Tokyo"
+                  })}
+                </Box>
+              </Box>
+              <Box mt={2}>
+                <HStack>
+                  <Icon as={FiUsers} />
+                  <Box as="h3" fontSize="sm" fontWeight="semibold">
+                    Participants:
+                  </Box>
+                </HStack>
+                <Flex wrap="wrap" gap={2} mt={1}>
+                  {meeting.participants.map((participant) => (
+                    <Tag
+                      key={participant.id}
+                      size="lg"
+                      borderRadius="full"
+                      variant="subtle"
+                      colorScheme="blue"
+                    >
+                      <Avatar
+                        size="xs"
+                        name={participant.user.username}
+                        ml={-1}
+                        mr={2}
+                      />
+                      <TagLabel>{participant.user.username}</TagLabel>
+                    </Tag>
+                  ))}
+                </Flex>
               </Box>
             </Box>
-          </Box>
-        ))}
-      </Box>
+          ))}
+        </Box>
+      )}
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
