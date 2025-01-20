@@ -16,24 +16,24 @@ import { redirect } from "next/navigation";
 import { getLab } from "./action";
 import { Users, Project } from "@/types";
 import { authOption } from "@/lib/next-auth/auth";
-// ラボ詳細ページのコンポーネント
+// Lab detail page component
 const LabPage = async ({ params }: { params: { id: string } }) => {
   const session = await getServerSession(authOption);
 
-  // 未認証の場合はサインインページにリダイレクト
+  // Redirect to sign in page if not authenticated
   if (!session) {
     redirect("/auth/signin");
   }
 
-  // ラボ情報を取得
+  // Get lab information
   const res = await getLab(params.id);
   const { lab, professor, status } = res;
   if (status !== 200) {
-    // エラーハンドリング
-    return <div>研究室情報の取得に失敗しました</div>;
+    // Error handling
+    return <div>Failed to retrieve laboratory information</div>;
   }
 
-  // スタイル定義
+  // Style definitions
   const containerStyle: SystemStyleObject = {
     maxWidth: "1200px",
     margin: "60px auto",
@@ -54,28 +54,28 @@ const LabPage = async ({ params }: { params: { id: string } }) => {
 
         <Box w="100%">
           <Heading as="h2" size="md" mb={4}>
-            研究室概要
+            Laboratory Overview
           </Heading>
           <Text>{lab.description}</Text>
         </Box>
 
         <Box w="100%">
           <Heading as="h2" size="md" mb={4}>
-            指導教員
+            Supervisor
           </Heading>
           <Text>{professor.username}</Text>
         </Box>
 
         <Box w="100%">
           <Heading as="h2" size="md" mb={4}>
-            メンバー一覧
+            Members List
           </Heading>
           <Table variant="simple">
             <Thead>
               <Tr>
-                <Th>名前</Th>
-                <Th>メールアドレス</Th>
-                <Th>役割</Th>
+                <Th>Name</Th>
+                <Th>Email</Th>
+                <Th>Role</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -92,13 +92,13 @@ const LabPage = async ({ params }: { params: { id: string } }) => {
 
         <Box w="100%">
           <Heading as="h2" size="md" mb={4}>
-            プロジェクト一覧
+            Projects List
           </Heading>
           <Table variant="simple">
             <Thead>
               <Tr>
-                <Th>プロジェクト名</Th>
-                <Th>説明</Th>
+                <Th>Project Name</Th>
+                <Th>Description</Th>
               </Tr>
             </Thead>
             <Tbody>
