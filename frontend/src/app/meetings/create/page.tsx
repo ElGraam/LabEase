@@ -11,7 +11,9 @@ export default async function CreateMeetingPage() {
   if (!session) {
     redirect("/auth/signin");
   }
-
+  if (session.user.role === "STUDENT") {
+    redirect("/meetings");
+  }
   const labId = session.user.labId ?? "";
   const labMembers = await getLabAvailableSlots(labId);
 

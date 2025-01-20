@@ -43,6 +43,7 @@ export default function MeetingList({ meetings: initialMeetings }: Props) {
   const role = session?.user?.role;
 
   const canDelete = role === Role.PROFESSOR || role === Role.SUB_INSTRUCTOR;
+  const canCreate = role === Role.PROFESSOR || role === Role.SUB_INSTRUCTOR;
 
   const handleDeleteClick = (meetingId: string) => {
     setTargetMeetingId(meetingId);
@@ -87,13 +88,15 @@ export default function MeetingList({ meetings: initialMeetings }: Props) {
     <>
       <Box mb={4}>
         <HStack spacing={4}>
-          <Button
-            as={Link}
-            href="/meetings/create"
-            colorScheme="blue"
-          >
-            Create Meeting
-          </Button>
+          {canCreate && (
+            <Button
+              as={Link}
+              href="/meetings/create"
+              colorScheme="blue"
+            >
+              Create Meeting
+            </Button>
+          )}
           <Button
             as={Link}
             href="/meetings/availableslots"
@@ -188,7 +191,12 @@ export default function MeetingList({ meetings: initialMeetings }: Props) {
                     Participants:
                   </Box>
                 </HStack>
-                <Flex wrap="wrap" gap={2} mt={1}>
+                <Box 
+                  display="flex" 
+                  flexWrap="wrap" 
+                  gap={2} 
+                  mt={1}
+                >
                   {meeting.participants.map((participant) => (
                     <Tag
                       key={participant.id}
@@ -206,7 +214,7 @@ export default function MeetingList({ meetings: initialMeetings }: Props) {
                       <TagLabel>{participant.user.username}</TagLabel>
                     </Tag>
                   ))}
-                </Flex>
+                </Box>
               </Box>
             </Box>
           ))}
