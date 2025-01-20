@@ -1,5 +1,5 @@
 "use server";
-import { Lab, Users } from "@/types";
+import { Lab, Users, Role } from "@/types";
 
 type responseData = {
   lab: Lab;
@@ -20,14 +20,31 @@ export const getLab = async (labId: string): Promise<responseData> => {
     const data = await res.json();
     const status = res.status;
 
-    // labとprofessorの情報を含むデータを返却
     if (status === 200) {
+      // メンバーをroleで並び替え
+      const sortedMembers = data.members?.sort((a: Users, b: Users) => {
+        // roleの優先順位を定義
+        const roleOrder = {
+          [Role.PROFESSOR]: 1,
+          [Role.SUB_INSTRUCTOR]: 2,
+          [Role.STUDENT]: 3,
+        };
+
+        // roleの優先順位で比較
+        const orderDiff = roleOrder[a.role] - roleOrder[b.role];
+        if (orderDiff !== 0) return orderDiff - 1;
+
+        // 同じroleの場合は名前で並び替え
+        return a.username.localeCompare(b.username);
+      });
+
       return {
         status,
         lab: {
-          ...data, // lab情報とメンバー、プロジェクト情報
+          ...data,
+          members: sortedMembers,
         },
-        professor: data.professor, // 教授情報
+        professor: data.professor,
       };
     }
 
