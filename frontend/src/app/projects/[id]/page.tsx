@@ -1,5 +1,4 @@
-import React from "react";
-import ProjectEditForm from "./_components/ProjectEditForm";
+import ProjectDetailView from "./_components/ProjectDetailView";
 import { getProject, getLabMenbers } from "./action";
 import { getServerSession } from "next-auth";
 import { authOption } from "@/lib/next-auth/auth";
@@ -16,8 +15,7 @@ const ProjectPage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <div>
-      <h1>プロジェクト</h1>
-      <ProjectEditForm 
+      <ProjectDetailView
         projectId={projectId}
         projectData={projectData.project}
         labMembers={members}
