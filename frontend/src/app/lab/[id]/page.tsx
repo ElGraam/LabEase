@@ -10,6 +10,8 @@ import {
   Th,
   Td,
   SystemStyleObject,
+  Card,
+  CardBody,
 } from "@chakra-ui/react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -33,16 +35,45 @@ const LabPage = async ({ params }: { params: { id: string } }) => {
     return <div>Failed to retrieve laboratory information</div>;
   }
 
-  // Style definitions
+  // Static style definitions
   const containerStyle: SystemStyleObject = {
     maxWidth: "1200px",
     margin: "60px auto",
     padding: "0 20px",
+    bg: "gray.50",
+    minHeight: "100vh",
   };
 
   const headingStyle: SystemStyleObject = {
-    fontSize: "app.header1",
+    fontSize: ["2xl", "3xl", "4xl"],
+    fontWeight: "bold",
     marginBottom: "30px",
+    color: "blue.600",
+    borderBottom: "4px solid",
+    borderColor: "blue.400",
+    paddingBottom: "8px",
+  };
+
+  const cardStyle: SystemStyleObject = {
+    w: "100%",
+    bg: "white",
+    boxShadow: "xl",
+    rounded: "xl",
+    p: 6,
+    mb: 4,
+    transition: "all 0.3s ease",
+    _hover: {
+      transform: "translateY(-2px)",
+      boxShadow: "2xl",
+    },
+  };
+
+  const tableStyle: SystemStyleObject = {
+    bg: "white",
+    borderRadius: "lg",
+    overflow: "hidden",
+    boxShadow: "sm",
+    w: "100%",
   };
 
   return (
@@ -52,65 +83,88 @@ const LabPage = async ({ params }: { params: { id: string } }) => {
           {lab.name}
         </Heading>
 
-        <Box w="100%">
-          <Heading as="h2" size="md" mb={4}>
-            Laboratory Overview
-          </Heading>
-          <Text>{lab.description}</Text>
-        </Box>
+        <Card sx={cardStyle}>
+          <CardBody>
+            <Heading as="h2" size="md" mb={4} color="blue.600">
+              Laboratory Overview
+            </Heading>
+            <Text color="gray.700" fontSize="lg" lineHeight="tall">
+              {lab.description}
+            </Text>
+          </CardBody>
+        </Card>
 
-        <Box w="100%">
-          <Heading as="h2" size="md" mb={4}>
-            Supervisor
-          </Heading>
-          <Text>{professor.username}</Text>
-        </Box>
+        <Card sx={cardStyle}>
+          <CardBody>
+            <Heading as="h2" size="md" mb={4} color="blue.600">
+              Supervisor
+            </Heading>
+            <Text color="gray.700" fontSize="lg" display="flex" alignItems="center" gap={2}>
+              <Box as="span" color="blue.500"></Box>
+              {professor.username}
+            </Text>
+          </CardBody>
+        </Card>
 
-        <Box w="100%">
-          <Heading as="h2" size="md" mb={4}>
-            Members List
-          </Heading>
-          <Table variant="simple">
-            <Thead>
-              <Tr>
-                <Th>Name</Th>
-                <Th>Email</Th>
-                <Th>Role</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {lab.members.map((member: Users) => (
-                <Tr key={member.id}>
-                  <Td>{member.username}</Td>
-                  <Td>{member.email}</Td>
-                  <Td>{member.role}</Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </Box>
+        <Card sx={cardStyle}>
+          <CardBody>
+            <Heading as="h2" size="md" mb={4} color="blue.600">
+              Members List
+            </Heading>
+            <Box sx={tableStyle}>
+              <Table variant="simple">
+                <Thead bg="blue.50">
+                  <Tr>
+                    <Th color="blue.600">Name</Th>
+                    <Th color="blue.600">Email</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {lab.members.map((member: Users) => (
+                    <Tr 
+                      key={member.id} 
+                      _hover={{ bg: "blue.50" }}
+                      transition="background-color 0.2s"
+                    >
+                      <Td fontWeight="medium">{member.username}</Td>
+                      <Td>{member.email}</Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </Box>
+          </CardBody>
+        </Card>
 
-        <Box w="100%">
-          <Heading as="h2" size="md" mb={4}>
-            Projects List
-          </Heading>
-          <Table variant="simple">
-            <Thead>
-              <Tr>
-                <Th>Project Name</Th>
-                <Th>Description</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {lab.projects.map((project: Project) => (
-                <Tr key={project.id}>
-                  <Td>{project.title}</Td>
-                  <Td>{project.description}</Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </Box>
+        <Card sx={cardStyle}>
+          <CardBody>
+            <Heading as="h2" size="md" mb={4} color="blue.600">
+              Projects List
+            </Heading>
+            <Box sx={tableStyle}>
+              <Table variant="simple">
+                <Thead bg="blue.50">
+                  <Tr>
+                    <Th color="blue.600">Project Name</Th>
+                    <Th color="blue.600">Description</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {lab.projects.map((project: Project) => (
+                    <Tr 
+                      key={project.id} 
+                      _hover={{ bg: "blue.50" }}
+                      transition="background-color 0.2s"
+                    >
+                      <Td fontWeight="medium">{project.title}</Td>
+                      <Td>{project.description}</Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </Box>
+          </CardBody>
+        </Card>
       </VStack>
     </Box>
   );
