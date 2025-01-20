@@ -71,7 +71,7 @@ const ProjectDetailView = ({
               colorScheme="blue"
               variant="outline"
             >
-              編集
+              Edit
             </Button>
           )}
         </Flex>
@@ -79,9 +79,9 @@ const ProjectDetailView = ({
         <Card>
           <CardHeader>
             <HStack justify="space-between">
-              <Heading size="md">全体の進捗</Heading>
+              <Heading size="md">Overall Progress</Heading>
               <Text color="gray.600">
-                {completedMilestones} / {totalMilestones} マイルストーン完了
+                {completedMilestones} / {totalMilestones} Milestones Completed
               </Text>
             </HStack>
           </CardHeader>
@@ -98,7 +98,7 @@ const ProjectDetailView = ({
 
         <Card>
           <CardHeader>
-            <Heading size="md">マイルストーン</Heading>
+            <Heading size="md">Milestones</Heading>
           </CardHeader>
           <CardBody>
             <Stack spacing={4}>
@@ -137,14 +137,14 @@ const ProjectDetailView = ({
                       <HStack>
                         <Icon as={FiCalendar} color="gray.500" />
                         <Text fontSize="sm" color="gray.600">
-                          期限: {new Date(milestone.dueDate).toLocaleDateString('ja-JP')}
+                          Due: {new Date(milestone.dueDate).toLocaleDateString('ja-JP')}
                         </Text>
                       </HStack>
                       {milestone.completionDate && (
                         <HStack>
                           <Icon as={FiCalendar} color="green.500" />
                           <Text fontSize="sm" color="green.600">
-                            完了: {new Date(milestone.completionDate).toLocaleDateString('ja-JP')}
+                            Completed: {new Date(milestone.completionDate).toLocaleDateString('ja-JP')}
                           </Text>
                         </HStack>
                       )}
@@ -160,7 +160,7 @@ const ProjectDetailView = ({
           <CardHeader>
             <HStack>
               <Icon as={FiUsers} />
-              <Heading size="md">プロジェクトメンバー</Heading>
+              <Heading size="md">Project Members</Heading>
             </HStack>
           </CardHeader>
           <CardBody>

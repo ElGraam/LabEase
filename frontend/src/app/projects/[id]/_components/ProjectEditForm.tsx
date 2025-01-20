@@ -91,7 +91,7 @@ const ProjectEditForm = ({
       if (session?.user?.role != "STUDENT") {
         await updateProject(title, description, formattedMilestones, projectId);
         setSuccess("更新しました");
-        showSuccessToast("更新しました");
+        showSuccessToast("Project updated successfully");
         router.refresh();
       }
     } catch (error) {
@@ -104,7 +104,7 @@ const ProjectEditForm = ({
       if (session?.user?.role != "STUDENT") {
         await projectRegister(projectId, selectedMemberIds);
         setSuccess("メンバーを登録しました");
-        showSuccessToast("メンバーを登録しました");
+        showSuccessToast("Members registered successfully");
         router.refresh();
       }
     } catch (error) {
@@ -119,7 +119,7 @@ const ProjectEditForm = ({
 
   const showSuccessToast = (message: string) => {
     toast({
-      title: "成功",
+      title: "Success",
       description: message,
       status: "success",
       duration: 3000,
@@ -135,12 +135,12 @@ const ProjectEditForm = ({
         <VStack spacing={6}>
           <Card w="100%">
             <CardHeader>
-              <Heading size="md">基本情報</Heading>
+              <Heading size="md">Basic Information</Heading>
             </CardHeader>
             <CardBody>
               <VStack spacing={4}>
                 <FormControl>
-                  <FormLabel>プロジェクトタイトル</FormLabel>
+                  <FormLabel>Project Title</FormLabel>
                   <Input
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
@@ -148,7 +148,7 @@ const ProjectEditForm = ({
                   />
                 </FormControl>
                 <FormControl>
-                  <FormLabel>プロジェクト説明</FormLabel>
+                  <FormLabel>Project Description</FormLabel>
                   <Textarea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
@@ -162,7 +162,7 @@ const ProjectEditForm = ({
 
           <Card w="100%">
             <CardHeader>
-              <Heading size="md">マイルストーン</Heading>
+              <Heading size="md">Milestones</Heading>
             </CardHeader>
             <CardBody>
               <Stack spacing={6}>
@@ -181,7 +181,7 @@ const ProjectEditForm = ({
                     <Grid templateColumns="repeat(2, 1fr)" gap={4}>
                       <GridItem colSpan={2}>
                         <FormControl>
-                          <FormLabel>タイトル</FormLabel>
+                          <FormLabel>Title</FormLabel>
                           <Input
                             value={milestone.title}
                             onChange={(e) =>
@@ -192,7 +192,7 @@ const ProjectEditForm = ({
                       </GridItem>
                       <GridItem colSpan={2}>
                         <FormControl>
-                          <FormLabel>説明</FormLabel>
+                          <FormLabel>Description</FormLabel>
                           <Textarea
                             value={milestone.description || ""}
                             onChange={(e) =>
@@ -203,7 +203,7 @@ const ProjectEditForm = ({
                       </GridItem>
                       <GridItem>
                         <FormControl>
-                          <FormLabel>ステータス</FormLabel>
+                          <FormLabel>Status</FormLabel>
                           <Select
                             value={milestone.status}
                             onChange={(e) =>
@@ -220,7 +220,7 @@ const ProjectEditForm = ({
                       </GridItem>
                       <GridItem>
                         <FormControl>
-                          <FormLabel>期限</FormLabel>
+                          <FormLabel>Due Date</FormLabel>
                           <Input
                             type="date"
                             value={new Date(milestone.dueDate).toISOString().split("T")[0]}
@@ -240,8 +240,8 @@ const ProjectEditForm = ({
           <Card w="100%">
             <CardHeader>
               <HStack justify="space-between">
-                <Heading size="md">メンバー管理</Heading>
-                <Tooltip label="選択したメンバーを登録">
+                <Heading size="md">Member Management</Heading>
+                <Tooltip label="Register Selected Members">
                   <IconButton
                     aria-label="Register members"
                     icon={<FiUserPlus />}
@@ -265,7 +265,7 @@ const ProjectEditForm = ({
                         <Avatar size="sm" name={member.username} />
                         <Text>{member.username}</Text>
                         {registeredMembers.includes(member.id) && (
-                          <Badge colorScheme="green">登録済み</Badge>
+                          <Badge colorScheme="green">Registered</Badge>
                         )}
                       </HStack>
                     </Checkbox>
@@ -282,7 +282,7 @@ const ProjectEditForm = ({
             leftIcon={<FiSave />}
             w="full"
           >
-            保存
+            Save
           </Button>
         </VStack>
       </form>
