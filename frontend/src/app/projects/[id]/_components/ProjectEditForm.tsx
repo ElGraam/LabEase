@@ -11,8 +11,23 @@ import {
   CheckboxGroup,
   Stack,
   Select,
+  Container,
+  Card,
+  CardHeader,
+  CardBody,
+  Heading,
+  IconButton,
+  Tooltip,
+  useToast,
+  Grid,
+  GridItem,
+  HStack,
+  Avatar,
+  Text,
+  Badge,
 } from "@chakra-ui/react";
 import { redirect, useRouter } from "next/navigation";
+import { FiSave, FiUserPlus } from "react-icons/fi";
 
 import { useSession } from "next-auth/react";
 import { useState } from "react";
@@ -48,6 +63,7 @@ const ProjectEditForm = ({
     projectData.members ? projectData.members.map((m: any) => m.userId) : []
   );
   const router = useRouter();
+  const toast = useToast();
 
   const handleMilestoneChange = (
     index: number,
@@ -75,6 +91,7 @@ const ProjectEditForm = ({
       if (session?.user?.role != "STUDENT") {
         await updateProject(title, description, formattedMilestones, projectId);
         setSuccess("更新しました");
+        showSuccessToast("更新しました");
         router.refresh();
       }
     } catch (error) {
@@ -87,6 +104,7 @@ const ProjectEditForm = ({
       if (session?.user?.role != "STUDENT") {
         await projectRegister(projectId, selectedMemberIds);
         setSuccess("メンバーを登録しました");
+        showSuccessToast("メンバーを登録しました");
         router.refresh();
       }
     } catch (error) {
@@ -99,156 +117,176 @@ const ProjectEditForm = ({
     
   };
 
+  const showSuccessToast = (message: string) => {
+    toast({
+      title: "成功",
+      description: message,
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+
   if (!projectData) return <Box>Loading...</Box>;
 
   return (
-    <form onSubmit={handleEditProject}>
-      <VStack spacing={4}>
-        <FormControl>
-          <FormLabel>プロジェクトタイトル</FormLabel>
-          <Input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            readOnly={session?.user?.role === "STUDENT"}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>プロジェクト説明</FormLabel>
-          <Textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            readOnly={session?.user?.role === "STUDENT"}
-          />
-        </FormControl>
+    <Container maxW="container.lg" py={8}>
+      <form onSubmit={handleEditProject}>
+        <VStack spacing={6}>
+          <Card w="100%">
+            <CardHeader>
+              <Heading size="md">基本情報</Heading>
+            </CardHeader>
+            <CardBody>
+              <VStack spacing={4}>
+                <FormControl>
+                  <FormLabel>プロジェクトタイトル</FormLabel>
+                  <Input
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    size="lg"
+                  />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>プロジェクト説明</FormLabel>
+                  <Textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    size="lg"
+                    minH="150px"
+                  />
+                </FormControl>
+              </VStack>
+            </CardBody>
+          </Card>
 
-        <Box w="100%">
-          <h2>マイルストーン</h2>
-          {milestones.map((milestone, index) => (
-            <Box
-              key={milestone.id}
-              p={4}
-              border="1px"
-              borderColor="gray.200"
-              mt={2}
-            >
-              <FormControl>
-                <FormLabel>タイトル</FormLabel>
-                <Input
-                  value={milestone.title}
-                  onChange={(e) =>
-                    handleMilestoneChange(index, "title", e.target.value)
-                  }
-                  readOnly={session?.user?.role === "STUDENT"}
-                />
-              </FormControl>
-              <FormControl mt={2}>
-                <FormLabel>説明</FormLabel>
-                <Textarea
-                  value={milestone.description || ""}
-                  onChange={(e) =>
-                    handleMilestoneChange(index, "description", e.target.value)
-                  }
-                  readOnly={session?.user?.role === "STUDENT"}
-                />
-              </FormControl>
-              <FormControl mt={2}>
-                <FormLabel>ステータス</FormLabel>
-                <Select
-                  value={milestone.status}
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                    handleMilestoneChange(index, "status", e.target.value)
-                  }
-                  isDisabled={session?.user?.role === "STUDENT"}
-                  sx={{
-                    color: session?.user?.role === "STUDENT" ? "black" : undefined,
-                    opacity: "1 !important",
-                    bg: session?.user?.role === "STUDENT" ? "gray.50" : undefined
-                  }}
-                >
-                  {Object.values(ProjectMilestoneStatus).map((status) => (
-                    <option key={status} value={status}>
-                      {status}
-                    </option>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControl mt={2}>
-                <FormLabel>期限</FormLabel>
-                <Input
-                  type="date"
-                  value={
-                    new Date(milestone.dueDate).toISOString().split("T")[0]
-                  }
-                  onChange={(e) =>
-                    handleMilestoneChange(
-                      index,
-                      "dueDate",
-                      new Date(e.target.value),
-                    )
-                  }
-                  isReadOnly={session?.user?.role === "STUDENT"}
-                />
-              </FormControl>
-            </Box>
-          ))}
-        </Box>
-        <FormControl width="100%">
-          <FormLabel fontSize="lg">
-            {session?.user?.role === "STUDENT" ? "メンバー" : "メンバーを選択"}
-          </FormLabel>
-          <Box border="1px" borderColor="gray.200" p={4} borderRadius="md">
-            {session?.user?.role === "STUDENT" ? (
-              <Stack spacing={2}>
-                {labMembers
-                  .filter(member => registeredMembers.includes(member.id))
-                  .map((member) => (
-                    <Box key={member.id} p={1}>
-                      {member.username}
-                    </Box>
-                  ))}
+          <Card w="100%">
+            <CardHeader>
+              <Heading size="md">マイルストーン</Heading>
+            </CardHeader>
+            <CardBody>
+              <Stack spacing={6}>
+                {milestones.map((milestone, index) => (
+                  <Box
+                    key={milestone.id}
+                    p={6}
+                    borderWidth="1px"
+                    borderRadius="lg"
+                    borderColor="gray.200"
+                    bg="white"
+                    shadow="sm"
+                    transition="all 0.2s"
+                    _hover={{ shadow: "md" }}
+                  >
+                    <Grid templateColumns="repeat(2, 1fr)" gap={4}>
+                      <GridItem colSpan={2}>
+                        <FormControl>
+                          <FormLabel>タイトル</FormLabel>
+                          <Input
+                            value={milestone.title}
+                            onChange={(e) =>
+                              handleMilestoneChange(index, "title", e.target.value)
+                            }
+                          />
+                        </FormControl>
+                      </GridItem>
+                      <GridItem colSpan={2}>
+                        <FormControl>
+                          <FormLabel>説明</FormLabel>
+                          <Textarea
+                            value={milestone.description || ""}
+                            onChange={(e) =>
+                              handleMilestoneChange(index, "description", e.target.value)
+                            }
+                          />
+                        </FormControl>
+                      </GridItem>
+                      <GridItem>
+                        <FormControl>
+                          <FormLabel>ステータス</FormLabel>
+                          <Select
+                            value={milestone.status}
+                            onChange={(e) =>
+                              handleMilestoneChange(index, "status", e.target.value)
+                            }
+                          >
+                            {Object.values(ProjectMilestoneStatus).map((status) => (
+                              <option key={status} value={status}>
+                                {status}
+                              </option>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </GridItem>
+                      <GridItem>
+                        <FormControl>
+                          <FormLabel>期限</FormLabel>
+                          <Input
+                            type="date"
+                            value={new Date(milestone.dueDate).toISOString().split("T")[0]}
+                            onChange={(e) =>
+                              handleMilestoneChange(index, "dueDate", new Date(e.target.value))
+                            }
+                          />
+                        </FormControl>
+                      </GridItem>
+                    </Grid>
+                  </Box>
+                ))}
               </Stack>
-            ) : (
-              <CheckboxGroup
-                onChange={handleMemberSelect}
-                value={selectedMemberIds}
-              >
-                <Stack spacing={2}>
+            </CardBody>
+          </Card>
+
+          <Card w="100%">
+            <CardHeader>
+              <HStack justify="space-between">
+                <Heading size="md">メンバー管理</Heading>
+                <Tooltip label="選択したメンバーを登録">
+                  <IconButton
+                    aria-label="Register members"
+                    icon={<FiUserPlus />}
+                    onClick={handleRegister}
+                    isDisabled={selectedMemberIds.length === 0}
+                    colorScheme="blue"
+                  />
+                </Tooltip>
+              </HStack>
+            </CardHeader>
+            <CardBody>
+              <CheckboxGroup onChange={handleMemberSelect} value={selectedMemberIds}>
+                <Stack spacing={3}>
                   {labMembers.map((member) => (
                     <Checkbox
                       key={member.id}
                       value={member.id}
                       isDisabled={registeredMembers.includes(member.id)}
                     >
-                      {member.username}{" "}
-                      {registeredMembers.includes(member.id) && "(登録済み)"}
+                      <HStack>
+                        <Avatar size="sm" name={member.username} />
+                        <Text>{member.username}</Text>
+                        {registeredMembers.includes(member.id) && (
+                          <Badge colorScheme="green">登録済み</Badge>
+                        )}
+                      </HStack>
                     </Checkbox>
                   ))}
                 </Stack>
               </CheckboxGroup>
-            )}
-          </Box>
-        </FormControl>
-        {session?.user?.role !== "STUDENT" && (
-          <>
-            <Button
-              mt={2}
-              onClick={handleRegister}
-              isDisabled={selectedMemberIds.length === 0}
-              colorScheme="blue"
-            >
-              選択したメンバーを登録
-            </Button>
-            <Button
-              type="submit"
-              colorScheme="blue"
-            >
-              更新
-            </Button>
-          </>
-        )}
-        {success && <Box color="green.500">{success}</Box>}
-      </VStack>
-    </form>
+            </CardBody>
+          </Card>
+
+          <Button
+            type="submit"
+            colorScheme="blue"
+            size="lg"
+            leftIcon={<FiSave />}
+            w="full"
+          >
+            保存
+          </Button>
+        </VStack>
+      </form>
+    </Container>
   );
 };
 
