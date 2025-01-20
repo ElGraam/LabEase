@@ -90,7 +90,7 @@ const ProjectEditForm = ({
       }));
       if (session?.user?.role != "STUDENT") {
         await updateProject(title, description, formattedMilestones, projectId);
-        setSuccess("更新しました");
+        setSuccess("Project updated successfully");
         showSuccessToast("Project updated successfully");
         router.refresh();
       }
@@ -103,7 +103,7 @@ const ProjectEditForm = ({
     try {
       if (session?.user?.role != "STUDENT") {
         await projectRegister(projectId, selectedMemberIds);
-        setSuccess("メンバーを登録しました");
+        setSuccess("Members registered successfully");
         showSuccessToast("Members registered successfully");
         router.refresh();
       }
