@@ -23,7 +23,7 @@ const ProjectList = ({ projects: initialProjects }: Props) => {
   const [targetProjectId, setTargetProjectId] = useState<string>("");
   const toast = useToast();
 
-  if (!session) return <p>ログインしてください。</p>;
+  if (!session) return <p>Please log in.</p>;
 
   const userRole = session.user.role;
   const canDelete = userRole === "PROFESSOR" || userRole === "SUB_INSTRUCTOR";
@@ -38,14 +38,14 @@ const ProjectList = ({ projects: initialProjects }: Props) => {
       await deleteProject(targetProjectId);
       setProjects(projects.filter(project => project.id !== targetProjectId));
       toast({
-        title: "プロジェクトを削除しました。",
+        title: "Project deleted successfully.",
         status: "success",
         duration: 3000,
         isClosable: true,
       });
     } catch (error) {
       toast({
-        title: "削除に失敗しました。",
+        title: "Failed to delete project.",
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -61,13 +61,13 @@ const ProjectList = ({ projects: initialProjects }: Props) => {
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th>プロジェクト名</Th>
-              <Th>説明</Th>
-              <Th>マイルストーン</Th>
-              <Th>ステータス</Th>
-              <Th>期限</Th>
-              <Th>達成した日</Th>
-              {canDelete && <Th>操作</Th>}
+              <Th>Project Name</Th>
+              <Th>Description</Th>
+              <Th>Milestone</Th>
+              <Th>Status</Th>
+              <Th>Due Date</Th>
+              <Th>Completion Date</Th>
+              {canDelete && <Th>Actions</Th>}
             </Tr>
           </Thead>
           <Tbody>
@@ -136,16 +136,16 @@ const ProjectList = ({ projects: initialProjects }: Props) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>プロジェクト削除の確認</ModalHeader>
+          <ModalHeader>Confirm Project Deletion</ModalHeader>
           <ModalBody>
-            このプロジェクトを削除してもよろしいですか？
+            Are you sure you want to delete this project?
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="red" mr={3} onClick={handleDelete}>
-              削除
+              Delete
             </Button>
             <Button variant="ghost" onClick={onClose}>
-              キャンセル
+              Cancel
             </Button>
           </ModalFooter>
         </ModalContent>

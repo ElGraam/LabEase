@@ -19,12 +19,12 @@ const ProjectsPage = async () => {
   return (
     <VStack spacing={6} align="stretch" p={6}>
       <Heading as="h1" size="xl" mb={4}>
-        プロジェクト一覧
+        Projects List
       </Heading>
       {role !== "STUDENT" && (
         <Link href="/projects/create">
           <Button colorScheme="blue" alignSelf="flex-end">
-            新しいプロジェクトを作成
+            Create New Project
           </Button>
         </Link>
       )}

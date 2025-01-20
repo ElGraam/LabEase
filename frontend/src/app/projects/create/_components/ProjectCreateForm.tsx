@@ -62,12 +62,12 @@ const ProjectCreateForm: React.FC<ProjectCreateFormProps> = ({
   return (
     <Box>
       <Heading as="h1" size="xl" mb={6}>
-        新しいプロジェクトを作成
+        Create New Project
       </Heading>
       <form onSubmit={handleSubmit}>
         <VStack spacing={4} align="stretch">
           <FormControl>
-            <FormLabel>タイトル</FormLabel>
+            <FormLabel>Title</FormLabel>
             <Input
               type="text"
               value={title}
@@ -76,14 +76,14 @@ const ProjectCreateForm: React.FC<ProjectCreateFormProps> = ({
             />
           </FormControl>
           <FormControl>
-            <FormLabel>説明</FormLabel>
+            <FormLabel>Description</FormLabel>
             <Textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </FormControl>
           <FormControl>
-            <FormLabel>マイルストーンのタイトル</FormLabel>
+            <FormLabel>Milestone Title</FormLabel>
             <Input
               type="text"
               value={milestoneTitle}
@@ -91,14 +91,14 @@ const ProjectCreateForm: React.FC<ProjectCreateFormProps> = ({
             />
           </FormControl>
           <FormControl>
-            <FormLabel>マイルストーンの説明</FormLabel>
+            <FormLabel>Milestone Description</FormLabel>
             <Textarea
               value={milestoneDescription}
               onChange={(e) => setMilestoneDescription(e.target.value)}
             />
           </FormControl>
           <FormControl>
-            <FormLabel>マイルストーンの期限</FormLabel>
+            <FormLabel>Milestone Due Date</FormLabel>
             <Input
               type="date"
               value={milestoneDueDate}
@@ -108,7 +108,7 @@ const ProjectCreateForm: React.FC<ProjectCreateFormProps> = ({
           {/* labId は hidden フィールドとして送信 */}
           <input type="hidden" name="labId" value={labId} />
           <Button type="submit" colorScheme="blue" isLoading={isLoading}>
-            作成
+            Create
           </Button>
           {error && <Box color="red.500">{error}</Box>}
         </VStack>
