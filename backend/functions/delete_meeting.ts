@@ -2,27 +2,26 @@ import { NextFunction, Request, Response } from "express";
 import { prisma } from "../lib/prisma";
 
 export const delete_meeting = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
+  req: Request,
+  res: Response,
+  next: NextFunction,
 ) => {
-    try {
+  try {
     const { meetingId } = req.params;
 
     if (!meetingId) {
-        return res.status(400).json();
+      return res.status(400).json();
     }
     const meeting = await prisma.meeting.delete({
-        where: {
-            id: meetingId,
-        },
+      where: {
+        id: meetingId,
+      },
     });
     return res.status(200).json(meeting);
-    
-    } catch (error) {
-        if (error instanceof Error) {
-            res.status(500).json();
-        }
-        next(error);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json();
     }
-}
+    next(error);
+  }
+};

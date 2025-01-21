@@ -25,11 +25,11 @@ export const get_meeting = async (
                 id: true,
                 username: true,
                 email: true,
-              }
-            }
-          }
-        }
-      }
+              },
+            },
+          },
+        },
+      },
     });
 
     if (!meeting) {

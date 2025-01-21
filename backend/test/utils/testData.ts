@@ -1,13 +1,13 @@
-import { prisma } from '../../lib/prisma';
-import dummyUsers from '../../seeding_files/dummyUsers.json';
-import dummyLabs from '../../seeding_files/dummyLab.json';
-import { 
-  EntryMonth, 
-  GraduationMonth, 
-  StudentStatus, 
-  Role, 
+import { prisma } from "../../lib/prisma";
+import dummyUsers from "../../seeding_files/dummyUsers.json";
+import dummyLabs from "../../seeding_files/dummyLab.json";
+import {
+  EntryMonth,
+  GraduationMonth,
+  StudentStatus,
+  Role,
   ProgramType,
-} from '../../types';
+} from "../../types";
 import crypto from "crypto";
 
 type DummyLab = {
@@ -17,7 +17,7 @@ type DummyLab = {
   professorId: string;
   created_at: string;
   updated_at: string;
-}
+};
 
 type DummyStudentProfile = {
   id: string;
@@ -29,7 +29,7 @@ type DummyStudentProfile = {
   status: string;
   created_at: string;
   updated_at: string;
-}
+};
 
 type DummyUser = {
   id: string;
@@ -43,7 +43,7 @@ type DummyUser = {
   studentProfile?: DummyStudentProfile;
   created_at: string;
   updated_at: string;
-}
+};
 
 export async function getTestData() {
   // データベースのクリーンアップ
@@ -70,7 +70,7 @@ export async function getTestData() {
           updated_at: new Date(lab.updated_at),
         },
       });
-    })
+    }),
   );
 
   // ユーザーデータの作成
@@ -83,7 +83,8 @@ export async function getTestData() {
         password: crypto
           .createHash("sha256")
           .update(user.password || "")
-          .digest("base64"),        role: user.role as Role,
+          .digest("base64"),
+        role: user.role as Role,
         studentId: user.studentId,
         program: user.program as ProgramType | undefined,
         labId: user.labId ?? undefined,
@@ -104,7 +105,8 @@ export async function getTestData() {
             entryYear: user.studentProfile.entryYear,
             entryMonth: user.studentProfile.entryMonth as EntryMonth,
             plannedGradYear: user.studentProfile.plannedGradYear,
-            plannedGradMonth: user.studentProfile.plannedGradMonth as GraduationMonth,
+            plannedGradMonth: user.studentProfile
+              .plannedGradMonth as GraduationMonth,
             status: user.studentProfile.status as StudentStatus,
             created_at: new Date(user.studentProfile.created_at),
             updated_at: new Date(user.studentProfile.updated_at),
@@ -113,7 +115,7 @@ export async function getTestData() {
       }
 
       return createdUser;
-    })
+    }),
   );
 
   return {
