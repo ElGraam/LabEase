@@ -40,7 +40,7 @@ export default function StudentTable({ Users }: { Users: any[] }) {
       }
     }
     setSelectedStudents([]);
-    router.refresh(); 
+    router.refresh();
   };
 
   return (

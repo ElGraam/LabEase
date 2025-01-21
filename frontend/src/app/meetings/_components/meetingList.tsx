@@ -53,7 +53,7 @@ export default function MeetingList({ meetings: initialMeetings }: Props) {
   const handleDelete = async () => {
     try {
       await deleteMeeting(targetMeetingId);
-      setMeetings(meetings.filter(meeting => meeting.id !== targetMeetingId));
+      setMeetings(meetings.filter((meeting) => meeting.id !== targetMeetingId));
       toast({
         title: "Meeting deleted.",
         status: "success",
@@ -89,19 +89,11 @@ export default function MeetingList({ meetings: initialMeetings }: Props) {
       <Box mb={4}>
         <HStack spacing={4}>
           {canCreate && (
-            <Button
-              as={Link}
-              href="/meetings/create"
-              colorScheme="blue"
-            >
+            <Button as={Link} href="/meetings/create" colorScheme="blue">
               Create Meeting
             </Button>
           )}
-          <Button
-            as={Link}
-            href="/meetings/availableslots"
-            colorScheme="green"
-          >
+          <Button as={Link} href="/meetings/availableslots" colorScheme="green">
             Manage Available Time
           </Button>
         </HStack>
@@ -143,8 +135,11 @@ export default function MeetingList({ meetings: initialMeetings }: Props) {
                   }}
                 />
               )}
-              
-              <Link href={`/meetings/${meeting.id}`} style={{ textDecoration: 'none' }}>
+
+              <Link
+                href={`/meetings/${meeting.id}`}
+                style={{ textDecoration: "none" }}
+              >
                 <Box
                   cursor="pointer"
                   _hover={{ bg: "gray.50" }}
@@ -183,7 +178,7 @@ export default function MeetingList({ meetings: initialMeetings }: Props) {
                         day: "2-digit",
                         hour: "2-digit",
                         minute: "2-digit",
-                        timeZone: "Asia/Tokyo"
+                        timeZone: "Asia/Tokyo",
                       })}
                     </Box>
                     <Box>
@@ -194,7 +189,7 @@ export default function MeetingList({ meetings: initialMeetings }: Props) {
                         day: "2-digit",
                         hour: "2-digit",
                         minute: "2-digit",
-                        timeZone: "Asia/Tokyo"
+                        timeZone: "Asia/Tokyo",
                       })}
                     </Box>
                   </Box>
@@ -205,12 +200,7 @@ export default function MeetingList({ meetings: initialMeetings }: Props) {
                         Participants:
                       </Box>
                     </HStack>
-                    <Box 
-                      display="flex" 
-                      flexWrap="wrap" 
-                      gap={2} 
-                      mt={1}
-                    >
+                    <Box display="flex" flexWrap="wrap" gap={2} mt={1}>
                       {meeting.participants.map((participant) => (
                         <Tag
                           key={participant.id}
@@ -241,9 +231,7 @@ export default function MeetingList({ meetings: initialMeetings }: Props) {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Confirmation of meeting deletion</ModalHeader>
-          <ModalBody>
-          Are you sure you want to delete this meeting?
-          </ModalBody>
+          <ModalBody>Are you sure you want to delete this meeting?</ModalBody>
           <ModalFooter>
             <Button colorScheme="red" mr={3} onClick={handleDelete}>
               Delete

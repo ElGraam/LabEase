@@ -29,7 +29,10 @@ export const getMeeting = async (meetingId: string): Promise<responseData> => {
   }
 };
 
-export const deleteMeetingMember = async (meetingId: string, userId: string): Promise<deleteMeetingMemberResponse> => {
+export const deleteMeetingMember = async (
+  meetingId: string,
+  userId: string,
+): Promise<deleteMeetingMemberResponse> => {
   const path = `${process.env.BACKEND_URL}/api/meeting/${meetingId}/member/${userId}`;
   try {
     const res = await fetch(path, {

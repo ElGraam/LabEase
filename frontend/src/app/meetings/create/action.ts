@@ -22,29 +22,27 @@ type CreateMeetingResponse = {
 };
 
 export const createMeeting = async (
-    type: MeetingType,
-    title: string,
-    description: string,
-    startTime: Date,
-    endTime: Date,
-    participants: string[]
+  type: MeetingType,
+  title: string,
+  description: string,
+  startTime: Date,
+  endTime: Date,
+  participants: string[],
 ): Promise<CreateMeetingResponse> => {
   const path = `${process.env.BACKEND_URL}/api/meeting/create`;
-  
+
   try {
     const res = await fetch(path, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(
-        {
-          type,
-          title,
-          description,
-          startTime,
-          endTime,
-          participants: participants.map(userId => ({ userId }))
-        }
-      ),
+      body: JSON.stringify({
+        type,
+        title,
+        description,
+        startTime,
+        endTime,
+        participants: participants.map((userId) => ({ userId })),
+      }),
     });
 
     if (!res.ok) {
@@ -53,37 +51,32 @@ export const createMeeting = async (
 
     const data = await res.json();
     return {
-      meeting: data
+      meeting: data,
     };
-
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 export const getLabAvailableSlots = async (
-  labId: string
+  labId: string,
 ): Promise<LabMembersSlots> => {
   const path = `${process.env.BACKEND_URL}/api/lab/${labId}/availableslots`;
 
   try {
-    const res = await fetch(
-      path,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    const res = await fetch(path, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
     }
 
     const data = await res.json();
     return data;
-
   } catch (error) {
     console.error(error);
     throw error;
   }
-}
+};

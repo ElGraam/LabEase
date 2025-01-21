@@ -1,15 +1,23 @@
 "use client";
 import { createAvailableSlots } from "../action";
-import { Button, Flex, FormControl, FormLabel, Input, Select, useToast } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  Input,
+  Select,
+  useToast,
+} from "@chakra-ui/react";
 import { useState } from "react";
 
 const generateTimeOptions = () => {
   const options = [];
   for (let hour = 5; hour < 22; hour++) {
-    options.push(`${hour.toString().padStart(2, '0')}:00`);
-    options.push(`${hour.toString().padStart(2, '0')}:30`);
+    options.push(`${hour.toString().padStart(2, "0")}:00`);
+    options.push(`${hour.toString().padStart(2, "0")}:30`);
   }
-  options.push(`${'22'.padStart(2, '0')}:00`);
+  options.push(`${"22".padStart(2, "0")}:00`);
 
   return options;
 };
@@ -44,12 +52,13 @@ const CreateAvailableSlotsForm = ({ userId, onSuccess }: Props) => {
       const endDate = new Date(`${date}T${endTime}:00`);
 
       if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-        throw new Error('The date format is invalid.')
+        throw new Error("The date format is invalid.");
       }
       if (startDate >= endDate) {
         toast({
           title: "The date format is invalid.",
-          description: "Please set the end time to be later than the start time.",
+          description:
+            "Please set the end time to be later than the start time.",
           status: "error",
           duration: 3000,
           isClosable: true,
@@ -59,7 +68,8 @@ const CreateAvailableSlotsForm = ({ userId, onSuccess }: Props) => {
       if (startDate.getDay() !== endDate.getDay()) {
         toast({
           title: "The date format is invalid.",
-          description: "Please set the start time and end time on the same day.",
+          description:
+            "Please set the start time and end time on the same day.",
           status: "error",
           duration: 3000,
           isClosable: true,
@@ -70,7 +80,8 @@ const CreateAvailableSlotsForm = ({ userId, onSuccess }: Props) => {
       if (!isValidTimeRange(startDate, endDate)) {
         toast({
           title: "The date format is invalid.",
-          description: "The time period from 10:00 PM to 5:00 AM cannot be set.",
+          description:
+            "The time period from 10:00 PM to 5:00 AM cannot be set.",
           status: "error",
           duration: 3000,
           isClosable: true,
@@ -81,12 +92,7 @@ const CreateAvailableSlotsForm = ({ userId, onSuccess }: Props) => {
       // 日付から曜日を取得（0-6の数値）
       const dayOfWeek = startDate.getDay();
 
-      await createAvailableSlots(
-        userId,
-        dayOfWeek,
-        startDate,
-        endDate
-      );
+      await createAvailableSlots(userId, dayOfWeek, startDate, endDate);
       onSuccess();
       toast({
         title: "Availability has been created.",
@@ -98,7 +104,10 @@ const CreateAvailableSlotsForm = ({ userId, onSuccess }: Props) => {
       console.error(error);
       toast({
         title: "An error has occurred.",
-        description: error instanceof Error ? error.message : "An unexpected error has occurred.",
+        description:
+          error instanceof Error
+            ? error.message
+            : "An unexpected error has occurred.",
         status: "error",
         duration: 3000,
         isClosable: true,

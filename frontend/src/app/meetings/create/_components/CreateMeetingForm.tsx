@@ -14,7 +14,7 @@ import {
   SimpleGrid,
   useToast,
   Heading,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 import { MemberAvailability } from "./MemberAvailability";
 import { createMeeting } from "../action";
 import { MeetingType } from "@/types";
@@ -23,10 +23,10 @@ import type { LabMembersSlots } from "../action";
 const generateTimeOptions = () => {
   const options = [];
   for (let hour = 5; hour < 22; hour++) {
-    options.push(`${hour.toString().padStart(2, '0')}:00`);
-    options.push(`${hour.toString().padStart(2, '0')}:30`);
+    options.push(`${hour.toString().padStart(2, "0")}:00`);
+    options.push(`${hour.toString().padStart(2, "0")}:30`);
   }
-  options.push(`${'22'.padStart(2, '0')}:00`);
+  options.push(`${"22".padStart(2, "0")}:00`);
   return options;
 };
 
@@ -43,7 +43,7 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
     type: MeetingType.REGULAR,
     date: "",
     startTime: "",
-    endTime: ""
+    endTime: "",
   });
   const [loading, setLoading] = useState(false);
   const toast = useToast();
@@ -54,7 +54,9 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
     setLoading(true);
 
     try {
-      const startDateTime = new Date(`${formData.date}T${formData.startTime}:00`);
+      const startDateTime = new Date(
+        `${formData.date}T${formData.startTime}:00`,
+      );
       const endDateTime = new Date(`${formData.date}T${formData.endTime}:00`);
 
       if (startDateTime >= endDateTime) {
@@ -75,9 +77,9 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
         formData.description,
         startDateTime,
         endDateTime,
-        selectedMembers
+        selectedMembers,
       );
-      
+
       toast({
         title: "Meeting Created",
         status: "success",
@@ -99,10 +101,10 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
   };
 
   const toggleMemberSelection = (memberId: string) => {
-    setSelectedMembers(prev =>
+    setSelectedMembers((prev) =>
       prev.includes(memberId)
-        ? prev.filter(id => id !== memberId)
-        : [...prev, memberId]
+        ? prev.filter((id) => id !== memberId)
+        : [...prev, memberId],
     );
   };
 
@@ -110,11 +112,13 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
   const weekRange = useMemo(() => {
     if (!formData.date) return null;
 
-    const startDate = new Date(`${formData.date}T${formData.startTime || '00:00'}:00`);
+    const startDate = new Date(
+      `${formData.date}T${formData.startTime || "00:00"}:00`,
+    );
     const weekStart = new Date(startDate);
-    weekStart.setDate(startDate.getDate() - 3); 
+    weekStart.setDate(startDate.getDate() - 3);
     const weekEnd = new Date(startDate);
-    weekEnd.setDate(startDate.getDate() + 3); 
+    weekEnd.setDate(startDate.getDate() + 3);
 
     return { weekStart, weekEnd };
   }, [formData.date, formData.startTime]);
@@ -128,7 +132,9 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
           <FormLabel>Title</FormLabel>
           <Input
             value={formData.title}
-            onChange={e => setFormData(prev => ({ ...prev, title: e.target.value }))}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, title: e.target.value }))
+            }
           />
         </FormControl>
 
@@ -136,7 +142,9 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
           <FormLabel>Description</FormLabel>
           <Textarea
             value={formData.description}
-            onChange={e => setFormData(prev => ({ ...prev, description: e.target.value }))}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, description: e.target.value }))
+            }
           />
         </FormControl>
 
@@ -146,7 +154,9 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
             <Input
               type="date"
               value={formData.date}
-              onChange={e => setFormData(prev => ({ ...prev, date: e.target.value }))}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, date: e.target.value }))
+              }
             />
           </FormControl>
 
@@ -154,7 +164,9 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
             <FormLabel>Start Time</FormLabel>
             <Select
               value={formData.startTime}
-              onChange={e => setFormData(prev => ({ ...prev, startTime: e.target.value }))}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, startTime: e.target.value }))
+              }
               required
             >
               <option value="">Select start time</option>
@@ -170,7 +182,9 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
             <FormLabel>End Time</FormLabel>
             <Select
               value={formData.endTime}
-              onChange={e => setFormData(prev => ({ ...prev, endTime: e.target.value }))}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, endTime: e.target.value }))
+              }
               required
             >
               <option value="">Select end time</option>
@@ -187,7 +201,12 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
           <FormLabel>Meeting Type</FormLabel>
           <Select
             value={formData.type}
-            onChange={e => setFormData(prev => ({ ...prev, type: e.target.value as MeetingType }))}
+            onChange={(e) =>
+              setFormData((prev) => ({
+                ...prev,
+                type: e.target.value as MeetingType,
+              }))
+            }
           >
             <option value={MeetingType.REGULAR}>Regular Meeting</option>
             <option value={MeetingType.SPONTANEOUS}>Spontaneous Meeting</option>

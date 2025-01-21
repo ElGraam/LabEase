@@ -51,4 +51,4 @@ export const deleteProject = async (projectId: string): Promise<response> => {
     console.log(error);
     throw error;
   }
-}
+};

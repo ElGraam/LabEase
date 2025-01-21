@@ -33,4 +33,4 @@ export const deleteMeeting = async (meetingId: string): Promise<Meeting> => {
     console.error(error);
     throw error;
   }
-}
+};

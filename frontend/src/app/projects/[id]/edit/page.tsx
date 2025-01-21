@@ -19,7 +19,7 @@ const ProjectEditPage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <div>
-      <ProjectEditForm 
+      <ProjectEditForm
         projectId={projectId}
         projectData={projectData.project}
         labMembers={members}

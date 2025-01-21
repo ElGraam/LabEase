@@ -27,11 +27,13 @@ export default async function MeetingPage({ params }: MeetingPageProps) {
   }
 
   return (
-    <Suspense fallback={
-      <Center h="100vh">
-        <Spinner size="xl" thickness="4px" color="blue.500" />
-      </Center>
-    }>
+    <Suspense
+      fallback={
+        <Center h="100vh">
+          <Spinner size="xl" thickness="4px" color="blue.500" />
+        </Center>
+      }
+    >
       <Box py={4} maxW="container.xl" mx="auto">
         <MeetingDetailView meeting={meeting} />
       </Box>

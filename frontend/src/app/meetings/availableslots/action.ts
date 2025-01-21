@@ -12,7 +12,7 @@ type responseData01 = {
 
 export const createAvailableSlots = async (
   userId: string,
-  dayOfWeek: number,  // 曜日
+  dayOfWeek: number, // 曜日
   startTime: Date,
   endTime: Date,
 ): Promise<responseData> => {
@@ -28,7 +28,7 @@ export const createAvailableSlots = async (
       }),
     });
     if (!res.ok) {
-      throw new Error('Failed to create slot');
+      throw new Error("Failed to create slot");
     }
     const data = await res.json();
     return { availableslot: data };
@@ -44,13 +44,13 @@ export const getAvailableSlots = async (
   limit: number,
 ): Promise<responseData01> => {
   const path = `${process.env.BACKEND_URL}/api/availableslots/${userId}?offset=${offset}&limit=${limit}`;
-  try{
+  try {
     const res = await fetch(path, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
     const data = await res.json();
-    return data;  
+    return data;
   } catch (error) {
     console.error(error);
     throw error;
@@ -58,7 +58,7 @@ export const getAvailableSlots = async (
 };
 
 export const deleteAvailableSlot = async (
-  availableSlotId: string
+  availableSlotId: string,
 ): Promise<responseData> => {
   const path = `${process.env.BACKEND_URL}/api/availableslots/${availableSlotId}`;
   try {

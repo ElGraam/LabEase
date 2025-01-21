@@ -33,11 +33,7 @@ import Link from "next/link";
 
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import {
-  updateProject,
-  projectRegister,
-  deleteProjectMember,
-} from "../action";
+import { updateProject, projectRegister, deleteProjectMember } from "../action";
 import {
   Project,
   ProjectMilestone,
@@ -45,11 +41,11 @@ import {
   Users,
 } from "@/types";
 
-const ProjectEditForm = ({ 
+const ProjectEditForm = ({
   projectId,
   projectData,
   labMembers,
-}: { 
+}: {
   projectId: string;
   projectData: Project;
   labMembers: Users[];
@@ -60,10 +56,12 @@ const ProjectEditForm = ({
   const [success, setSuccess] = useState("");
   const [title, setTitle] = useState(projectData.title);
   const [description, setDescription] = useState(projectData.description || "");
-  const [milestones, setMilestones] = useState<ProjectMilestone[]>(projectData.milestones);
+  const [milestones, setMilestones] = useState<ProjectMilestone[]>(
+    projectData.milestones,
+  );
   const [selectedMemberIds, setSelectedMemberIds] = useState<string[]>([]);
   const [registeredMembers, setRegisteredMembers] = useState<string[]>(
-    projectData.members ? projectData.members.map((m: any) => m.userId) : []
+    projectData.members ? projectData.members.map((m: any) => m.userId) : [],
   );
   const router = useRouter();
   const toast = useToast();
@@ -119,7 +117,6 @@ const ProjectEditForm = ({
 
   const handleMemberSelect = (values: string[]) => {
     setSelectedMemberIds(values);
-    
   };
 
   const showSuccessToast = (message: string) => {
@@ -202,7 +199,11 @@ const ProjectEditForm = ({
                           <Input
                             value={milestone.title}
                             onChange={(e) =>
-                              handleMilestoneChange(index, "title", e.target.value)
+                              handleMilestoneChange(
+                                index,
+                                "title",
+                                e.target.value,
+                              )
                             }
                           />
                         </FormControl>
@@ -213,7 +214,11 @@ const ProjectEditForm = ({
                           <Textarea
                             value={milestone.description || ""}
                             onChange={(e) =>
-                              handleMilestoneChange(index, "description", e.target.value)
+                              handleMilestoneChange(
+                                index,
+                                "description",
+                                e.target.value,
+                              )
                             }
                           />
                         </FormControl>
@@ -224,14 +229,20 @@ const ProjectEditForm = ({
                           <Select
                             value={milestone.status}
                             onChange={(e) =>
-                              handleMilestoneChange(index, "status", e.target.value)
+                              handleMilestoneChange(
+                                index,
+                                "status",
+                                e.target.value,
+                              )
                             }
                           >
-                            {Object.values(ProjectMilestoneStatus).map((status) => (
-                              <option key={status} value={status}>
-                                {status}
-                              </option>
-                            ))}
+                            {Object.values(ProjectMilestoneStatus).map(
+                              (status) => (
+                                <option key={status} value={status}>
+                                  {status}
+                                </option>
+                              ),
+                            )}
                           </Select>
                         </FormControl>
                       </GridItem>
@@ -240,9 +251,17 @@ const ProjectEditForm = ({
                           <FormLabel>Due Date</FormLabel>
                           <Input
                             type="date"
-                            value={new Date(milestone.dueDate).toISOString().split("T")[0]}
+                            value={
+                              new Date(milestone.dueDate)
+                                .toISOString()
+                                .split("T")[0]
+                            }
                             onChange={(e) =>
-                              handleMilestoneChange(index, "dueDate", new Date(e.target.value))
+                              handleMilestoneChange(
+                                index,
+                                "dueDate",
+                                new Date(e.target.value),
+                              )
                             }
                           />
                         </FormControl>
@@ -272,12 +291,20 @@ const ProjectEditForm = ({
             <CardBody>
               <VStack spacing={4} align="stretch">
                 <Box>
-                  <Text fontWeight="bold" mb={2}>Registered Members</Text>
+                  <Text fontWeight="bold" mb={2}>
+                    Registered Members
+                  </Text>
                   <Stack spacing={3}>
                     {labMembers
                       .filter((member) => registeredMembers.includes(member.id))
                       .map((member) => (
-                        <HStack key={member.id} justify="space-between" p={2} borderWidth="1px" borderRadius="md">
+                        <HStack
+                          key={member.id}
+                          justify="space-between"
+                          p={2}
+                          borderWidth="1px"
+                          borderRadius="md"
+                        >
                           <HStack>
                             <Avatar size="sm" name={member.username} />
                             <Text>{member.username}</Text>
@@ -291,7 +318,11 @@ const ProjectEditForm = ({
                             onClick={async () => {
                               try {
                                 await deleteProjectMember(projectId, member.id);
-                                setRegisteredMembers(registeredMembers.filter(id => id !== member.id));
+                                setRegisteredMembers(
+                                  registeredMembers.filter(
+                                    (id) => id !== member.id,
+                                  ),
+                                );
                                 toast({
                                   title: "Member removed",
                                   status: "success",
@@ -315,11 +346,18 @@ const ProjectEditForm = ({
                 </Box>
 
                 <Box>
-                  <Text fontWeight="bold" mb={2}>Available Members</Text>
-                  <CheckboxGroup onChange={handleMemberSelect} value={selectedMemberIds}>
+                  <Text fontWeight="bold" mb={2}>
+                    Available Members
+                  </Text>
+                  <CheckboxGroup
+                    onChange={handleMemberSelect}
+                    value={selectedMemberIds}
+                  >
                     <Stack spacing={3}>
                       {labMembers
-                        .filter((member) => !registeredMembers.includes(member.id))
+                        .filter(
+                          (member) => !registeredMembers.includes(member.id),
+                        )
                         .map((member) => (
                           <Checkbox key={member.id} value={member.id}>
                             <HStack>

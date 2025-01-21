@@ -18,7 +18,13 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
-import { FaClock, FaUsers, FaInfoCircle, FaArrowLeft, FaTrash } from "react-icons/fa";
+import {
+  FaClock,
+  FaUsers,
+  FaInfoCircle,
+  FaArrowLeft,
+  FaTrash,
+} from "react-icons/fa";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { deleteMeetingMember } from "../action";
@@ -29,7 +35,7 @@ interface MeetingDetailViewProps {
 }
 
 export const MeetingDetailView = ({ meeting }: MeetingDetailViewProps) => {
-  const {data: session} = useSession();
+  const { data: session } = useSession();
   const userId = session?.user?.id;
   const toast = useToast();
   const router = useRouter();
@@ -86,7 +92,9 @@ export const MeetingDetailView = ({ meeting }: MeetingDetailViewProps) => {
             <HStack spacing={4} width="full" justify="space-between">
               <VStack align="start" spacing={2}>
                 <Badge
-                  colorScheme={meeting.type === MeetingType.REGULAR ? "green" : "purple"}
+                  colorScheme={
+                    meeting.type === MeetingType.REGULAR ? "green" : "purple"
+                  }
                   fontSize="sm"
                   px={3}
                   py={1}
@@ -97,29 +105,38 @@ export const MeetingDetailView = ({ meeting }: MeetingDetailViewProps) => {
                 <Heading size="lg">{meeting.title}</Heading>
               </VStack>
             </HStack>
-            
+
             <HStack spacing={6}>
               <HStack>
                 <Icon as={FaClock} color="blue.500" boxSize={5} />
-                <Text fontSize="md" color="gray.600" _dark={{ color: "gray.300" }}>
+                <Text
+                  fontSize="md"
+                  color="gray.600"
+                  _dark={{ color: "gray.300" }}
+                >
                   {new Date(meeting.startTime).toLocaleString("ja-JP", {
                     year: "numeric",
                     month: "2-digit",
                     day: "2-digit",
                     hour: "2-digit",
                     minute: "2-digit",
-                    timeZone: "Asia/Tokyo"
-                  })} - 
+                    timeZone: "Asia/Tokyo",
+                  })}{" "}
+                  -
                   {new Date(meeting.endTime).toLocaleString("ja-JP", {
                     hour: "2-digit",
                     minute: "2-digit",
-                    timeZone: "Asia/Tokyo"
+                    timeZone: "Asia/Tokyo",
                   })}
                 </Text>
               </HStack>
               <HStack>
                 <Icon as={FaUsers} color="blue.500" boxSize={5} />
-                <Text fontSize="md" color="gray.600" _dark={{ color: "gray.300" }}>
+                <Text
+                  fontSize="md"
+                  color="gray.600"
+                  _dark={{ color: "gray.300" }}
+                >
                   {meeting.participants?.length || 0} Participants
                 </Text>
               </HStack>
@@ -169,7 +186,7 @@ export const MeetingDetailView = ({ meeting }: MeetingDetailViewProps) => {
                     _hover={{ bg: "gray.50" }}
                     _dark={{
                       _hover: { bg: "gray.700" },
-                      borderColor: "gray.600"
+                      borderColor: "gray.600",
                     }}
                   >
                     <HStack spacing={4}>
@@ -182,7 +199,11 @@ export const MeetingDetailView = ({ meeting }: MeetingDetailViewProps) => {
                         <Text fontWeight="bold">
                           {participant.user.username}
                         </Text>
-                        <Text fontSize="sm" color="gray.500" _dark={{ color: "gray.400" }}>
+                        <Text
+                          fontSize="sm"
+                          color="gray.500"
+                          _dark={{ color: "gray.400" }}
+                        >
                           {participant.user.email}
                         </Text>
                       </VStack>

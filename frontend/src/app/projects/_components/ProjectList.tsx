@@ -1,9 +1,23 @@
 "use client";
-import { 
-  Box, Table, Thead, Tbody, Tr, Th, Td, Tag,
-  useDisclosure, Modal, ModalOverlay, ModalContent,
-  ModalHeader, ModalBody, ModalFooter, Button,
-  IconButton, useToast
+import {
+  Box,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Tag,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  IconButton,
+  useToast,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import Link from "next/link";
@@ -36,7 +50,7 @@ const ProjectList = ({ projects: initialProjects }: Props) => {
   const handleDelete = async () => {
     try {
       await deleteProject(targetProjectId);
-      setProjects(projects.filter(project => project.id !== targetProjectId));
+      setProjects(projects.filter((project) => project.id !== targetProjectId));
       toast({
         title: "Project deleted successfully.",
         status: "success",
@@ -93,26 +107,24 @@ const ProjectList = ({ projects: initialProjects }: Props) => {
                     ))}
                 </Td>
                 <Td>
-                  {new Date(project.milestones?.[0]?.dueDate).toLocaleDateString(
-                    "ja-JP",
-                    {
-                      year: "numeric",
-                      month: "2-digit",
-                      day: "2-digit",
-                    },
-                  )}
+                  {new Date(
+                    project.milestones?.[0]?.dueDate,
+                  ).toLocaleDateString("ja-JP", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                  })}
                 </Td>
                 <Td>
-                  {project.milestones?.[0]?.completionDate 
-                    ? new Date(project.milestones[0].completionDate).toLocaleDateString(
-                        "ja-JP",
-                        {
-                          year: "numeric",
-                          month: "2-digit",
-                          day: "2-digit",
-                          timeZone: "Asia/Tokyo",
-                        },
-                      )
+                  {project.milestones?.[0]?.completionDate
+                    ? new Date(
+                        project.milestones[0].completionDate,
+                      ).toLocaleDateString("ja-JP", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        timeZone: "Asia/Tokyo",
+                      })
                     : "-"}
                 </Td>
                 {canDelete && (
@@ -137,9 +149,7 @@ const ProjectList = ({ projects: initialProjects }: Props) => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Confirm Project Deletion</ModalHeader>
-          <ModalBody>
-            Are you sure you want to delete this project?
-          </ModalBody>
+          <ModalBody>Are you sure you want to delete this project?</ModalBody>
           <ModalFooter>
             <Button colorScheme="red" mr={3} onClick={handleDelete}>
               Delete

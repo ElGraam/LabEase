@@ -20,12 +20,12 @@ export default async function AvailableSlotsPage({ searchParams }: Props) {
   if (!session?.user?.id) {
     redirect("/auth/signin");
   }
-  
+
   const offset = searchParams.offset ? parseInt(searchParams.offset) : 0;
   const { availableSlots, totalCount } = await getAvailableSlots(
-    session.user.id, 
-    offset, 
-    ITEM_LIMIT
+    session.user.id,
+    offset,
+    ITEM_LIMIT,
   );
 
   return (
@@ -46,9 +46,9 @@ export default async function AvailableSlotsPage({ searchParams }: Props) {
         </Box>
         <Heading size="lg">Availability Management</Heading>
         <Suspense fallback={<Box>Loading...</Box>}>
-          <AvailableSlotsClientWrapper 
-            userId={session.user.id} 
-            slots={availableSlots} 
+          <AvailableSlotsClientWrapper
+            userId={session.user.id}
+            slots={availableSlots}
             offset={offset}
             totalCount={totalCount}
           />

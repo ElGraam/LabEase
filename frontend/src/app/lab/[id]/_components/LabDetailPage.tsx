@@ -24,7 +24,12 @@ import {
   Th,
   Td,
 } from "@chakra-ui/react";
-import { FaArrowLeft, FaUsers, FaProjectDiagram, FaUserTie } from "react-icons/fa";
+import {
+  FaArrowLeft,
+  FaUsers,
+  FaProjectDiagram,
+  FaUserTie,
+} from "react-icons/fa";
 import Link from "next/link";
 import { Lab, Users, Project } from "@/types";
 
@@ -76,12 +81,7 @@ export const LabDetailPage = ({ lab, professor }: LabDetailPageProps) => {
               variant="subtle"
               colorScheme="blue"
             >
-              <Avatar
-                size="sm"
-                name={professor.username}
-                ml={-1}
-                mr={2}
-              />
+              <Avatar size="sm" name={professor.username} ml={-1} mr={2} />
               <TagLabel>{professor.username}</TagLabel>
             </Tag>
           </CardBody>

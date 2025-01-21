@@ -13,11 +13,11 @@ type Props = {
   totalCount: number;
 };
 
-export default function AvailableSlotsClientWrapper({ 
-  userId, 
+export default function AvailableSlotsClientWrapper({
+  userId,
   slots,
   offset,
-  totalCount
+  totalCount,
 }: Props) {
   const router = useRouter();
   const handleSuccess = () => {
@@ -27,19 +27,19 @@ export default function AvailableSlotsClientWrapper({
   return (
     <>
       <Box p={4} borderWidth={1} borderRadius="lg">
-        <Heading size="md" mb={4}>Creation of availability time</Heading>
+        <Heading size="md" mb={4}>
+          Creation of availability time
+        </Heading>
         <CreateAvailableSlotsForm userId={userId} onSuccess={handleSuccess} />
       </Box>
 
       <Box p={4} borderWidth={1} borderRadius="lg">
-        <Heading size="md" mb={4}>List of available times</Heading>
+        <Heading size="md" mb={4}>
+          List of available times
+        </Heading>
         <AvailableSlotsList availableSlots={slots} onDelete={handleSuccess} />
         <Box mt={4} display="flex" justifyContent="center">
-          <Pagination
-            keyword=""
-            offset={offset}
-            totalCount={totalCount}
-          />
+          <Pagination keyword="" offset={offset} totalCount={totalCount} />
         </Box>
       </Box>
     </>

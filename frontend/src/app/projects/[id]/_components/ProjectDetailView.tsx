@@ -39,10 +39,10 @@ const ProjectDetailView = ({
 }) => {
   const { data: session } = useSession();
   const router = useRouter();
-  
-  const bgColor = useColorModeValue('white', 'gray.800');
-  const borderColor = useColorModeValue('gray.200', 'gray.700');
-  
+
+  const bgColor = useColorModeValue("white", "gray.800");
+  const borderColor = useColorModeValue("gray.200", "gray.700");
+
   const getProjectProgress = (status: string) => {
     switch (status) {
       case "COMPLETED":
@@ -54,7 +54,9 @@ const ProjectDetailView = ({
     }
   };
 
-  const completedMilestones = projectData.milestones.filter(m => m.status === "COMPLETED").length;
+  const completedMilestones = projectData.milestones.filter(
+    (m) => m.status === "COMPLETED",
+  ).length;
   const totalMilestones = projectData.milestones.length;
   const overallProgress = (completedMilestones / totalMilestones) * 100;
 
@@ -75,8 +77,12 @@ const ProjectDetailView = ({
       <VStack spacing={8} align="stretch">
         <Flex justify="space-between" align="center">
           <Box>
-            <Heading size="lg" mb={2}>{projectData.title}</Heading>
-            <Text color="gray.600" fontSize="md">{projectData.description}</Text>
+            <Heading size="lg" mb={2}>
+              {projectData.title}
+            </Heading>
+            <Text color="gray.600" fontSize="md">
+              {projectData.description}
+            </Text>
           </Box>
           {session?.user?.role !== "STUDENT" && (
             <Button
@@ -130,8 +136,13 @@ const ProjectDetailView = ({
                   <HStack justify="space-between" mb={2}>
                     <Heading size="sm">{milestone.title}</Heading>
                     <Badge
-                      colorScheme={milestone.status === "COMPLETED" ? "green" : 
-                                milestone.status === "IN_PROGRESS" ? "blue" : "yellow"}
+                      colorScheme={
+                        milestone.status === "COMPLETED"
+                          ? "green"
+                          : milestone.status === "IN_PROGRESS"
+                            ? "blue"
+                            : "yellow"
+                      }
                       borderRadius="full"
                       px={3}
                       py={1}
@@ -139,7 +150,9 @@ const ProjectDetailView = ({
                       {milestone.status}
                     </Badge>
                   </HStack>
-                  <Text color="gray.600" mb={3}>{milestone.description}</Text>
+                  <Text color="gray.600" mb={3}>
+                    {milestone.description}
+                  </Text>
                   <Stack spacing={2}>
                     <Progress
                       value={getProjectProgress(milestone.status)}
@@ -151,14 +164,20 @@ const ProjectDetailView = ({
                       <HStack>
                         <Icon as={FiCalendar} color="gray.500" />
                         <Text fontSize="sm" color="gray.600">
-                          Due: {new Date(milestone.dueDate).toLocaleDateString('ja-JP')}
+                          Due:{" "}
+                          {new Date(milestone.dueDate).toLocaleDateString(
+                            "ja-JP",
+                          )}
                         </Text>
                       </HStack>
                       {milestone.completionDate && (
                         <HStack>
                           <Icon as={FiCalendar} color="green.500" />
                           <Text fontSize="sm" color="green.600">
-                            Completed: {new Date(milestone.completionDate).toLocaleDateString('ja-JP')}
+                            Completed:{" "}
+                            {new Date(
+                              milestone.completionDate,
+                            ).toLocaleDateString("ja-JP")}
                           </Text>
                         </HStack>
                       )}
@@ -180,8 +199,8 @@ const ProjectDetailView = ({
           <CardBody>
             <Flex wrap="wrap" gap={4}>
               {labMembers
-                .filter(member => 
-                  projectData.members?.some(m => m.userId === member.id)
+                .filter((member) =>
+                  projectData.members?.some((m) => m.userId === member.id),
                 )
                 .map((member) => (
                   <Tag
@@ -191,12 +210,7 @@ const ProjectDetailView = ({
                     variant="subtle"
                     colorScheme="blue"
                   >
-                    <Avatar
-                      size="xs"
-                      name={member.username}
-                      ml={-1}
-                      mr={2}
-                    />
+                    <Avatar size="xs" name={member.username} ml={-1} mr={2} />
                     <TagLabel>{member.username}</TagLabel>
                   </Tag>
                 ))}

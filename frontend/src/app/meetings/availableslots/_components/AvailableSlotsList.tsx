@@ -10,7 +10,7 @@ const DayOfWeekMap: Record<number, string> = {
   3: "Wednesday",
   4: "Thursday",
   5: "Friday",
-  6: "Saturday"  
+  6: "Saturday",
 };
 
 type Props = {
@@ -32,37 +32,41 @@ const AvailableSlotsList = ({ availableSlots, onDelete }: Props) => {
       <Table variant="simple">
         <Thead>
           <Tr>
-          <Th>Day</Th>
-          <Th>Start Time</Th>
-          <Th>End Time</Th>
-          <Th>Action</Th>
+            <Th>Day</Th>
+            <Th>Start Time</Th>
+            <Th>End Time</Th>
+            <Th>Action</Th>
           </Tr>
         </Thead>
         <Tbody>
           {slots.length === 0 ? (
             <Tr>
-              <Td colSpan={4} textAlign="center">No available time slots registered</Td>
+              <Td colSpan={4} textAlign="center">
+                No available time slots registered
+              </Td>
             </Tr>
           ) : (
             slots.map((slot: AvailableSlot) => (
               <Tr key={slot.id}>
                 <Td>{DayOfWeekMap[slot.dayOfWeek]}</Td>
-                <Td>{new Date(slot.startTime).toLocaleString("ja-JP", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  timeZone: "Asia/Tokyo"
+                <Td>
+                  {new Date(slot.startTime).toLocaleString("ja-JP", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    timeZone: "Asia/Tokyo",
                   })}
                 </Td>
-                <Td>{new Date(slot.endTime).toLocaleString("ja-JP", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  timeZone: "Asia/Tokyo"
+                <Td>
+                  {new Date(slot.endTime).toLocaleString("ja-JP", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    timeZone: "Asia/Tokyo",
                   })}
                 </Td>
                 <Td>
@@ -81,6 +85,6 @@ const AvailableSlotsList = ({ availableSlots, onDelete }: Props) => {
       </Table>
     </Box>
   );
-}
+};
 
 export default AvailableSlotsList;
