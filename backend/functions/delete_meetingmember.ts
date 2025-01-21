@@ -29,7 +29,7 @@ export const delete_meetingmember = async (
             },
         });
 
-        return res.status(200).json(deletedMeetingMember);
+        return res.status(200).json({ message: "参加者を削除しました" });
     } catch (error) {
         if (error instanceof Error) {
           res.status(500).json({ message: error.message });
