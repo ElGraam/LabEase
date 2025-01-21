@@ -22,6 +22,8 @@ import { get_availableslot } from "./functions/get_availableslots";
 import { delete_availableslot } from "./functions/delete_availableslot";
 import { delete_meeting } from "./functions/delete_meeting";
 import { get_lab_availableslot } from "./functions/get_lab_availableslot";
+import { delete_projectmember } from "./functions/delete_projectmember";
+import { delete_meetingmember } from "./functions/delete_meetingmember";
 
 const app = express();
 app.use(express.json());
@@ -46,7 +48,7 @@ app.get("/api/lab/:labid/projects", get_labproject);
 app.get("/api/project/:projectId", get_project);
 app.put("/api/project/:projectId", update_project);
 app.delete("/api/project/:projectId", delete_project);
-
+app.delete("/api/project/:projectId/member/:userId", delete_projectmember);
 // meeting
 app.post("/api/meeting/create", meeting_create);
 app.get("/api/meeting/:userId", get_meeting);
@@ -55,6 +57,7 @@ app.delete("/api/meeting/:meetingId", delete_meeting);
 app.get("/api/availableslots/:userId", get_availableslot);
 app.delete("/api/availableslots/:availableSlotId", delete_availableslot);
 app.get("/api/lab/:labId/availableslots", get_lab_availableslot);
+app.delete("/api/meeting/:meetingId/member/:userId", delete_meetingmember);
 
 // error handler
 app.use(notFound);
