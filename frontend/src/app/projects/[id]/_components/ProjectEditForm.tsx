@@ -27,13 +27,14 @@ import {
   Badge,
 } from "@chakra-ui/react";
 import { redirect, useRouter } from "next/navigation";
-import { FiSave, FiUserPlus } from "react-icons/fi";
+import { FiSave, FiUserPlus, FiUserMinus } from "react-icons/fi";
 
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import {
   updateProject,
   projectRegister,
+  deleteProjectMember,
 } from "../action";
 import {
   Project,
@@ -103,6 +104,8 @@ const ProjectEditForm = ({
     try {
       if (session?.user?.role != "STUDENT") {
         await projectRegister(projectId, selectedMemberIds);
+        setRegisteredMembers([...registeredMembers, ...selectedMemberIds]);
+        setSelectedMemberIds([]);
         setSuccess("Members registered successfully");
         showSuccessToast("Members registered successfully");
         router.refresh();
@@ -253,25 +256,68 @@ const ProjectEditForm = ({
               </HStack>
             </CardHeader>
             <CardBody>
-              <CheckboxGroup onChange={handleMemberSelect} value={selectedMemberIds}>
-                <Stack spacing={3}>
-                  {labMembers.map((member) => (
-                    <Checkbox
-                      key={member.id}
-                      value={member.id}
-                      isDisabled={registeredMembers.includes(member.id)}
-                    >
-                      <HStack>
-                        <Avatar size="sm" name={member.username} />
-                        <Text>{member.username}</Text>
-                        {registeredMembers.includes(member.id) && (
-                          <Badge colorScheme="green">Registered</Badge>
-                        )}
-                      </HStack>
-                    </Checkbox>
-                  ))}
-                </Stack>
-              </CheckboxGroup>
+              <VStack spacing={4} align="stretch">
+                <Box>
+                  <Text fontWeight="bold" mb={2}>Registered Members</Text>
+                  <Stack spacing={3}>
+                    {labMembers
+                      .filter((member) => registeredMembers.includes(member.id))
+                      .map((member) => (
+                        <HStack key={member.id} justify="space-between" p={2} borderWidth="1px" borderRadius="md">
+                          <HStack>
+                            <Avatar size="sm" name={member.username} />
+                            <Text>{member.username}</Text>
+                          </HStack>
+                          <IconButton
+                            aria-label="Remove member"
+                            icon={<FiUserMinus />}
+                            size="sm"
+                            colorScheme="red"
+                            variant="ghost"
+                            onClick={async () => {
+                              try {
+                                await deleteProjectMember(projectId, member.id);
+                                setRegisteredMembers(registeredMembers.filter(id => id !== member.id));
+                                toast({
+                                  title: "Member removed",
+                                  status: "success",
+                                  duration: 3000,
+                                  isClosable: true,
+                                });
+                                router.refresh();
+                              } catch (error) {
+                                toast({
+                                  title: "Error removing member",
+                                  status: "error",
+                                  duration: 3000,
+                                  isClosable: true,
+                                });
+                              }
+                            }}
+                          />
+                        </HStack>
+                      ))}
+                  </Stack>
+                </Box>
+
+                <Box>
+                  <Text fontWeight="bold" mb={2}>Available Members</Text>
+                  <CheckboxGroup onChange={handleMemberSelect} value={selectedMemberIds}>
+                    <Stack spacing={3}>
+                      {labMembers
+                        .filter((member) => !registeredMembers.includes(member.id))
+                        .map((member) => (
+                          <Checkbox key={member.id} value={member.id}>
+                            <HStack>
+                              <Avatar size="sm" name={member.username} />
+                              <Text>{member.username}</Text>
+                            </HStack>
+                          </Checkbox>
+                        ))}
+                    </Stack>
+                  </CheckboxGroup>
+                </Box>
+              </VStack>
             </CardBody>
           </Card>
 

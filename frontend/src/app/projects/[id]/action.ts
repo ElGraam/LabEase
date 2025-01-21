@@ -103,3 +103,20 @@ export const projectRegister = async (
     throw error;
   }
 };
+
+export const deleteProjectMember = async (
+  projectId: string,
+  userId: string,
+): Promise<responseData> => {
+  const path = `${process.env.BACKEND_URL}/api/project/${projectId}/member/${userId}`;
+  try {
+    const res = await fetch(path, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+    return res.json();
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
