@@ -57,11 +57,9 @@ export const availableSlots_create = async (
     const startHour = new Date(startTime).getHours();
     const endHour = new Date(endTime).getHours();
     if (startHour > 22 || startHour < 5 || endHour > 22 || endHour < 5) {
-      return res
-        .status(400)
-        .json({
-          messege: "The time period from 10:00 PM to 5:00 AM cannot be set.",
-        });
+      return res.status(400).json({
+        messege: "The time period from 10:00 PM to 5:00 AM cannot be set.",
+      });
     }
     const availableSlots = await prisma.availableSlot.create({
       data: {
