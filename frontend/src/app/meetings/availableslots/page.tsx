@@ -1,11 +1,13 @@
 import { getAvailableSlots } from "./action";
-import { Container, Heading, VStack, Box } from "@chakra-ui/react";
+import { Container, Heading, VStack, Box, Button } from "@chakra-ui/react";
 import { ITEM_LIMIT } from "@/const";
 import { getServerSession } from "next-auth";
 import { authOption } from "@/lib/next-auth/auth";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import AvailableSlotsClientWrapper from "./_components/AvailableSlotsClientWrapper";
+import Link from "next/link";
+import { FaArrowLeft } from "react-icons/fa";
 
 type Props = {
   searchParams: {
@@ -29,6 +31,19 @@ export default async function AvailableSlotsPage({ searchParams }: Props) {
   return (
     <Container maxW="container.xl" py={8}>
       <VStack spacing={8} align="stretch">
+        <Box>
+          <Button
+            as={Link}
+            href="/meetings"
+            leftIcon={<FaArrowLeft />}
+            colorScheme="gray"
+            variant="ghost"
+            size="sm"
+            mb={4}
+          >
+            Back to meetings list
+          </Button>
+        </Box>
         <Heading size="lg">Availability Management</Heading>
         <Suspense fallback={<Box>Loading...</Box>}>
           <AvailableSlotsClientWrapper 
