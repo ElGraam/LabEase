@@ -123,99 +123,115 @@ export default function MeetingList({ meetings: initialMeetings }: Props) {
               borderRadius="lg"
               p={4}
               shadow="sm"
+              position="relative"
               _hover={{ shadow: "md" }}
               transition="box-shadow 0.2s"
             >
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="flex-start"
-              >
-                <Box>
-                  <Box as="h2" fontSize="xl" fontWeight="semibold">
-                    {meeting.title}
-                  </Box>
-                  <Box color="gray.600">{meeting.description}</Box>
-                </Box>
-                <Box display="flex" gap={2} alignItems="center">
-                  <Box
-                    bg="blue.100"
-                    color="blue.800"
-                    px={2}
-                    py={1}
-                    borderRadius="md"
-                    fontSize="sm"
-                  >
-                    {meeting.type}
-                  </Box>
-                  {canDelete && (
-                    <IconButton
-                      aria-label="Delete meeting"
-                      icon={<DeleteIcon />}
-                      size="sm"
-                      colorScheme="red"
-                      variant="ghost"
-                      onClick={() => handleDeleteClick(meeting.id)}
-                    />
-                  )}
-                </Box>
-              </Box>
-              <Box mt={4} fontSize="sm" color="gray.500">
-                <Box>
-                  Start:{" "}
-                  {new Date(meeting.startTime).toLocaleString("ja-JP", {
-                    year: "numeric",
-                    month: "2-digit",
-                    day: "2-digit",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    timeZone: "Asia/Tokyo"
-                  })}
-                </Box>
-                <Box>
-                  End:{" "}
-                  {new Date(meeting.endTime).toLocaleString("ja-JP", {
-                    year: "numeric",
-                    month: "2-digit",
-                    day: "2-digit",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    timeZone: "Asia/Tokyo"
-                  })}
-                </Box>
-              </Box>
-              <Box mt={2}>
-                <HStack>
-                  <Icon as={FiUsers} />
-                  <Box as="h3" fontSize="sm" fontWeight="semibold">
-                    Participants:
-                  </Box>
-                </HStack>
-                <Box 
-                  display="flex" 
-                  flexWrap="wrap" 
-                  gap={2} 
-                  mt={1}
+              {canDelete && (
+                <IconButton
+                  aria-label="Delete meeting"
+                  icon={<DeleteIcon />}
+                  size="sm"
+                  colorScheme="red"
+                  variant="ghost"
+                  position="absolute"
+                  top={2}
+                  right={2}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteClick(meeting.id);
+                  }}
+                />
+              )}
+              
+              <Link href={`/meetings/${meeting.id}`} style={{ textDecoration: 'none' }}>
+                <Box
+                  cursor="pointer"
+                  _hover={{ bg: "gray.50" }}
+                  transition="background 0.2s"
+                  borderRadius="md"
                 >
-                  {meeting.participants.map((participant) => (
-                    <Tag
-                      key={participant.id}
-                      size="lg"
-                      borderRadius="full"
-                      variant="subtle"
-                      colorScheme="blue"
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="flex-start"
+                    pr={canDelete ? 12 : 4}
+                  >
+                    <Box>
+                      <Box as="h2" fontSize="xl" fontWeight="semibold">
+                        {meeting.title}
+                      </Box>
+                      <Box color="gray.600">{meeting.description}</Box>
+                    </Box>
+                    <Box
+                      bg="blue.100"
+                      color="blue.800"
+                      px={2}
+                      py={1}
+                      borderRadius="md"
+                      fontSize="sm"
                     >
-                      <Avatar
-                        size="xs"
-                        name={participant.user.username}
-                        ml={-1}
-                        mr={2}
-                      />
-                      <TagLabel>{participant.user.username}</TagLabel>
-                    </Tag>
-                  ))}
+                      {meeting.type}
+                    </Box>
+                  </Box>
+                  <Box mt={4} fontSize="sm" color="gray.500">
+                    <Box>
+                      Start:{" "}
+                      {new Date(meeting.startTime).toLocaleString("ja-JP", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        timeZone: "Asia/Tokyo"
+                      })}
+                    </Box>
+                    <Box>
+                      End:{" "}
+                      {new Date(meeting.endTime).toLocaleString("ja-JP", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        timeZone: "Asia/Tokyo"
+                      })}
+                    </Box>
+                  </Box>
+                  <Box mt={2}>
+                    <HStack>
+                      <Icon as={FiUsers} />
+                      <Box as="h3" fontSize="sm" fontWeight="semibold">
+                        Participants:
+                      </Box>
+                    </HStack>
+                    <Box 
+                      display="flex" 
+                      flexWrap="wrap" 
+                      gap={2} 
+                      mt={1}
+                    >
+                      {meeting.participants.map((participant) => (
+                        <Tag
+                          key={participant.id}
+                          size="lg"
+                          borderRadius="full"
+                          variant="subtle"
+                          colorScheme="blue"
+                        >
+                          <Avatar
+                            size="xs"
+                            name={participant.user.username}
+                            ml={-1}
+                            mr={2}
+                          />
+                          <TagLabel>{participant.user.username}</TagLabel>
+                        </Tag>
+                      ))}
+                    </Box>
+                  </Box>
                 </Box>
-              </Box>
+              </Link>
             </Box>
           ))}
         </Box>
