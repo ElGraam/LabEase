@@ -16,7 +16,7 @@ import { delete_project } from "./functions/delete_project";
 import { get_lab_member } from "./functions/get_lab_member";
 import { updateProfile } from "./functions/update_profile";
 import { meeting_create } from "./functions/meeting_create";
-import { get_meeting } from "./functions/get_meeting";
+import { get_meetings } from "./functions/get_meetings";
 import { availableSlots_create } from "./functions/availableslot_create";
 import { get_availableslot } from "./functions/get_availableslots";
 import { delete_availableslot } from "./functions/delete_availableslot";
@@ -51,7 +51,7 @@ app.delete("/api/project/:projectId", delete_project);
 app.delete("/api/project/:projectId/member/:userId", delete_projectmember);
 // meeting
 app.post("/api/meeting/create", meeting_create);
-app.get("/api/meeting/:userId", get_meeting);
+app.get("/api/meeting/:userId", get_meetings);
 app.post("/api/availableslots/create/:userId", availableSlots_create);
 app.delete("/api/meeting/:meetingId", delete_meeting);
 app.get("/api/availableslots/:userId", get_availableslot);

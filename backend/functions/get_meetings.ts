@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../lib/prisma";
 
-export const get_meeting = async (
+export const get_meetings = async (
     req: Request,
     res: Response,
     next: NextFunction,
