@@ -6,7 +6,7 @@ type responseData = {
 };
 
 export const getMeetings = async (userId: string): Promise<responseData> => {
-  const path = `${process.env.BACKEND_URL}/api/meeting/${userId}`;
+  const path = `${process.env.BACKEND_URL}/api/meeting/user/${userId}`;
   try {
     const res = await fetch(path, {
       method: "GET",
