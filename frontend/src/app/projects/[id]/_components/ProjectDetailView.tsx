@@ -25,6 +25,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Project, Users } from "@/types";
 import { FiCalendar, FiEdit2, FiUsers } from "react-icons/fi";
+import { FaArrowLeft } from "react-icons/fa";
+import Link from "next/link";
 
 const ProjectDetailView = ({
   projectId,
@@ -58,6 +60,18 @@ const ProjectDetailView = ({
 
   return (
     <Container maxW="container.lg" py={8}>
+      <Box mb={6}>
+        <Button
+          as={Link}
+          href="/projects"
+          leftIcon={<FaArrowLeft />}
+          colorScheme="gray"
+          variant="ghost"
+          size="sm"
+        >
+          Back to projects list
+        </Button>
+      </Box>
       <VStack spacing={8} align="stretch">
         <Flex justify="space-between" align="center">
           <Box>

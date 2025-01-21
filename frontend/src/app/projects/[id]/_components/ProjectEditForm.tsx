@@ -28,6 +28,8 @@ import {
 } from "@chakra-ui/react";
 import { redirect, useRouter } from "next/navigation";
 import { FiSave, FiUserPlus, FiUserMinus } from "react-icons/fi";
+import { FaArrowLeft } from "react-icons/fa";
+import Link from "next/link";
 
 import { useSession } from "next-auth/react";
 import { useState } from "react";
@@ -134,6 +136,18 @@ const ProjectEditForm = ({
 
   return (
     <Container maxW="container.lg" py={8}>
+      <Box mb={6}>
+        <Button
+          as={Link}
+          href={`/projects/${projectId}`}
+          leftIcon={<FaArrowLeft />}
+          colorScheme="gray"
+          variant="ghost"
+          size="sm"
+        >
+          Back to project
+        </Button>
+      </Box>
       <form onSubmit={handleEditProject}>
         <VStack spacing={6}>
           <Card w="100%">
