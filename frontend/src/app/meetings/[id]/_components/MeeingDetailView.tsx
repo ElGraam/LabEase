@@ -102,7 +102,7 @@ export const MeetingDetailView = ({ meeting }: MeetingDetailViewProps) => {
               <HStack>
                 <Icon as={FaClock} color="blue.500" boxSize={5} />
                 <Text fontSize="md" color="gray.600" _dark={{ color: "gray.300" }}>
-                  {new Date(meeting.startTime).toLocaleString("en-US", {
+                  {new Date(meeting.startTime).toLocaleString("ja-JP", {
                     year: "numeric",
                     month: "2-digit",
                     day: "2-digit",
@@ -110,7 +110,7 @@ export const MeetingDetailView = ({ meeting }: MeetingDetailViewProps) => {
                     minute: "2-digit",
                     timeZone: "Asia/Tokyo"
                   })} - 
-                  {new Date(meeting.endTime).toLocaleString("en-US", {
+                  {new Date(meeting.endTime).toLocaleString("ja-JP", {
                     hour: "2-digit",
                     minute: "2-digit",
                     timeZone: "Asia/Tokyo"
