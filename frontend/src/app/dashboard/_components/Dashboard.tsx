@@ -33,19 +33,29 @@ interface DashboardProps {
   initialTotalCount: number;
 }
 // 曜日を英語で表示
-const dayOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];    
+const dayOfWeek = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 
-export default function Dashboard({ 
-  userId, 
+export default function Dashboard({
+  userId,
   initialMeetings,
   initialProjects,
   initialAvailableSlots,
   initialTabIndex = 0,
-  initialTotalCount
+  initialTotalCount,
 }: DashboardProps) {
   const [meetings, setMeetings] = useState<Meeting[]>(initialMeetings);
   const [projects, setProjects] = useState<Project[]>(initialProjects);
-  const [availableSlots, setAvailableSlots] = useState<AvailableSlot[]>(initialAvailableSlots);
+  const [availableSlots, setAvailableSlots] = useState<AvailableSlot[]>(
+    initialAvailableSlots,
+  );
   const router = useRouter();
   const searchParams = useSearchParams();
   const tabIndex = Number(searchParams.get("tab") || initialTabIndex);
@@ -77,12 +87,12 @@ export default function Dashboard({
         console.error("Error fetching data:", error);
       }
     };
-    
+
     fetchData();
-    
-    // 定期的な更新が必要な場合はここでインターバルを設定
+
+    // インターバルを設定
     const interval = setInterval(fetchData, 60000); // 1分ごとに更新
-    
+
     return () => clearInterval(interval);
   }, [userId, offset]);
 
@@ -109,7 +119,12 @@ export default function Dashboard({
   return (
     <Container maxW="container.xl" py={8}>
       <Heading mb={6}>Dashboard</Heading>
-      <Tabs colorScheme="blue" variant="enclosed" index={tabIndex} onChange={handleTabChange}>
+      <Tabs
+        colorScheme="blue"
+        variant="enclosed"
+        index={tabIndex}
+        onChange={handleTabChange}
+      >
         <TabList>
           <Tab>Meetings</Tab>
           <Tab>Available Slots</Tab>
@@ -126,27 +141,32 @@ export default function Dashboard({
                   </CardHeader>
                   <CardBody>
                     <Stack spacing={3}>
-                      <Text>Start: {new Date(meeting.startTime).toLocaleString(
-                        "ja-JP",
-                        {
+                      <Text>
+                        Start:{" "}
+                        {new Date(meeting.startTime).toLocaleString("ja-JP", {
                           year: "numeric",
                           month: "2-digit",
                           day: "2-digit",
                           hour: "2-digit",
                           minute: "2-digit",
-                        }
-                      )}</Text>
-                      <Text>End: {new Date(meeting.endTime).toLocaleString(
-                        "ja-JP",
-                        {
+                        })}
+                      </Text>
+                      <Text>
+                        End:{" "}
+                        {new Date(meeting.endTime).toLocaleString("ja-JP", {
                           year: "numeric",
                           month: "2-digit",
                           day: "2-digit",
                           hour: "2-digit",
                           minute: "2-digit",
-                        }
-                      )}</Text>
-                      <Text>Type: {meeting.type === MeetingType.REGULAR ? "Regular" : "Irregular"}</Text>
+                        })}
+                      </Text>
+                      <Text>
+                        Type:{" "}
+                        {meeting.type === MeetingType.REGULAR
+                          ? "Regular"
+                          : "Irregular"}
+                      </Text>
                       {meeting.description && (
                         <Text>Details: {meeting.description}</Text>
                       )}
@@ -167,35 +187,35 @@ export default function Dashboard({
                   <CardBody>
                     <Stack spacing={3}>
                       <Text>Day: {dayOfWeek[slot.dayOfWeek]}</Text>
-                      <Text>Start: {new Date(slot.startTime).toLocaleString(
-                        "ja-JP",
-                        {
-                            year: "numeric",
-                            month: "2-digit",
-                            day: "2-digit",
-                            hour: "2-digit",
-                            minute: "2-digit",                          
-                        }
-                      )}</Text>
-                      <Text>End: {new Date(slot.endTime).toLocaleString(
-                        "ja-JP",
-                        {
-                            year: "numeric",
-                            month: "2-digit",
-                            day: "2-digit",
-                            hour: "2-digit",
-                            minute: "2-digit",                          
-                        }
-                      )}</Text>
+                      <Text>
+                        Start:{" "}
+                        {new Date(slot.startTime).toLocaleString("ja-JP", {
+                          year: "numeric",
+                          month: "2-digit",
+                          day: "2-digit",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </Text>
+                      <Text>
+                        End:{" "}
+                        {new Date(slot.endTime).toLocaleString("ja-JP", {
+                          year: "numeric",
+                          month: "2-digit",
+                          day: "2-digit",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </Text>
                     </Stack>
                   </CardBody>
                 </Card>
               ))}
             </SimpleGrid>
-            <Pagination 
-              keyword="" 
-              offset={offset} 
-              totalCount={totalCount} 
+            <Pagination
+              keyword=""
+              offset={offset}
+              totalCount={totalCount}
               currentTab={tabIndex}
             />
           </TabPanel>

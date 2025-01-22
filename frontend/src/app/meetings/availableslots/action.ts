@@ -16,7 +16,6 @@ export const createAvailableSlots = async (
   startTime: Date,
   endTime: Date,
 ): Promise<responseData> => {
-
   const path = `${process.env.BACKEND_URL}/api/availableslots/create/${userId}`;
   try {
     const startTimeString = new Date(startTime).toISOString();
@@ -33,13 +32,18 @@ export const createAvailableSlots = async (
     });
 
     if (!res.ok) {
-      const errorData = await res.json().catch(() => ({ message: "Failed to parse error response" }));
+      const errorData = await res
+        .json()
+        .catch(() => ({ message: "Failed to parse error response" }));
       console.error("Server response:", {
         status: res.status,
         statusText: res.statusText,
         error: errorData,
       });
-      throw new Error(errorData.message || `Failed to create available slot: ${res.status} ${res.statusText}`);
+      throw new Error(
+        errorData.message ||
+          `Failed to create available slot: ${res.status} ${res.statusText}`,
+      );
     }
 
     const data = await res.json();
@@ -82,7 +86,6 @@ export const getAvailableSlots = async (
 export const deleteAvailableSlot = async (
   availableSlotId: string,
 ): Promise<responseData> => {
-
   const path = `${process.env.BACKEND_URL}/api/availableslots/${availableSlotId}`;
   try {
     const res = await fetch(path, {

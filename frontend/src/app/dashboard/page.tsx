@@ -18,8 +18,10 @@ export default async function DashboardPage({
     redirect("/auth/signin");
   }
 
-  const offset = typeof searchParams.offset === "string" ? parseInt(searchParams.offset) : 0;
-  const tabIndex = typeof searchParams.tab === "string" ? parseInt(searchParams.tab) : 0;
+  const offset =
+    typeof searchParams.offset === "string" ? parseInt(searchParams.offset) : 0;
+  const tabIndex =
+    typeof searchParams.tab === "string" ? parseInt(searchParams.tab) : 0;
 
   const [meetingsData, projectsData, slotsData] = await Promise.all([
     getMeetings(userId),
@@ -28,7 +30,7 @@ export default async function DashboardPage({
   ]);
 
   return (
-    <Dashboard 
+    <Dashboard
       userId={userId}
       initialMeetings={meetingsData.meetings}
       initialProjects={projectsData.projects}
