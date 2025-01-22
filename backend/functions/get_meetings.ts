@@ -18,12 +18,28 @@ export const get_meetings = async (
       },
       include: {
         meetings: {
+          orderBy: {
+            meeting: {
+              startTime: "desc",
+            },
+          },
           include: {
             meeting: {
               include: {
                 participants: {
                   include: {
-                    user: true,
+                    user: {
+                      select: {
+                        id: true,
+                        username: true,
+                        email: true,
+                        password: false,
+                        role: true,
+                        studentId: true,
+                        program: true,
+                        labId: true,
+                      },
+                    },
                   },
                 },
               },
@@ -37,16 +53,10 @@ export const get_meetings = async (
       return res.status(404).json();
     }
 
-    // ユーザーの全ミーティングを抽出し、パスワードを除外
-    const meetings = user.meetings.map((participant) => ({
-      ...participant.meeting,
-      participants: participant.meeting.participants.map((p) => ({
-        ...p,
-        user: {
-          ...p.user,
-          password: undefined,
-        },
-      })),
+    // ミーティングデータを適切な形式に変換
+    const meetings = user.meetings.map((meetingParticipant) => ({
+      ...meetingParticipant.meeting,
+      participants: meetingParticipant.meeting.participants,
     }));
 
     return res.status(200).json(meetings);
