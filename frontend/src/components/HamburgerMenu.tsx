@@ -70,6 +70,15 @@ const HamburgerMenu = () => {
               Home
             </Link>
           </Box>
+          <Box as="li">
+            <Link
+              href="/dashboard"
+              color="white"
+              _hover={{ bg: "gray.600", p: "2", borderRadius: "md" }}
+            >
+              Dashboard
+            </Link>
+          </Box>
           {role !== "STUDENT" && (
             <Box as="li">
               <Link
