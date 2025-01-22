@@ -16,16 +16,16 @@ export const get_user_projects = async (
       where: {
         members: {
           some: {
-            userId: userId
-          }
-        }
+            userId: userId,
+          },
+        },
       },
       include: {
         lab: true,
         members: true,
-      }
+      },
     });
-    
+
     return res.status(200).json(projects);
   } catch (error) {
     next(error);
