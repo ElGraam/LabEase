@@ -1,4 +1,4 @@
-import Dashboard from "./_components/DashBord";
+import Dashboard from "./_components/Dashboard";
 import { getServerSession } from "next-auth";
 import { authOption } from "@/lib/next-auth/auth";
 import { redirect } from "next/navigation";
