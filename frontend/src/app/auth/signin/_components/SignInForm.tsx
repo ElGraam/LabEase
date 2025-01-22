@@ -41,7 +41,7 @@ const SignInForm = () => {
     // ログイン成功時の処理
     if (res?.ok) {
       const userInfo = await getSession();
-      userInfo && router.push(`/lab/`);
+      userInfo && router.push(`/dashboard`);
     }
   };
 
