@@ -16,24 +16,42 @@ export const createAvailableSlots = async (
   startTime: Date,
   endTime: Date,
 ): Promise<responseData> => {
+
   const path = `${process.env.BACKEND_URL}/api/availableslots/create/${userId}`;
   try {
+    const startTimeString = new Date(startTime).toISOString();
+    const endTimeString = new Date(endTime).toISOString();
+
     const res = await fetch(path, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         dayOfWeek,
-        startTime: new Date(startTime).toISOString(),
-        endTime: new Date(endTime).toISOString(),
+        startTime: startTimeString,
+        endTime: endTimeString,
       }),
     });
+
     if (!res.ok) {
-      throw new Error("Failed to create slot");
+      const errorData = await res.json().catch(() => ({ message: "Failed to parse error response" }));
+      console.error("Server response:", {
+        status: res.status,
+        statusText: res.statusText,
+        error: errorData,
+      });
+      throw new Error(errorData.message || `Failed to create available slot: ${res.status} ${res.statusText}`);
     }
+
     const data = await res.json();
     return { availableslot: data };
   } catch (error) {
-    console.error(error);
+    console.error("Error creating available slot:", {
+      error,
+      userId,
+      dayOfWeek,
+      startTime: startTime.toISOString(),
+      endTime: endTime.toISOString(),
+    });
     throw error;
   }
 };
@@ -49,10 +67,14 @@ export const getAvailableSlots = async (
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.message || "Failed to fetch available slots");
+    }
     const data = await res.json();
     return data;
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching available slots:", error);
     throw error;
   }
 };
@@ -60,16 +82,21 @@ export const getAvailableSlots = async (
 export const deleteAvailableSlot = async (
   availableSlotId: string,
 ): Promise<responseData> => {
+
   const path = `${process.env.BACKEND_URL}/api/availableslots/${availableSlotId}`;
   try {
     const res = await fetch(path, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
     });
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.message || "Failed to delete available slot");
+    }
     const data = await res.json();
     return { availableslot: data };
   } catch (error) {
-    console.error(error);
+    console.error("Error deleting available slot:", error);
     throw error;
   }
 };
