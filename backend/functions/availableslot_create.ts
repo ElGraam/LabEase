@@ -72,7 +72,7 @@ export const availableSlots_create = async (
     return res.status(201).json(availableSlots);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(500).json();
+      res.status(500).json({ message: error.message });
     }
     next(error);
   }

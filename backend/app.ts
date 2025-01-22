@@ -25,6 +25,7 @@ import { get_lab_availableslot } from "./functions/get_lab_availableslot";
 import { delete_projectmember } from "./functions/delete_projectmember";
 import { delete_meetingmember } from "./functions/delete_meetingmember";
 import { get_meeting } from "./functions/get_meeting";
+import { get_user_projects } from "./functions/get_user_projects";
 const app = express();
 app.use(express.json());
 
@@ -49,6 +50,7 @@ app.get("/api/project/:projectId", get_project);
 app.put("/api/project/:projectId", update_project);
 app.delete("/api/project/:projectId", delete_project);
 app.delete("/api/project/:projectId/member/:userId", delete_projectmember);
+app.get("/api/project/user/:userId", get_user_projects);
 // meeting
 app.post("/api/meeting/create", meeting_create);
 app.get("/api/meeting/user/:userId", get_meetings);
