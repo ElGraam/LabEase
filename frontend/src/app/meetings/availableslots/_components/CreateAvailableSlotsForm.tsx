@@ -50,26 +50,38 @@ const CreateAvailableSlotsForm = ({ userId, onSuccess }: Props) => {
     try {
       const startDate = new Date(`${date}T${startTime}:00`);
       const endDate = new Date(`${date}T${endTime}:00`);
+      const currentDate = new Date();
 
       if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-        throw new Error("The date format is invalid.");
+        throw new Error("Invalid date format.");
       }
+
       if (startDate >= endDate) {
         toast({
-          title: "The date format is invalid.",
-          description:
-            "Please set the end time to be later than the start time.",
+          title: "Invalid time format",
+          description: "End time must be later than start time.",
           status: "error",
           duration: 3000,
           isClosable: true,
         });
         return;
       }
+
       if (startDate.getDay() !== endDate.getDay()) {
         toast({
-          title: "The date format is invalid.",
-          description:
-            "Please set the start time and end time on the same day.",
+          title: "Invalid date format",
+          description: "Start time and end time must be on the same day.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+        return;
+      }
+
+      if (startDate < currentDate || endDate < currentDate) {
+        toast({
+          title: "Invalid date format",
+          description: "Cannot set past dates.",
           status: "error",
           duration: 3000,
           isClosable: true,
@@ -79,9 +91,8 @@ const CreateAvailableSlotsForm = ({ userId, onSuccess }: Props) => {
 
       if (!isValidTimeRange(startDate, endDate)) {
         toast({
-          title: "The date format is invalid.",
-          description:
-            "The time period from 10:00 PM to 5:00 AM cannot be set.",
+          title: "Invalid time format",
+          description: "Cannot set times between 10 PM and 5 AM.",
           status: "error",
           duration: 3000,
           isClosable: true,
@@ -89,13 +100,12 @@ const CreateAvailableSlotsForm = ({ userId, onSuccess }: Props) => {
         return;
       }
 
-      // 日付から曜日を取得（0-6の数値）
       const dayOfWeek = startDate.getDay();
 
       await createAvailableSlots(userId, dayOfWeek, startDate, endDate);
       onSuccess();
       toast({
-        title: "Availability has been created.",
+        title: "Available time slot created successfully.",
         status: "success",
         duration: 3000,
         isClosable: true,
