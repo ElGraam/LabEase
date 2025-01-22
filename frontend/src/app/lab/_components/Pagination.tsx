@@ -10,19 +10,19 @@ type Props = {
   keyword: string;
   offset: number;
   totalCount: number;
+  currentTab?: number;
 };
 
-const Pagination: FC<Props> = ({ keyword, offset, totalCount }) => {
+const Pagination: FC<Props> = ({ keyword, offset, totalCount, currentTab }) => {
   // ページ番号
   const currentPageNum = Math.floor(offset / ITEM_LIMIT);
   const endPageNum = Math.ceil(totalCount / ITEM_LIMIT) - 1;
 
   // 検索条件を保持した遷移先URLを作成
   const pathname = usePathname();
-  const url =
-    keyword !== ""
-      ? `${pathname}?keyword=${encodeURIComponent(keyword)}&`
-      : `${pathname}?`;
+  const url = `${pathname}?${
+    keyword !== "" ? `keyword=${encodeURIComponent(keyword)}&` : ""
+  }${currentTab !== undefined ? `tab=${currentTab}&` : ""}`;
 
   // Pagenationボタンのコンポーネント
   const PaginationItem: FC<{
