@@ -20,7 +20,7 @@ export const get_meetings = async (
         meetings: {
           orderBy: {
             meeting: {
-              startTime: "desc",
+              startTime: "asc",
             },
           },
           include: {
