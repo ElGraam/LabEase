@@ -48,6 +48,25 @@ const dayOfWeek = [
   "Saturday",
 ];
 
+const formatDate = (date: Date) => {
+  return new Date(date).toLocaleString("ja-JP", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Asia/Tokyo",
+  });
+};
+
+const formatTime = (date: Date) => {
+  return new Date(date).toLocaleString("ja-JP", {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Asia/Tokyo",
+  });
+};
+
 export default function Dashboard({
   userId,
   initialMeetings,
@@ -205,24 +224,9 @@ export default function Dashboard({
                           <HStack>
                             <Icon as={FaClock} color="blue.500" />
                             <Text fontSize="sm">
-                              {new Date(meeting.startTime).toLocaleString(
-                                "ja-JP",
-                                {
-                                  year: "numeric",
-                                  month: "2-digit",
-                                  day: "2-digit",
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                                },
-                              )}
+                              {formatDate(new Date(meeting.startTime))}
                               {" - "}
-                              {new Date(meeting.endTime).toLocaleString(
-                                "ja-JP",
-                                {
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                                },
-                              )}
+                              {formatTime(new Date(meeting.endTime))}
                             </Text>
                           </HStack>
                           {meeting.description && (
@@ -273,6 +277,7 @@ export default function Dashboard({
                                   year: "numeric",
                                   month: "2-digit",
                                   day: "2-digit",
+                                  timeZone: "Asia/Tokyo",
                                 },
                               )}
                               ({dayOfWeek[slot.dayOfWeek]})
@@ -286,12 +291,14 @@ export default function Dashboard({
                                 {
                                   hour: "2-digit",
                                   minute: "2-digit",
+                                  timeZone: "Asia/Tokyo",
                                 },
                               )}
                               {" - "}
                               {new Date(slot.endTime).toLocaleString("ja-JP", {
                                 hour: "2-digit",
                                 minute: "2-digit",
+                                timeZone: "Asia/Tokyo",
                               })}
                             </Text>
                           </HStack>
