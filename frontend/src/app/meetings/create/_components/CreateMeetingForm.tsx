@@ -22,11 +22,34 @@ import type { LabMembersSlots } from "../action";
 
 const generateTimeOptions = () => {
   const options = [];
-  for (let hour = 5; hour < 22; hour++) {
-    options.push(`${hour.toString().padStart(2, "0")}:00`);
-    options.push(`${hour.toString().padStart(2, "0")}:30`);
-  }
-  options.push(`${"22".padStart(2, "0")}:00`);
+  // Class1
+  options.push(`${"9".padStart(2, "0")}:00`);
+  options.push(`${"9".padStart(2, "0")}:50`);
+  // Class2
+  options.push(`${"10".padStart(2, "0")}:40`);
+  // Class3
+  options.push(`${"10".padStart(2, "0")}:50`);
+  options.push(`${"11".padStart(2, "0")}:40`);
+  // Class4
+  options.push(`${"12".padStart(2, "0")}:30`);
+  // Class5
+  options.push(`${"13".padStart(2, "0")}:20`);
+  options.push(`${"14".padStart(2, "0")}:10`);
+  // Class6
+  options.push(`${"15".padStart(2, "0")}:00`);
+  // Class7
+  options.push(`${"15".padStart(2, "0")}:10`);
+  options.push(`${"16".padStart(2, "0")}:00`);
+  // Class8
+  options.push(`${"16".padStart(2, "0")}:50`);
+  // Class9
+  options.push(`${"17".padStart(2, "0")}:00`);
+  options.push(`${"17".padStart(2, "0")}:50`);
+  // Class10
+  options.push(`${"18".padStart(2, "0")}:40`);
+  // Class11
+  options.push(`${"18".padStart(2, "0")}:50`);
+  options.push(`${"19".padStart(2, "0")}:40`);
   return options;
 };
 
@@ -135,10 +158,11 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
             onChange={(e) =>
               setFormData((prev) => ({ ...prev, title: e.target.value }))
             }
+            required
           />
         </FormControl>
 
-        <FormControl>
+        <FormControl isRequired>
           <FormLabel>Description</FormLabel>
           <Textarea
             value={formData.description}

@@ -13,11 +13,34 @@ import { useState } from "react";
 
 const generateTimeOptions = () => {
   const options = [];
-  for (let hour = 5; hour < 22; hour++) {
-    options.push(`${hour.toString().padStart(2, "0")}:00`);
-    options.push(`${hour.toString().padStart(2, "0")}:30`);
-  }
-  options.push(`${"22".padStart(2, "0")}:00`);
+  // Class1
+  options.push(`${"9".padStart(2, "0")}:00`);
+  options.push(`${"9".padStart(2, "0")}:50`);
+  // Class2
+  options.push(`${"10".padStart(2, "0")}:40`);
+  // Class3
+  options.push(`${"10".padStart(2, "0")}:50`);
+  options.push(`${"11".padStart(2, "0")}:40`);
+  // Class4
+  options.push(`${"12".padStart(2, "0")}:30`);
+  // Class5
+  options.push(`${"13".padStart(2, "0")}:20`);
+  options.push(`${"14".padStart(2, "0")}:10`);
+  // Class6
+  options.push(`${"15".padStart(2, "0")}:00`);
+  // Class7
+  options.push(`${"15".padStart(2, "0")}:10`);
+  options.push(`${"16".padStart(2, "0")}:00`);
+  // Class8
+  options.push(`${"16".padStart(2, "0")}:50`);
+  // Class9
+  options.push(`${"17".padStart(2, "0")}:00`);
+  options.push(`${"17".padStart(2, "0")}:50`);
+  // Class10
+  options.push(`${"18".padStart(2, "0")}:40`);
+  // Class11
+  options.push(`${"18".padStart(2, "0")}:50`);
+  options.push(`${"19".padStart(2, "0")}:40`);
 
   return options;
 };
@@ -34,16 +57,6 @@ const CreateAvailableSlotsForm = ({ userId, onSuccess }: Props) => {
   const toast = useToast();
   const timeOptions = generateTimeOptions();
 
-  const isValidTimeRange = (start: Date, end: Date): boolean => {
-    const startHour = start.getHours();
-    const endHour = end.getHours();
-
-    // 22時から5時までの時間帯をチェック
-    if (startHour > 22 || startHour < 5 || endHour > 22 || endHour < 5) {
-      return false;
-    }
-    return true;
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,17 +95,6 @@ const CreateAvailableSlotsForm = ({ userId, onSuccess }: Props) => {
         toast({
           title: "Invalid date format",
           description: "Cannot set past dates.",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
-        return;
-      }
-
-      if (!isValidTimeRange(startDate, endDate)) {
-        toast({
-          title: "Invalid time format",
-          description: "Cannot set times between 10 PM and 5 AM.",
           status: "error",
           duration: 3000,
           isClosable: true,
