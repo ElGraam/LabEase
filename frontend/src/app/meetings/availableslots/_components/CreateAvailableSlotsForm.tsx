@@ -80,10 +80,10 @@ const CreateAvailableSlotsForm = ({ userId, onSuccess }: Props) => {
         return;
       }
 
-      if (startDate.getDay() !== endDate.getDay()) {
+      if (startDate < currentDate || endDate < currentDate) {
         toast({
           title: "Invalid date format",
-          description: "Start time and end time must be on the same day.",
+          description: "Cannot set past dates.",
           status: "error",
           duration: 3000,
           isClosable: true,
@@ -91,10 +91,10 @@ const CreateAvailableSlotsForm = ({ userId, onSuccess }: Props) => {
         return;
       }
 
-      if (startDate < currentDate || endDate < currentDate) {
+      if (startDate.getDay() === 0 || startDate.getDay() === 6) {
         toast({
-          title: "Invalid date format",
-          description: "Cannot set past dates.",
+          title: "Invalid date",
+          description: "Weekends (Saturday and Sunday) cannot be selected.",
           status: "error",
           duration: 3000,
           isClosable: true,
@@ -135,7 +135,20 @@ const CreateAvailableSlotsForm = ({ userId, onSuccess }: Props) => {
           <Input
             type="date"
             value={date}
-            onChange={(e) => setDate(e.target.value)}
+            onChange={(e) => {
+              const selectedDate = new Date(e.target.value);
+              if (selectedDate.getDay() === 0 || selectedDate.getDay() === 6) {
+                toast({
+                  title: "Invalid date",
+                  description: "Weekends (Saturday and Sunday) cannot be selected.",
+                  status: "error",
+                  duration: 3000,
+                  isClosable: true,
+                });
+                return;
+              }
+              setDate(e.target.value);
+            }}
             required
           />
         </FormControl>

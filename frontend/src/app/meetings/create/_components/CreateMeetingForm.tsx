@@ -94,6 +94,18 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
         return;
       }
 
+      if (startDateTime.getDay() === 0 || startDateTime.getDay() === 6) {
+        toast({
+          title: "Invalid Date Selection",
+          description: "Weekends (Saturday and Sunday) cannot be selected",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+        setLoading(false);
+        return;
+      }
+
       await createMeeting(
         formData.type,
         formData.title,
@@ -178,9 +190,20 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
             <Input
               type="date"
               value={formData.date}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, date: e.target.value }))
-              }
+              onChange={(e) => {
+                const selectedDate = new Date(e.target.value);
+                if (selectedDate.getDay() === 0 || selectedDate.getDay() === 6) {
+                  toast({
+                    title: "Invalid Date Selection",
+                    description: "Weekends (Saturday and Sunday) cannot be selected",
+                    status: "error",
+                    duration: 3000,
+                    isClosable: true,
+                  });
+                  return;
+                }
+                setFormData((prev) => ({ ...prev, date: e.target.value }));
+              }}
             />
           </FormControl>
 
