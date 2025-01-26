@@ -8,7 +8,7 @@ export const projectCreate = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const { title, description, labId, milestones } = req.body;
+  const { title, description, labId, milestones, memberIds } = req.body;
 
   try {
     // プロジェクトを作成
@@ -18,6 +18,9 @@ export const projectCreate = async (
         title: title,
         description: description,
         labId: labId,
+        members: {
+          create: memberIds.map((id: string) => ({ userId: id })),
+        },
       },
     });
 
