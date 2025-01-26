@@ -30,7 +30,7 @@ const SearchBox = ({ isBookmark }: { isBookmark: boolean }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname() || "";
 
-  // 並び替えの状態を管理
+  // Manage sort order state
   const [sortOrder, setSortOrder] = useState<string>(
     searchParams?.get("sort") || "studentId",
   );
@@ -39,7 +39,7 @@ const SearchBox = ({ isBookmark }: { isBookmark: boolean }) => {
     studentId: "studentId",
   };
 
-  /** 検索ボタン押下時の処理 */
+  /** Process when the search button is pressed */
   const onSubmit = (data: FormData) => {
     const keyword = data.get("keyword") as string;
     const newParams = new URLSearchParams(searchParams?.toString());
@@ -50,7 +50,7 @@ const SearchBox = ({ isBookmark }: { isBookmark: boolean }) => {
       newParams.delete("keyword");
     }
 
-    // 並び替え条件もクエリパラメータに追加
+    // Add sort conditions to query parameters
     if (sortOrder) {
       newParams.set("sort", sortOrder);
     }
@@ -59,7 +59,7 @@ const SearchBox = ({ isBookmark }: { isBookmark: boolean }) => {
     router.push(createUrl(pathname, newParams));
   };
 
-  // 並び替えオプションの変更処理
+  // Process for changing sort options
   const onSortChange = (sort: string) => {
     setSortOrder(sort);
     const newParams = new URLSearchParams(searchParams?.toString());
@@ -67,7 +67,7 @@ const SearchBox = ({ isBookmark }: { isBookmark: boolean }) => {
     router.push(createUrl(pathname, newParams));
   };
 
-  // sp表示用
+  // For sp display
   const FormStyle: SystemStyleObject = {
     width: { base: "100%", md: "726px" },
     ".searchForm": {
@@ -107,7 +107,7 @@ const SearchBox = ({ isBookmark }: { isBookmark: boolean }) => {
             name="keyword"
             id="keyword"
             variant="filled"
-            placeholder="キーワードで検索する"
+            placeholder="Search by keyword"
             defaultValue={searchParams?.get("keyword") || ""}
             sx={isBookmark ? InputStyleForBookmark : InputStyle}
           />
@@ -128,12 +128,12 @@ const SearchBox = ({ isBookmark }: { isBookmark: boolean }) => {
                 bg="white"
                 shadow="md"
                 borderRadius="lg"
-                _hover={{ bg: "gray.100" }} // hover時の背景色
-                _active={{ bg: "gray.200" }} // クリック時の背景色
+                _hover={{ bg: "gray.100" }} // Background color on hover
+                _active={{ bg: "gray.200" }} // Background color on click
                 rightIcon={<TriangleDownIcon w={3} h={3} />}
-                px={4} // ボタンの左右余白
-                py={2} // ボタンの上下余白
-                fontWeight="bold" // ボタンの文字の太さ
+                px={4} // Left and right padding of the button
+                py={2} // Top and bottom padding of the button
+                fontWeight="bold" // Font weight of the button text
                 fontSize="sm"
                 w={48}
               >
@@ -162,7 +162,7 @@ const SearchBox = ({ isBookmark }: { isBookmark: boolean }) => {
 
 export default SearchBox;
 
-// URL生成用
+// For URL generation
 const createUrl = (
   pathname: string,
   params: URLSearchParams | ReadonlyURLSearchParams,
