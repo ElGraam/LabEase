@@ -76,6 +76,6 @@ describe("meeting_create", () => {
     await meeting_create(req, res, next);
 
     expect(res.send.called).toBeFalsy();
-    expect(next.called).toBeTruthy();
+    expect(res.status.calledWith(400)).toBeTruthy();
   });
 });
