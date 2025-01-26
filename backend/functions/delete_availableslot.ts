@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../lib/prisma";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 export const delete_availableslot = async (
   req: Request,
@@ -19,12 +20,11 @@ export const delete_availableslot = async (
       },
     });
 
-    if (!availableSlot) {
-      return res.status(404).json();
-    }
-
     return res.status(200).json(availableSlot);
   } catch (error) {
+    if (error instanceof PrismaClientKnownRequestError && error.code === "P2025") {
+      return res.status(404).json();
+    }
     if (error instanceof Error) {
       res.status(500).json();
     }
