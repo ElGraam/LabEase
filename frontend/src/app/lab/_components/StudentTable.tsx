@@ -49,17 +49,17 @@ export default function StudentTable({ Users }: { Users: any[] }) {
         <Table variant="simple" size={{ base: "sm", md: "md" }}>
           <Thead>
             <Tr>
-              <Th width="60px">選択</Th>
-              <Th width={{ base: "120px", md: "auto" }}>名前</Th>
+              <Th width="60px">Select</Th>
+              <Th width={{ base: "120px", md: "auto" }}>Name</Th>
               <Hide below="md">
-                <Th>メール</Th>
+                <Th>Email</Th>
               </Hide>
-              <Th width={{ base: "100px", md: "auto" }}>学生ID</Th>
+              <Th width={{ base: "100px", md: "auto" }}>Student ID</Th>
               <Hide below="md">
-                <Th>プログラム</Th>
+                <Th>Program</Th>
               </Hide>
               <Hide below="md">
-                <Th>LabID</Th>
+                <Th>Lab ID</Th>
               </Hide>
             </Tr>
           </Thead>
@@ -90,7 +90,7 @@ export default function StudentTable({ Users }: { Users: any[] }) {
       </Box>
       <Box mt={4} mb={8} textAlign="center">
         <Button colorScheme="blue" onClick={handleRegister}>
-          ラボに登録({selectedStudents.length}人)
+          Register to Lab ({selectedStudents.length} students)
         </Button>
       </Box>
     </Box>
