@@ -22,7 +22,10 @@ export const delete_availableslot = async (
 
     return res.status(200).json(availableSlot);
   } catch (error) {
-    if (error instanceof PrismaClientKnownRequestError && error.code === "P2025") {
+    if (
+      error instanceof PrismaClientKnownRequestError &&
+      error.code === "P2025"
+    ) {
       return res.status(404).json();
     }
     if (error instanceof Error) {

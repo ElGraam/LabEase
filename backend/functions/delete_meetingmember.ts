@@ -9,7 +9,9 @@ export const delete_meetingmember = async (
   try {
     const { meetingId, userId } = req.params;
     if (!meetingId || !userId) {
-      return res.status(400).json({ message: "meetingId and userId are required" });
+      return res
+        .status(400)
+        .json({ message: "meetingId and userId are required" });
     }
 
     const meetingParticipant = await prisma.meetingParticipant.findFirst({

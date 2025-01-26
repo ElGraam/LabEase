@@ -37,7 +37,9 @@ export const meeting_create = async (
       .filter((id): id is string => typeof id === "string" && id.length > 0);
 
     if (participantIds.length === 0) {
-      return res.status(400).json({ error: "Valid participant IDs are required" });
+      return res
+        .status(400)
+        .json({ error: "Valid participant IDs are required" });
     }
 
     const startTime = new Date(body.startTime);
