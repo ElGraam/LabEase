@@ -3,6 +3,7 @@ import { authOption } from "@/lib/next-auth/auth";
 import { redirect } from "next/navigation";
 import ProjectCreateForm from "./_components/ProjectCreateForm";
 import { Box, Container } from "@chakra-ui/react";
+import { getLabMenbers } from "./action";
 
 const CreateProjectPage = async () => {
   const session = await getServerSession(authOption);
@@ -16,9 +17,13 @@ const CreateProjectPage = async () => {
   if (session.user.role === "STUDENT") {
     redirect("/projects");
   }
+
+  const response = await getLabMenbers(labId);
+  const members = response.members;
+
   return (
     <Container>
-      <ProjectCreateForm labId={labId} />
+      <ProjectCreateForm labId={labId} initialMembers={members} />
     </Container>
   );
 };
