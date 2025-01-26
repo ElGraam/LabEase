@@ -33,15 +33,15 @@ const StudentList = async ({
   const session = await getServerSession();
 
   if (!session) {
-    redirect("/auth/signin"); // ログインページへのパス
+    redirect("/auth/signin"); // Path to login page
   }
   const labid = session.user.labId || ``;
-  // クエリパラメータで指定された検索条件
+  // Search conditions specified by query parameters
   const keyword = searchParams?.keyword || "";
   const sort = searchParams?.sort || "studentId";
   const offset = Number(searchParams?.offset) || 0;
 
-  // 指定された検索条件で学生情報を取得
+  // Get student information based on specified search conditions
   const res = keyword
     ? await getStudentBasedId(keyword)
     : await getStudents(offset);
@@ -49,8 +49,8 @@ const StudentList = async ({
   const { Users, status, totalCount } = res;
   const resultText =
     status === 200
-      ? `${totalCount}件の学生が見つかりました（${offset + 1}～${Math.min(offset + ITEM_LIMIT, totalCount)}件を表示）`
-      : "学生が見つかりませんでした";
+      ? `${totalCount} students found (Displaying ${offset + 1} to ${Math.min(offset + ITEM_LIMIT, totalCount)})`
+      : "No students found";
 
   const vStackStyle: SystemStyleObject = {
     margin: "60px auto",
@@ -66,7 +66,7 @@ const StudentList = async ({
     <VStack sx={vStackStyle}>
       <SearchBox isBookmark={false} />
       <Heading as="h2" sx={titleStyle}>
-        学生登録一覧
+        Student Registration
       </Heading>
       <Text>{resultText}</Text>
       <StudentTable Users={Users} />
