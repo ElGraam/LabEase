@@ -21,11 +21,11 @@ export const lab_register = async (
       },
     });
 
-    // ユーザーが存在しない場合は404を返す
+    // If the user does not exist, return 404
     if (!user) {
       return res.status(404).json();
     }
-    // labIdが存在しない場合は404を返す
+    // If the labId does not exist, return 404
     if (!lab) {
       return res.status(404).json();
     }

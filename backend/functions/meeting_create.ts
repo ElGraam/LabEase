@@ -25,11 +25,11 @@ export const meeting_create = async (
 
     // バリデーション
     if (!body.title || body.title.trim() === "") {
-      return res.status(400).json({ error: "タイトルは必須です" });
+      return res.status(400).json({ error: "Title is required" });
     }
 
     if (!Array.isArray(body.participants) || body.participants.length === 0) {
-      return res.status(400).json({ error: "参加者は必須です" });
+      return res.status(400).json({ error: "Participants are required" });
     }
 
     const participantIds = body.participants
@@ -37,20 +37,20 @@ export const meeting_create = async (
       .filter((id): id is string => typeof id === "string" && id.length > 0);
 
     if (participantIds.length === 0) {
-      return res.status(400).json({ error: "有効な参加者IDが必要です" });
+      return res.status(400).json({ error: "Valid participant IDs are required" });
     }
 
     const startTime = new Date(body.startTime);
     const endTime = new Date(body.endTime);
 
     if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) {
-      return res.status(400).json({ error: "無効な日時形式です" });
+      return res.status(400).json({ error: "Invalid date format" });
     }
 
     if (endTime <= startTime) {
       return res
         .status(400)
-        .json({ error: "終了時刻は開始時刻より後である必要があります" });
+        .json({ error: "End time must be after start time" });
     }
 
     // 参加者全員の存在確認
@@ -63,7 +63,7 @@ export const meeting_create = async (
     });
 
     if (users.length !== body.participants.length) {
-      throw new Error("存在しない参加者が含まれています");
+      throw new Error("Some participants do not exist");
     }
 
     // 全参加者の予定重複チェック
@@ -116,7 +116,7 @@ export const meeting_create = async (
           users.find((u) => u.id === participant.userId)?.username ||
           participant.userId;
         throw new Error(
-          `${userName}は指定された時間に他のミーティングが既に存在します`,
+          `${userName} already has a meeting scheduled at the specified time`,
         );
       }
     }
@@ -146,7 +146,7 @@ export const meeting_create = async (
       res.status(500);
       next({ message: error.message, statusCode: 500, stack: error.stack });
     } else {
-      next({ message: "unknown error" });
+      next({ message: "Unknown error" });
     }
   }
 };

@@ -18,7 +18,7 @@ export const delete_projectmember = async (
       },
     });
     if (!projectMember) {
-      return res.status(404).json("メンバーが見つかりません");
+      return res.status(404).json("Member not found");
     }
     const deleteProjectMember = await prisma.projectMember.delete({
       where: {

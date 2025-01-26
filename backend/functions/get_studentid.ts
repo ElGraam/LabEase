@@ -16,7 +16,7 @@ export const get_student_basedId = async (
       },
     });
 
-    // ユーザーが存在しない場合は404を返す
+    // If the user does not exist, return 404
     if (!user) {
       return res.status(404).json();
     }

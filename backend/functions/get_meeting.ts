@@ -10,7 +10,7 @@ export const get_meeting = async (
     const { meetingId } = req.params;
 
     if (!meetingId) {
-      return res.status(400).json({ message: "meetingIdは必須です" });
+      return res.status(400).json({ message: "meetingId is required" });
     }
 
     const meeting = await prisma.meeting.findUnique({
@@ -33,7 +33,7 @@ export const get_meeting = async (
     });
 
     if (!meeting) {
-      return res.status(404).json({ message: "ミーティングが見つかりません" });
+      return res.status(404).json({ message: "Meeting not found" });
     }
 
     return res.status(200).json(meeting);

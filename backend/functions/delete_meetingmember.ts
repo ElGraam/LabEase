@@ -9,7 +9,7 @@ export const delete_meetingmember = async (
   try {
     const { meetingId, userId } = req.params;
     if (!meetingId || !userId) {
-      return res.status(400).json({ message: "meetingIdとuserIdは必須です" });
+      return res.status(400).json({ message: "meetingId and userId are required" });
     }
 
     const meetingParticipant = await prisma.meetingParticipant.findFirst({
@@ -20,7 +20,7 @@ export const delete_meetingmember = async (
     });
 
     if (!meetingParticipant) {
-      return res.status(404).json({ message: "参加者が見つかりません" });
+      return res.status(404).json({ message: "Participant not found" });
     }
 
     const deletedMeetingMember = await prisma.meetingParticipant.delete({
@@ -29,7 +29,7 @@ export const delete_meetingmember = async (
       },
     });
 
-    return res.status(200).json({ message: "参加者を削除しました" });
+    return res.status(200).json({ message: "Meeting participant deleted" });
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json({ message: error.message });

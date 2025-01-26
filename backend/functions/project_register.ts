@@ -17,7 +17,7 @@ export const projectRegister = async (
     });
 
     if (!project) {
-      return res.status(404).json({ message: "プロジェクトが見つかりません" });
+      return res.status(404).json({ message: "Project not found" });
     }
 
     // 登録されるメンバーがlabに所属しているか確認
@@ -28,7 +28,7 @@ export const projectRegister = async (
 
     if (invalidMembers.length > 0) {
       return res.status(400).json({
-        message: "研究室に所属していないメンバーが含まれています",
+        message: "Some members are not part of the lab",
         invalidMembers,
       });
     }

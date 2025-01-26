@@ -16,9 +16,7 @@ export const updateProjectMilestone = async (
     });
 
     if (!existingMilestone) {
-      return res
-        .status(404)
-        .json({ message: "マイルストーンが見つかりません" });
+      return res.status(404).json({ message: "Milestone not found" });
     }
 
     // マイルストーンの更新
@@ -52,7 +50,7 @@ export const updateProjectMilestone = async (
         stack: error.stack,
       });
     } else {
-      next({ message: "不明なエラーが発生しました" });
+      next({ message: "Unknown error occurred" });
     }
   }
 };
