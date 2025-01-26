@@ -9,16 +9,23 @@ export const get_lab_member = async (
   const { labId } = req.params;
 
   try {
-    // labIdを元にユーザーを取得するためのクエリ
+    // まず研究室の存在確認
+    const lab = await prisma.lab.findUnique({
+      where: {
+        id: labId,
+      },
+    });
+
+    if (!lab) {
+      return res.status(404).json();
+    }
+
+    // 研究室のメンバーを取得
     const users = await prisma.users.findMany({
       where: {
         labId: labId,
       },
     });
-    // ユーザーが存在しない場合は404を返す
-    if (!users) {
-      return res.status(404).json();
-    }
 
     return res.status(200).json(users);
   } catch (error) {
