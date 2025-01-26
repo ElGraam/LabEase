@@ -52,7 +52,7 @@ enum MeetingType {
 
 model Users {
   id                String         @id @default(uuid())
-  username          String         @unique 
+  username          String         
   password          String   
   email             String         @unique 
   role              Role           @default(STUDENT)
