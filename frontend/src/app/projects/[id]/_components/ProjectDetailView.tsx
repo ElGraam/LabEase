@@ -138,10 +138,12 @@ const ProjectDetailView = ({
                     <Badge
                       colorScheme={
                         milestone.status === "COMPLETED"
-                          ? "green"
-                          : milestone.status === "IN_PROGRESS"
-                            ? "blue"
-                            : "yellow"
+                        ? "green"
+                        : milestone.status === "IN_PROGRESS"
+                          ? "blue"
+                          : milestone.status === "PLANNED"
+                            ? "yellow"
+                            : "red"
                       }
                       borderRadius="full"
                       px={3}
