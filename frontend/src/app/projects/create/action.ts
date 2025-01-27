@@ -28,7 +28,13 @@ export const projectCreate = async (
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title, description, labId, milestones, memberIds }),
+      body: JSON.stringify({
+        title,
+        description,
+        labId,
+        milestones,
+        memberIds,
+      }),
     });
     console.log(res);
     const data = await res.json();

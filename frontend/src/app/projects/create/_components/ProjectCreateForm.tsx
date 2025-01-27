@@ -48,7 +48,9 @@ const ProjectCreateForm: React.FC<ProjectCreateFormProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [members] = useState<Users[]>(initialMembers);
   const [selectedMembers, setSelectedMembers] = useState<Users[]>([]);
-  const [milestoneDateError, setMilestoneDateError] = useState<string | null>(null);
+  const [milestoneDateError, setMilestoneDateError] = useState<string | null>(
+    null,
+  );
 
   const validateDueDate = (date: string) => {
     const selectedDate = new Date(date);
@@ -79,7 +81,9 @@ const ProjectCreateForm: React.FC<ProjectCreateFormProps> = ({
   };
 
   const handleRemoveMember = (memberId: string) => {
-    setSelectedMembers(selectedMembers.filter((member) => member.id !== memberId));
+    setSelectedMembers(
+      selectedMembers.filter((member) => member.id !== memberId),
+    );
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -119,7 +123,7 @@ const ProjectCreateForm: React.FC<ProjectCreateFormProps> = ({
         description,
         labId,
         milestones,
-        selectedMembers.map((member) => member.id)
+        selectedMembers.map((member) => member.id),
       );
       router.push("/projects");
     } catch (error: any) {
@@ -196,7 +200,8 @@ const ProjectCreateForm: React.FC<ProjectCreateFormProps> = ({
               <Stack spacing={3}>
                 {members
                   .filter(
-                    (member) => !selectedMembers.some((m) => m.id === member.id)
+                    (member) =>
+                      !selectedMembers.some((m) => m.id === member.id),
                   )
                   .map((member) => (
                     <HStack

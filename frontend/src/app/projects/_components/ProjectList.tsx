@@ -95,7 +95,11 @@ const ProjectList = ({ projects: initialProjects }: Props) => {
           </Alert>
         </Box>
       ) : (
-        <Box display="grid" gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))" gap={6}>
+        <Box
+          display="grid"
+          gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+          gap={6}
+        >
           {projects.map((project) => (
             <Box
               key={project.id}
@@ -104,10 +108,10 @@ const ProjectList = ({ projects: initialProjects }: Props) => {
               p={5}
               shadow="sm"
               position="relative"
-              _hover={{ 
+              _hover={{
                 shadow: "lg",
                 transform: "translateY(-2px)",
-                borderColor: "blue.200"
+                borderColor: "blue.200",
               }}
               transition="all 0.2s"
               bg="white"
@@ -137,7 +141,13 @@ const ProjectList = ({ projects: initialProjects }: Props) => {
               >
                 <Box>
                   <Box mb={4}>
-                    <Box as="h2" fontSize="xl" fontWeight="bold" mb={2} color="gray.800">
+                    <Box
+                      as="h2"
+                      fontSize="xl"
+                      fontWeight="bold"
+                      mb={2}
+                      color="gray.800"
+                    >
                       {project.title}
                     </Box>
                     <Box color="gray.600" fontSize="sm" noOfLines={2}>
@@ -148,62 +158,66 @@ const ProjectList = ({ projects: initialProjects }: Props) => {
                   <Box mb={4}>
                     <HStack spacing={2} mb={2}>
                       <Icon as={FiFlag} color="blue.500" />
-                      <Box as="h3" fontSize="sm" fontWeight="semibold" color="gray.700">
+                      <Box
+                        as="h3"
+                        fontSize="sm"
+                        fontWeight="semibold"
+                        color="gray.700"
+                      >
                         Milestone Status
                       </Box>
                     </HStack>
                     <Box>
-                      {project.milestones && project.milestones.map((milestone) => (
-                        <Tag
-                          key={milestone.id}
-                          size="md"
-                          variant="subtle"
-                          colorScheme={
-                            milestone.status === "COMPLETED"
-                            ? "green"
-                            : milestone.status === "IN_PROGRESS"
-                              ? "blue"
-                              : milestone.status === "PLANNED"
-                                ? "yellow"
-                                : "red"
-                          }
-                          mr={2}
-                          mb={2}
-                        >
-                          <TagLabel>{milestone.status}</TagLabel>
-                        </Tag>
-                      ))}
+                      {project.milestones &&
+                        project.milestones.map((milestone) => (
+                          <Tag
+                            key={milestone.id}
+                            size="md"
+                            variant="subtle"
+                            colorScheme={
+                              milestone.status === "COMPLETED"
+                                ? "green"
+                                : milestone.status === "IN_PROGRESS"
+                                  ? "blue"
+                                  : milestone.status === "PLANNED"
+                                    ? "yellow"
+                                    : "red"
+                            }
+                            mr={2}
+                            mb={2}
+                          >
+                            <TagLabel>{milestone.status}</TagLabel>
+                          </Tag>
+                        ))}
                     </Box>
                   </Box>
 
-                  <Box 
-                    p={3} 
-                    bg="gray.50" 
-                    borderRadius="md"
-                    fontSize="sm"
-                  >
+                  <Box p={3} bg="gray.50" borderRadius="md" fontSize="sm">
                     <Box mb={2}>
-                      <Box color="gray.600" mb={1}>Due Date:</Box>
+                      <Box color="gray.600" mb={1}>
+                        Due Date:
+                      </Box>
                       <Box fontWeight="medium" color="gray.800">
                         {project.milestones?.[0]?.dueDate
-                          ? new Date(project.milestones[0].dueDate).toLocaleDateString(
-                              "ja-JP",
-                              {
-                                year: "numeric",
-                                month: "2-digit",
-                                day: "2-digit",
-                                timeZone: "Asia/Tokyo",
-                              }
-                            )
+                          ? new Date(
+                              project.milestones[0].dueDate,
+                            ).toLocaleDateString("ja-JP", {
+                              year: "numeric",
+                              month: "2-digit",
+                              day: "2-digit",
+                              timeZone: "Asia/Tokyo",
+                            })
                           : "-"}
                       </Box>
                     </Box>
                     <Box>
-                      <Box color="gray.600" mb={1}>Completion Date:</Box>
+                      <Box color="gray.600" mb={1}>
+                        Completion Date:
+                      </Box>
                       <Box fontWeight="medium" color="gray.800">
                         {project.milestones?.[0]?.completionDate
                           ? new Date(
-                              project.milestones[0].completionDate
+                              project.milestones[0].completionDate,
                             ).toLocaleDateString("ja-JP", {
                               year: "numeric",
                               month: "2-digit",

@@ -57,7 +57,6 @@ const CreateAvailableSlotsForm = ({ userId, onSuccess }: Props) => {
   const toast = useToast();
   const timeOptions = generateTimeOptions();
 
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -140,7 +139,8 @@ const CreateAvailableSlotsForm = ({ userId, onSuccess }: Props) => {
               if (selectedDate.getDay() === 0 || selectedDate.getDay() === 6) {
                 toast({
                   title: "Invalid date",
-                  description: "Weekends (Saturday and Sunday) cannot be selected.",
+                  description:
+                    "Weekends (Saturday and Sunday) cannot be selected.",
                   status: "error",
                   duration: 3000,
                   isClosable: true,

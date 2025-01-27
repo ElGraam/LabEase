@@ -192,10 +192,14 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
               value={formData.date}
               onChange={(e) => {
                 const selectedDate = new Date(e.target.value);
-                if (selectedDate.getDay() === 0 || selectedDate.getDay() === 6) {
+                if (
+                  selectedDate.getDay() === 0 ||
+                  selectedDate.getDay() === 6
+                ) {
                   toast({
                     title: "Invalid Date Selection",
-                    description: "Weekends (Saturday and Sunday) cannot be selected",
+                    description:
+                      "Weekends (Saturday and Sunday) cannot be selected",
                     status: "error",
                     duration: 3000,
                     isClosable: true,
