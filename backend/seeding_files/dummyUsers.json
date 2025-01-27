@@ -1,7 +1,7 @@
 [
   {
     "id": "1a2b3c4d-5678-90ab-cdef-1234567890ab",
-    "username": "professor_sato",
+    "username": "SatoHiroshi",
     "email": "sato@example.com",
     "password": "hashedpassword1",
     "role": "PROFESSOR",
@@ -11,7 +11,7 @@
   },
   {
     "id": "7a2b3c4d-5678-90ab-cdef-1234567890ab",
-    "username": "professor_tanaka",
+    "username": "TanakaTarou",
     "email": "prof_tanaka@example.com",
     "password": "prof_tanaka",
     "role": "PROFESSOR",
@@ -21,7 +21,7 @@
   },
   {
     "id": "8a2b3c4d-5678-90ab-cdef-1234567890ab",
-    "username": "professor_ohta",
+    "username": "OhtaKenji",
     "email": "prof_ohta@example.com",
     "password": "prof_ohta",
     "role": "PROFESSOR",
@@ -31,7 +31,7 @@
   },
   {
     "id": "9a2b3c4d-5678-90ab-cdef-1234567890ac",
-    "username": "professor_suwa",
+    "username": "SuwaTakeshi",
     "email": "prof_suwa@test.com",
     "password": "prof_suwa",
     "role": "PROFESSOR",
@@ -41,7 +41,7 @@
   },
   {
     "id": "2b3c4d5e-6789-01bc-def0-2345678901bc",
-    "username": "student_tanaka",
+    "username": "TanakaYuki",
     "email": "tanaka@example.com",
     "password": "hashedpassword2",
     "role": "STUDENT",
@@ -63,7 +63,7 @@
   },
   {
     "id": "4b3c4d5e-6789-01bc-def0-2345678901bc",
-    "username": "student_sato",
+    "username": "SatoAiko",
     "email": "student_sato@example.com",
     "password": "tanakapassword1",
     "role": "STUDENT",
@@ -85,7 +85,7 @@
   },
   {
     "id": "3a2b3c4d-5678-90ab-cdef-1234567890ab",
-    "username": "student_ohta",
+    "username": "OhtaKazuo",
     "email": "ohta@example.com",
     "password": "ohtapassword1",
     "role": "STUDENT",
@@ -107,7 +107,7 @@
   },
   {
     "id": "5a2b3c4d-5678-90ab-cdef-1234567890ac",
-    "username": "student_suzuki",
+    "username": "SuzukiHaruto",
     "email": "suzuki@example.com",
     "password": "suzukipassword1",
     "role": "STUDENT",
@@ -129,7 +129,7 @@
   },
   {
     "id": "6a2b3c4d-5678-90ab-cdef-1234567890ad",
-    "username": "student_yamada",
+    "username": "YamadaSakura",
     "email": "yamada@example.com",
     "password": "yamadapassword1",
     "role": "STUDENT",
@@ -151,7 +151,7 @@
   },
   {
     "id": "7a2b3c4d-5678-90ab-cdef-1234567890ae",
-    "username": "student_ito",
+    "username": "ItoShin",
     "email": "ito@example.com",
     "password": "itopassword1",
     "role": "STUDENT",
@@ -173,7 +173,7 @@
   },
   {
     "id": "8a2b3c4d-5678-90ab-cdef-1234567890af",
-    "username": "student_watanabe",
+    "username": "WatanabeMika",
     "email": "watanabe@example.com",
     "password": "watanabepassword1",
     "role": "STUDENT",
@@ -195,7 +195,7 @@
   },
   {
     "id": "9a2b3c4d-5678-90ab-cdef-1234567890b0",
-    "username": "student_nakamura",
+    "username": "NakamuraKenta",
     "email": "nakamura@example.com",
     "password": "nakamurapassword1",
     "role": "STUDENT",
@@ -217,7 +217,7 @@
   },
   {
     "id": "aa2b3c4d-5678-90ab-cdef-1234567890b1",
-    "username": "student_kobayashi",
+    "username": "KobayashiRina",
     "email": "kobayashi@example.com",
     "password": "kobayasipassword1",
     "role": "STUDENT",
@@ -239,7 +239,7 @@
   },
   {
     "id": "ba2b3c4d-5678-90ab-cdef-1234567890b2",
-    "username": "student_kato",
+    "username": "KatoYui",
     "email": "kato@example.com",
     "password": "katopassword1",
     "role": "STUDENT",
@@ -261,7 +261,7 @@
   },
   {
     "id": "ca2b3c4d-5678-90ab-cdef-1234567890b3",
-    "username": "student_yoshida",
+    "username": "YoshidaHana",
     "email": "yoshida@example.com",
     "password": "yoshidapassword1",
     "role": "STUDENT",
@@ -283,7 +283,7 @@
   },
   {
     "id": "da2b3c4d-5678-90ab-cdef-1234567890b4",
-    "username": "student_kimura",
+    "username": "KimuraSatoshi",
     "email": "kimura@example.com",
     "password": "kimurapassword1",
     "role": "STUDENT",
@@ -305,7 +305,7 @@
   },
   {
     "id": "ea2b3c4d-5678-90ab-cdef-1234567890b5",
-    "username": "student_hayashi",
+    "username": "HayashiMio",
     "email": "hayashi@example.com",
     "password": "hayashipassword1",
     "role": "STUDENT",
@@ -327,7 +327,7 @@
   },
   {
     "id": "fa2b3c4d-5678-90ab-cdef-1234567890b6",
-    "username": "student_inoue",
+    "username": "InoueRiku",
     "email": "inoue@example.com",
     "password": "inouepassword1",
     "role": "STUDENT",
@@ -349,7 +349,7 @@
   },
   {
     "id": "112b3c4d-5678-90ab-cdef-1234567890b7",
-    "username": "student_sasaki",
+    "username": "SasakiYuna",
     "email": "sasaki@example.com",
     "password": "sasakipassword1",
     "role": "STUDENT",
@@ -371,7 +371,7 @@
   },
   {
     "id": "222b3c4d-5678-90ab-cdef-1234567890b8",
-    "username": "student_yamaguchi",
+    "username": "YamaguchiKaito",
     "email": "yamaguchi@example.com",
     "password": "yamaguchipassword1",
     "role": "STUDENT",
@@ -393,7 +393,7 @@
   },
   {
     "id": "332b3c4d-5678-90ab-cdef-1234567890b9",
-    "username": "student_matsumoto",
+    "username": "MatsumotoAoi",
     "email": "matsumoto@example.com",
     "password": "matsumotopassword1",
     "role": "STUDENT",
@@ -415,7 +415,7 @@
   },
   {
     "id": "442b3c4d-5678-90ab-cdef-1234567890ba",
-    "username": "student_aoki",
+    "username": "AokiRen",
     "email": "aoki@example.com",
     "password": "aokipassword1",
     "role": "STUDENT",
@@ -437,7 +437,7 @@
   },
   {
     "id": "552b3c4d-5678-90ab-cdef-1234567890bb",
-    "username": "student_fujita",
+    "username": "FujitaNao",
     "email": "fujita@example.com",
     "password": "fujitapassword1",
     "role": "STUDENT",
@@ -459,7 +459,7 @@
   },
   {
     "id": "662b3c4d-5678-90ab-cdef-1234567890bc",
-    "username": "student_okada",
+    "username": "OkadaYuto",
     "email": "okada@example.com",
     "password": "okadapassword1",
     "role": "STUDENT",
@@ -481,7 +481,7 @@
   },
   {
     "id": "772b3c4d-5678-90ab-cdef-1234567890bd",
-    "username": "student_hasegawa",
+    "username": "HasegawaSora",
     "email": "hasegawa@example.com",
     "password": "hasegawapassword1",
     "role": "STUDENT",
@@ -503,7 +503,7 @@
   },
   {
     "id": "882b3c4d-5678-90ab-cdef-1234567890be",
-    "username": "student_saito",
+    "username": "SaitoHinata",
     "email": "saito@example.com",
     "password": "saitopassword1",
     "role": "STUDENT",
@@ -522,5 +522,115 @@
     },
     "created_at": "2024-01-22T00:00:00Z",
     "updated_at": "2024-01-22T00:00:00Z"
+  },
+  {
+    "id": "992b3c4d-5678-90ab-cdef-1234567890bf",
+    "username": "JohnDoe",
+    "email": "john.doe@example.com",
+    "password": "johndoepassword1",
+    "role": "STUDENT",
+    "studentId": "International123",
+    "program": "UNDERGRADUATE",
+    "studentProfile": {
+      "id": "profile23",
+      "userId": "992b3c4d-5678-90ab-cdef-1234567890bf",
+      "entryYear": 2024,
+      "entryMonth": "APRIL",
+      "plannedGradYear": 2028,
+      "plannedGradMonth": "MARCH",
+      "status": "ACTIVE",
+      "created_at": "2024-01-23T00:00:00Z",
+      "updated_at": "2024-01-23T00:00:00Z"
+    },
+    "created_at": "2024-01-23T00:00:00Z",
+    "updated_at": "2024-01-23T00:00:00Z"
+  },
+  {
+    "id": "aa2b3c4d-5678-90ab-cdef-1234567890c0",
+    "username": "JaneSmith",
+    "email": "jane.smith@example.com",
+    "password": "janesmithpassword1",
+    "role": "STUDENT",
+    "studentId": "International456",
+    "program": "MASTERS",
+    "studentProfile": {
+      "id": "profile24",
+      "userId": "aa2b3c4d-5678-90ab-cdef-1234567890c0",
+      "entryYear": 2023,
+      "entryMonth": "OCTOBER",
+      "plannedGradYear": 2025,
+      "plannedGradMonth": "SEPTEMBER",
+      "status": "ACTIVE",
+      "created_at": "2024-01-24T00:00:00Z",
+      "updated_at": "2024-01-24T00:00:00Z"
+    },
+    "created_at": "2024-01-24T00:00:00Z",
+    "updated_at": "2024-01-24T00:00:00Z"
+  },
+  {
+    "id": "bb2b3c4d-5678-90ab-cdef-1234567890c1",
+    "username": "CarlosGarcia",
+    "email": "carlos.garcia@example.com",
+    "password": "carlosgarciapassword1",
+    "role": "STUDENT",
+    "studentId": "International789",
+    "program": "DOCTORAL",
+    "studentProfile": {
+      "id": "profile25",
+      "userId": "bb2b3c4d-5678-90ab-cdef-1234567890c1",
+      "entryYear": 2022,
+      "entryMonth": "APRIL",
+      "plannedGradYear": 2025,
+      "plannedGradMonth": "MARCH",
+      "status": "ACTIVE",
+      "created_at": "2024-01-25T00:00:00Z",
+      "updated_at": "2024-01-25T00:00:00Z"
+    },
+    "created_at": "2024-01-25T00:00:00Z",
+    "updated_at": "2024-01-25T00:00:00Z"
+  },
+  {
+    "id": "cc2b3c4d-5678-90ab-cdef-1234567890c2",
+    "username": "LiuWei",
+    "email": "liu.wei@example.com",
+    "password": "liuweipassword1",
+    "role": "STUDENT",
+    "studentId": "International012",
+    "program": "UNDERGRADUATE",
+    "studentProfile": {
+      "id": "profile26",
+      "userId": "cc2b3c4d-5678-90ab-cdef-1234567890c2",
+      "entryYear": 2024,
+      "entryMonth": "APRIL",
+      "plannedGradYear": 2028,
+      "plannedGradMonth": "MARCH",
+      "status": "ACTIVE",
+      "created_at": "2024-01-26T00:00:00Z",
+      "updated_at": "2024-01-26T00:00:00Z"
+    },
+    "created_at": "2024-01-26T00:00:00Z",
+    "updated_at": "2024-01-26T00:00:00Z"
+  },
+  {
+    "id": "dd2b3c4d-5678-90ab-cdef-1234567890c3",
+    "username": "MarieCurie",
+    "email": "marie.curie@example.com",
+    "password": "mariecuriepassword1",
+    "role": "STUDENT",
+    "studentId": "International345",
+    "program": "MASTERS",
+    "studentProfile": {
+      "id": "profile27",
+      "userId": "dd2b3c4d-5678-90ab-cdef-1234567890c3",
+      "entryYear": 2023,
+      "entryMonth": "OCTOBER",
+      "plannedGradYear": 2025,
+      "plannedGradMonth": "SEPTEMBER",
+      "status": "ACTIVE",
+      "created_at": "2024-01-27T00:00:00Z",
+      "updated_at": "2024-01-27T00:00:00Z"
+    },
+    "created_at": "2024-01-27T00:00:00Z",
+    "updated_at": "2024-01-27T00:00:00Z"
   }
 ]
