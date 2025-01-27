@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "@jest/globals";
+import { describe, expect, beforeEach, afterEach, afterAll } from "@jest/globals";
 import { Response } from "express";
 import Sinon from "sinon";
 import { mockReq, mockRes } from "sinon-express-mock";
@@ -22,6 +22,10 @@ describe("meeting_create", () => {
 
     res = mockRes();
     next = Sinon.spy();
+  });
+  afterEach(async () => {
+    await resetDatabase();
+    jest.clearAllMocks();
   });
 
   afterAll(async () => {

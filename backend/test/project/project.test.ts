@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach, afterEach } from "@jest/globals";
+import { describe, expect, beforeEach, afterEach, afterAll } from "@jest/globals";
 import { prisma } from "../../lib/prisma";
 import { getTestData } from "../utils/testData";
 import { resetDatabase } from "../utils/cleanupDb";
@@ -34,13 +34,18 @@ describe("Project API Functions", () => {
     jest.clearAllMocks();
   });
 
+  afterAll(async () => {
+    await prisma.$disconnect();
+  });
+
   describe("projectCreate", () => {
-    test("新しいプロジェクトを作成できる", async () => {
+    it("新しいプロジェクトを作成できる", async () => {
       mockRequest = {
         body: {
           title: "新規プロジェクト",
           description: "新規プロジェクトの説明",
           labId: "lab01",
+          memberIds: ["2b3c4d5e-6789-01bc-def0-2345678901bc", "4b3c4d5e-6789-01bc-def0-2345678901bc"],
           milestones: [
             {
               title: "マイルストーン1",
@@ -62,9 +67,13 @@ describe("Project API Functions", () => {
       const responseData = (mockResponse.json as jest.Mock).mock.calls[0][0];
       expect(responseData).toHaveProperty("id");
       expect(responseData.title).toBe(mockRequest.body.title);
+      expect(responseData.description).toBe(mockRequest.body.description);
+      expect(responseData.labId).toBe("lab01");
+      expect(responseData.members).toHaveLength(2);
+      expect(responseData.milestones).toHaveLength(1);
     });
 
-    test("必須フィールドが欠けている場合はエラーを返す", async () => {
+    it("必須フィールドが欠けている場合はエラーを返す", async () => {
       mockRequest = {
         body: {
           description: "説明のみ",
@@ -84,7 +93,7 @@ describe("Project API Functions", () => {
   });
 
   describe("get_project", () => {
-    test("プロジェクトの詳細を取得できる", async () => {
+    it("プロジェクトの詳細を取得できる", async () => {
       const project = await prisma.project.create({
         data: {
           id: randomUUID(),
@@ -112,7 +121,7 @@ describe("Project API Functions", () => {
       expect(responseData.title).toBe(project.title);
     });
 
-    test("存在しないプロジェクトIDの場合は404を返す", async () => {
+    it("存在しないプロジェクトIDの場合は404を返す", async () => {
       mockRequest = {
         params: {
           projectId: randomUUID(),
@@ -130,7 +139,7 @@ describe("Project API Functions", () => {
   });
 
   describe("update_project", () => {
-    test("プロジェクトを更新できる", async () => {
+    it("プロジェクトを更新できる", async () => {
       const project = await prisma.project.create({
         data: {
           id: randomUUID(),
@@ -165,7 +174,7 @@ describe("Project API Functions", () => {
   });
 
   describe("projectRegister", () => {
-    test("プロジェクトメンバーを追加できる", async () => {
+    it("プロジェクトメンバーを追加できる", async () => {
       // まず研究室メンバーとしてユーザーを追加
       await prisma.users.update({
         where: {
@@ -205,7 +214,7 @@ describe("Project API Functions", () => {
   });
 
   describe("delete_project", () => {
-    test("プロジェクトを削除できる", async () => {
+    it("プロジェクトを削除できる", async () => {
       const project = await prisma.project.create({
         data: {
           id: randomUUID(),
@@ -236,7 +245,7 @@ describe("Project API Functions", () => {
   });
 
   describe("get_labproject", () => {
-    test("研究室のプロジェクト一覧を取得できる", async () => {
+    it("研究室のプロジェクト一覧を取得できる", async () => {
       await prisma.project.createMany({
         data: [
           {
@@ -275,7 +284,7 @@ describe("Project API Functions", () => {
   });
 
   describe("updateProjectMilestone", () => {
-    test("プロジェクトのマイルストーンを更新できる", async () => {
+    it("プロジェクトのマイルストーンを更新できる", async () => {
       const project = await prisma.project.create({
         data: {
           id: randomUUID(),
@@ -319,7 +328,7 @@ describe("Project API Functions", () => {
   });
 
   describe("delete_projectmember", () => {
-    test("プロジェクトメンバーを削除できる", async () => {
+    it("プロジェクトメンバーを削除できる", async () => {
       const project = await prisma.project.create({
         data: {
           id: randomUUID(),
@@ -361,7 +370,7 @@ describe("Project API Functions", () => {
       expect(deletedMember).toBeNull();
     });
 
-    test("存在しないメンバーの削除を試みた場合は404を返す", async () => {
+    it("存在しないメンバーの削除を試みた場合は404を返す", async () => {
       mockRequest = {
         params: {
           projectId: randomUUID(),
@@ -380,7 +389,7 @@ describe("Project API Functions", () => {
   });
 
   describe("get_user_projects", () => {
-    test("ユーザーが参加しているプロジェクト一覧を取得できる", async () => {
+    it("ユーザーが参加しているプロジェクト一覧を取得できる", async () => {
       // プロジェクトを2つ作成
       const project1 = await prisma.project.create({
         data: {
@@ -435,7 +444,7 @@ describe("Project API Functions", () => {
       expect(responseData[1]).toHaveProperty("title");
     });
 
-    test("プロジェクトに参加していないユーザーの場合は空配列を返す", async () => {
+    it("プロジェクトに参加していないユーザーの場合は空配列を返す", async () => {
       mockRequest = {
         params: {
           userId: "2b3c4d5e-6789-01bc-def0-2345678901bc",
