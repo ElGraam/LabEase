@@ -4,7 +4,13 @@ import { resetDatabase } from "../utils/cleanupDb";
 import { availableSlots_create } from "../../functions/availableslot_create";
 import { delete_availableslot } from "../../functions/delete_availableslot";
 import { Request, Response } from "express";
-import { describe, expect, beforeEach, afterEach, afterAll } from "@jest/globals";
+import {
+  describe,
+  expect,
+  beforeEach,
+  afterEach,
+  afterAll,
+} from "@jest/globals";
 
 describe("AvailableSlots", () => {
   let mockRequest: Partial<Request> & {

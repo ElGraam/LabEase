@@ -1,4 +1,10 @@
-import { describe, expect, beforeEach, afterEach, afterAll } from "@jest/globals";
+import {
+  describe,
+  expect,
+  beforeEach,
+  afterEach,
+  afterAll,
+} from "@jest/globals";
 import { prisma } from "../../lib/prisma";
 import { getTestData } from "../utils/testData";
 import { resetDatabase } from "../utils/cleanupDb";
@@ -45,7 +51,10 @@ describe("Project API Functions", () => {
           title: "新規プロジェクト",
           description: "新規プロジェクトの説明",
           labId: "lab01",
-          memberIds: ["2b3c4d5e-6789-01bc-def0-2345678901bc", "4b3c4d5e-6789-01bc-def0-2345678901bc"],
+          memberIds: [
+            "2b3c4d5e-6789-01bc-def0-2345678901bc",
+            "4b3c4d5e-6789-01bc-def0-2345678901bc",
+          ],
           milestones: [
             {
               title: "マイルストーン1",
