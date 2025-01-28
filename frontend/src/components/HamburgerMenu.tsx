@@ -96,7 +96,7 @@ const HamburgerMenu = () => {
               color="white"
               _hover={{ bg: "gray.600", p: "2", borderRadius: "md" }}
             >
-              Lab Projects
+              Projects
             </Link>
           </Box>
           <Box as="li">
