@@ -74,26 +74,12 @@ const ProjectList = ({ projects: initialProjects }: Props) => {
   return (
     <>
       {projects.length === 0 ? (
-        <Box textAlign="center" py={6}>
-          <Alert
-            status="info"
-            variant="subtle"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            textAlign="center"
-            height="200px"
-            borderRadius="xl"
-          >
-            <AlertIcon boxSize="40px" mr={0} />
-            <Box mt={4} mb={2} fontSize="lg" fontWeight="medium">
-              No projects available
-            </Box>
-            <Box fontSize="sm" color="gray.600">
-              Please create a new project
-            </Box>
-          </Alert>
-        </Box>
+        <Box textAlign="center" py={4}>
+        <Alert status="info">
+          <AlertIcon />
+          There are no projects.
+        </Alert>
+      </Box>
       ) : (
         <Box
           display="grid"
