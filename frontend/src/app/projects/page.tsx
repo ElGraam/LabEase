@@ -4,7 +4,8 @@ import ProjectList from "./_components/ProjectList";
 import { getLabProject } from "./action";
 import { authOption } from "@/lib/next-auth/auth";
 import { getServerSession } from "next-auth/next";
-
+import { getProjects } from "./action";
+import { Project } from "@/types";
 const ProjectsPage = async () => {
   const serversession = await getServerSession(authOption);
 
@@ -13,13 +14,20 @@ const ProjectsPage = async () => {
   }
   const labId = serversession.user.labId || "";
   const role = serversession.user.role || "";
-  const response = await getLabProject(labId);
-  const projects = response.project;
+  const userId = serversession.user.id || "";
+  let projects: Project[] = [];
+  if (role === "STUDENT") {
+    const response = await getProjects(userId);
+    projects = response.project;
+  } else {
+    const response = await getLabProject(labId);
+    projects = response.project;
+  }
 
   return (
     <VStack spacing={6} align="stretch" p={6}>
       <Heading as="h1" size="xl" mb={4}>
-        Projects List
+        Projects
       </Heading>
       {role !== "STUDENT" && (
         <Link href="/projects/create">

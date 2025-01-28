@@ -10,7 +10,26 @@ type responseData = {
 type response = {
   project: Project;
 };
+export const getProjects = async (userId: string): Promise<responseData> => {
+  const path = `${process.env.BACKEND_URL}/api/project/user/${userId}`;
+  try {
+    const res = await fetch(path, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      cache: "no-store",
+    });
+    const data = await res.json();
+    const Projects = Array.isArray(data) ? data : [data]; // データが配列でない場合、配列に変換
 
+    return {
+      status: res.status,
+      project: Projects,
+    };
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 export const getLabProject = async (labId: string): Promise<responseData> => {
   const path = `${process.env.BACKEND_URL}/api/lab/${labId}/projects`;
 
