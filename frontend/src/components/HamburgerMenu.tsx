@@ -15,7 +15,7 @@ const HamburgerMenu = () => {
 
   return (
     <Box position="relative">
-      {/* ハンバーガーアイコン */}
+      {/* Hamburger Icon */}
       <Box
         as="button"
         onClick={toggleMenu}
@@ -49,7 +49,7 @@ const HamburgerMenu = () => {
         />
       </Box>
 
-      {/* メニュー */}
+      {/* Menu */}
       <Box
         position="absolute"
         top="50px"

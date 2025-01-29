@@ -66,7 +66,7 @@ const Footer = () => {
               sx={{ maxWidth: "80px", height: "auto" }}
             />
             <Heading as="h3" sx={titleStyle}>
-              大学のサービス
+              University Services
             </Heading>
           </Box>
           <Box sx={linkListsBoxStyle}>

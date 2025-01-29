@@ -104,12 +104,12 @@ const HomeHeader = () => {
         />
         <Box sx={contentDetailBoxStyle}>
           <Heading as="h3" sx={detailTitleStyle}>
-            効率的な
+            Efficient
           </Heading>
           <Heading as="h4" sx={detailTextStyle}>
-            lab Management System
+            Lab Management System
             <br />
-            で研究活動をサポート
+            to support research activities
           </Heading>
         </Box>
       </Flex>
