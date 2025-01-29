@@ -18,7 +18,7 @@ import { FormEvent } from "react";
 const SignInForm = () => {
   const router = useRouter();
 
-  /**　ログインボタン押下時の処理   */
+  /**　Process when the login button is pressed   */
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     // この関数内で動作を制御するため既定処理は行わない
     event.preventDefault();
@@ -85,32 +85,32 @@ const SignInForm = () => {
       <Box as="form" onSubmit={handleSubmit} sx={formBoxStyle}>
         <VStack sx={formVStackStyle}>
           <Heading as="h2" sx={titleStyle}>
-            ユーザーログイン
+            User Login
           </Heading>
           <FormControl isRequired>
-            <FormLabel sx={formLabelStyle}>メールアドレス</FormLabel>
+            <FormLabel sx={formLabelStyle}>Email Address</FormLabel>
             <Text sx={formSubLabelStyle}>
               {" "}
-              大学のドメインを使用してください。
+              Please use the university domain.
             </Text>
             <Input
-              placeholder="メールアドレス"
+              placeholder="Email Address"
               type="email"
               id="email"
               name="email"
             />
           </FormControl>
           <FormControl isRequired>
-            <FormLabel sx={formLabelStyle}>パスワード</FormLabel>
+            <FormLabel sx={formLabelStyle}>Password</FormLabel>
             <Input
-              placeholder="パスワード"
+              placeholder="Password"
               type="password"
               id="password"
               name="password"
             />
           </FormControl>
           <Button colorScheme="blue" type="submit">
-            ログイン
+            Login
           </Button>
         </VStack>
       </Box>
