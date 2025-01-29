@@ -81,7 +81,20 @@ export function CreateMeetingForm({ initialLabMembers }: Props) {
         `${formData.date}T${formData.startTime}:00`,
       );
       const endDateTime = new Date(`${formData.date}T${formData.endTime}:00`);
+      const startDate = new Date(`${formData.date}T${formData.startTime}:00`);
+      const endDate = new Date(`${formData.date}T${formData.endTime}:00`);
+      const currentDate = new Date();
 
+      if (startDate < currentDate || endDate < currentDate) {
+        toast({
+          title: "Invalid date format",
+          description: "Cannot set past dates.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+        return;
+      }
       if (startDateTime >= endDateTime) {
         toast({
           title: "Invalid Time Selection",

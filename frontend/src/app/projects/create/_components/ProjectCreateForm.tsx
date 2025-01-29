@@ -108,6 +108,17 @@ const ProjectCreateForm: React.FC<ProjectCreateFormProps> = ({
       });
       return;
     }
+    const milestonedate = new Date(milestoneDueDate).getDay();
+    if (milestonedate === 0 || milestonedate === 6) {
+      toast({
+        title: "Invalid date",
+        description: "Weekends (Saturday and Sunday) cannot be selected.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
     setIsLoading(true);
     const milestones: CreateMilestone[] = [
       {
