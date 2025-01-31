@@ -11,7 +11,7 @@ const LabPage = async ({ params }: { params: { id: string } }) => {
   if (!session) {
     redirect("/auth/signin");
   }
-  const labId = session.user.id;
+  const labId = session.user.labId;
   if (labId !== params.id) {
     redirect("/dashboard");
   }

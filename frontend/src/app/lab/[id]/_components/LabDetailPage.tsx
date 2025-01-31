@@ -47,13 +47,13 @@ export const LabDetailPage = ({ lab, professor }: LabDetailPageProps) => {
       <Box mb={6}>
         <Button
           as={Link}
-          href="/projects"
+          href="/dashboard"
           leftIcon={<FaArrowLeft />}
           colorScheme="gray"
           variant="ghost"
           size="sm"
         >
-          Back to Projects
+          Back to Dashboard
         </Button>
       </Box>
 
