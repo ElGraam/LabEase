@@ -1,29 +1,29 @@
-// 一覧での一画面ごとの表示数
+// Number of items displayed per page in the list
 export const ITEM_LIMIT = 10;
 
-// フッターのタイトル
-export const footerTitle: string[] = ["学生向け", "進路情報"];
-// フッターのタイトルごとのリンク先
+// Footer titles
+export const footerTitle: string[] = ["For Students", "Career Information"];
+// Links for each footer title
 export const FOOTER_LINKS: {
   title: string;
   value: { text: string; link: string }[];
 }[] = [
   {
-    title: "在学生・教職員の方向け",
-    value: [{ text: "クイックリンク", link: "" }],
+    title: "For Current Students and Faculty",
+    value: [{ text: "Quick Links", link: "" }],
   },
   {
-    title: "進路情報",
+    title: "Career Information",
     value: [
-      { text: "学部の進路情報", link: "" },
-      { text: "大学院の進路情報", link: "" },
+      { text: "Undergraduate Career Information", link: "" },
+      { text: "Graduate Career Information", link: "" },
     ],
   },
 ];
 
-// フッターの下部リンク
+// Footer bottom links
 export const FOOTER_FOOT_LINKS: { text: string; link: string }[] = [
-  { text: "大学", link: "" },
-  { text: "アクセス", link: "" },
-  { text: "個人情報保護方針", link: "" },
+  { text: "University", link: "" },
+  { text: "Access", link: "" },
+  { text: "Privacy Policy", link: "" },
 ];
