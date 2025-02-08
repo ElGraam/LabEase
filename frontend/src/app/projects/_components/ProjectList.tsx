@@ -75,11 +75,11 @@ const ProjectList = ({ projects: initialProjects }: Props) => {
     <>
       {projects.length === 0 ? (
         <Box textAlign="center" py={4}>
-        <Alert status="info">
-          <AlertIcon />
-          There are no projects.
-        </Alert>
-      </Box>
+          <Alert status="info">
+            <AlertIcon />
+            There are no projects.
+          </Alert>
+        </Box>
       ) : (
         <Box
           display="grid"
